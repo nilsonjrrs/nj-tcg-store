@@ -80,6 +80,46 @@ body {
   overflow-x: hidden;
 }
 
+/* ============================================================
+   Fundo decorativo — brilhos em camadas (roxo + um toque de laranja)
+   e um grão de textura bem fino, fixos atrás do conteúdo. Decorativo
+   só: aria-hidden, sem interação, não participa do fluxo do layout.
+   ============================================================ */
+.fundo-glow,
+.fundo-grao {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.fundo-glow {
+  inset: -12%;
+  background:
+    radial-gradient(42% 32% at 18% 12%, rgba(150, 105, 215, 0.28), transparent 70%),
+    radial-gradient(50% 40% at 88% 18%, rgba(150, 105, 215, 0.20), transparent 70%),
+    radial-gradient(38% 30% at 10% 88%, rgba(255, 124, 56, 0.14), transparent 70%),
+    radial-gradient(46% 38% at 80% 92%, rgba(150, 105, 215, 0.22), transparent 70%);
+  animation: deriva-glow 70s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.fundo-grao {
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+@keyframes deriva-glow {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-2.5%, 2%, 0) scale(1.04);
+  }
+}
+
 h1, h2, h3 {
   line-height: 1.2;
   margin: 0;
