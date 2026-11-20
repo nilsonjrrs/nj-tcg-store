@@ -24,5 +24,10 @@ Site vitrine da NJ TCG Store (Pokémon TCG, Curitiba). O cliente monta o pedido 
 - [ ] **Fotos dos produtos**: nenhum produto tem foto ainda (Nilson vai fotografar). Quando tiver as fotos, colocar em `img/` e preencher o campo `img` de cada produto em `js/produtos.js`.
 - [ ] **Confirmar local exato de "retirada em mãos"** em Curitiba (bairro/ponto de referência) — hoje o texto está genérico.
 - [ ] **Confirmar texto do acréscimo no cartão**: hoje está "cartão com acréscimo de taxa", sem percentual. Se quiser, pode incluir o valor (ex.: "+4% no cartão").
-- [ ] **Publicar o site**: GitHub ainda não está conectado nesta sessão. Para publicar no GitHub Pages, falta: (1) conectar a conta do GitHub em claude.ai/connect-github, (2) criar o repositório, (3) subir o código, (4) ativar o GitHub Pages nas configurações do repositório.
-- [ ] Testar o site no navegador em tela de celular (390px): adicionar produto, abrir o pedido, conferir o link do WhatsApp.
+- [ ] **Publicar o site**: GitHub ainda não está conectado nesta sessão (precisa conectar em claude.ai/connect-github). Repositório local já iniciado (git init + commit inicial) em `nj-tcg-store/`, pronto para criar o repo remoto e dar push assim que a conexão estiver ativa, e então ativar o GitHub Pages.
+
+## Feito
+
+- [x] Site construído do zero: catálogo, carrinho, pedido e link do WhatsApp.
+- [x] Testado em tela de celular (390px) com Playwright: adicionar produto, abrir pedido, total e link do WhatsApp conferidos e corretos.
+- [x] Corrigido bug de CSS em que o modal de pedido ficava clicável mesmo escondido (`.modal[hidden]`).
