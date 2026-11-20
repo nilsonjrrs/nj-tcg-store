@@ -62,6 +62,14 @@ const Catalogo = (function () {
     renderizarGrade();
   }
 
+  function limparFiltros() {
+    filtroAtivo.colecao = TODOS;
+    filtroAtivo.idioma = TODOS;
+    filtroAtivo.categoria = TODOS;
+    renderizarFiltros();
+    renderizarGrade();
+  }
+
   function criarFoto(produto) {
     const tilt = document.createElement("div");
     tilt.className = "produto-tilt";
@@ -127,6 +135,7 @@ const Catalogo = (function () {
 
   function criarCard(produto) {
     const card = document.createElement("article");
+    card.id = "produto-" + produto.id;
     card.className = "produto-card" + (estaEsgotado(produto) ? " esgotado" : "");
     card.appendChild(criarFoto(produto));
 
@@ -274,5 +283,5 @@ const Catalogo = (function () {
     injetarJsonLd();
   }
 
-  return { iniciar, renderizarGrade, formatarPreco, estaEsgotado, definirBusca };
+  return { iniciar, renderizarGrade, formatarPreco, estaEsgotado, definirBusca, limparFiltros };
 })();

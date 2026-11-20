@@ -117,5 +117,28 @@
     document.getElementById("busca-produto").addEventListener("input", (evento) => {
       Catalogo.definirBusca(evento.target.value);
     });
+
+    document.getElementById("botao-abrir-pacote").addEventListener("click", SimuladorUI.abrirPacote);
+    document.getElementById("pacote-virtual").addEventListener("click", SimuladorUI.abrirPacote);
+    document.getElementById("pacote-virtual").addEventListener("keydown", (evento) => {
+      if (evento.key === "Enter" || evento.key === " ") {
+        evento.preventDefault();
+        SimuladorUI.abrirPacote();
+      }
+    });
+    document.getElementById("botao-virar-todas").addEventListener("click", SimuladorUI.virarTodas);
+    document.getElementById("botao-abrir-outro").addEventListener("click", SimuladorUI.abrirOutro);
+
+    document.getElementById("comprar-booster-real").addEventListener("click", (evento) => {
+      evento.preventDefault();
+      Catalogo.limparFiltros();
+      requestAnimationFrame(() => {
+        const alvo = document.getElementById("produto-reinado-delta-booster-avulso");
+        if (!alvo) return;
+        alvo.scrollIntoView({ behavior: "smooth", block: "center" });
+        alvo.classList.add("produto-card--destaque");
+        setTimeout(() => alvo.classList.remove("produto-card--destaque"), 1600);
+      });
+    });
   });
 })();
