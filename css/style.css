@@ -58,6 +58,7 @@
   --shadow-glow: 0 0 24px rgba(150, 105, 215, 0.55);
 
   --container-max: 1120px;
+  --navbar-h: 64px;
 }
 
 /* ============================================================
@@ -73,12 +74,17 @@ html {
 
 body {
   margin: 0;
+  padding-top: var(--navbar-h);
   font-family: var(--font-base);
   background: var(--color-bg);
   color: var(--color-text);
   font-size: var(--text-md);
   line-height: 1.5;
   overflow-x: hidden;
+}
+
+html {
+  scroll-padding-top: var(--navbar-h);
 }
 
 /* ============================================================
@@ -166,39 +172,198 @@ a {
 }
 
 /* ============================================================
+   Navbar fixa
+   ============================================================ */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: var(--navbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 0 var(--space-5);
+  background: rgba(23, 18, 31, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar-marca {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.navbar-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.navbar-nome {
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.navbar-links {
+  display: flex;
+  gap: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links a {
+  color: var(--color-muted);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: bold;
+  transition: color 150ms;
+}
+
+.navbar-links a:hover {
+  color: var(--color-text);
+}
+
+.navbar-busca {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.navbar-busca svg {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-muted);
+  pointer-events: none;
+}
+
+.navbar-busca input {
+  width: 170px;
+  min-height: 36px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  padding: 0 var(--space-3) 0 var(--space-7);
+}
+
+.navbar-busca input::placeholder {
+  color: var(--color-muted);
+}
+
+@media (max-width: 760px) {
+  :root {
+    --navbar-h: 92px;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    row-gap: var(--space-2);
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .navbar-nome {
+    display: none;
+  }
+
+  .navbar-busca {
+    flex: 1 1 auto;
+  }
+
+  .navbar-busca input {
+    width: 100%;
+  }
+
+  .navbar-links {
+    order: 3;
+    width: 100%;
+    gap: var(--space-4);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .navbar-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .navbar-links li {
+    flex-shrink: 0;
+  }
+}
+
+/* ============================================================
    Hero
    ============================================================ */
 .hero {
-  text-align: center;
-  padding: var(--space-9) var(--space-4) var(--space-7);
-  max-width: var(--container-max);
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 440px;
+  padding: var(--space-7) var(--space-4);
+  background-color: var(--color-bg);
+  background-image:
+    linear-gradient(90deg, rgba(23, 18, 31, 0.92) 0%, rgba(23, 18, 31, 0.8) 42%, rgba(23, 18, 31, 0.35) 75%, rgba(23, 18, 31, 0.05) 100%),
+    url("../img/hero-bg.jpg");
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+
+.hero-conteudo {
+  max-width: 620px;
   margin: 0 auto;
+  width: 100%;
+}
+
+.hero-marca-linha {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
 }
 
 .hero-logo-wrap {
   position: relative;
   display: inline-block;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
   animation: flutuar-logo 6s ease-in-out infinite;
 }
 
 .hero-logo-wrap::after {
   content: "";
   position: absolute;
-  inset: -18px;
+  inset: -8px;
   z-index: -1;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(150, 105, 215, 0.55), rgba(255, 124, 56, 0.25) 55%, transparent 75%);
-  filter: blur(6px);
+  filter: blur(4px);
   animation: pulsar-glow 4s ease-in-out infinite;
 }
 
 .hero-logo {
   display: block;
-  width: 140px;
-  height: 140px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--color-primary);
+  border: 2px solid var(--color-primary);
   box-shadow: var(--shadow-glow);
 }
 
@@ -207,7 +372,7 @@ a {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-5px);
   }
 }
 
@@ -223,7 +388,7 @@ a {
 }
 
 .hero-marca {
-  margin: var(--space-4) 0 0;
+  margin: 0;
   color: var(--color-muted);
   font-weight: bold;
   letter-spacing: 0.08em;
@@ -232,67 +397,118 @@ a {
 }
 
 .hero-titulo {
-  margin: var(--space-3) 0 0;
+  margin: 0;
   font-size: var(--text-2xl);
-  max-width: 20ch;
-  margin-left: auto;
-  margin-right: auto;
+  text-align: left;
 }
 
 .hero-subtitulo {
-  margin: var(--space-4) auto 0;
+  margin: var(--space-4) 0 0;
   color: var(--color-muted);
   max-width: 48ch;
   font-size: var(--text-md);
+  text-align: left;
 }
 
 .hero-acoes {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.hero-metricas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
   margin-top: var(--space-6);
 }
 
-/* Em telas largas, sai do empilhado-centralizado e vira um enquadramento
-   editorial: logo de um lado, texto alinhado à esquerda do outro. */
+.hero-metrica {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hero-metrica svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.hero-metrica strong {
+  display: block;
+  font-size: var(--text-lg);
+}
+
+.hero-metrica span {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
 @media (min-width: 1024px) {
   .hero {
-    display: flex;
-    align-items: center;
-    gap: var(--space-8);
-    text-align: left;
-    padding-top: var(--space-9);
-    padding-bottom: var(--space-9);
-  }
-
-  .hero-logo-wrap {
-    flex-shrink: 0;
-  }
-
-  .hero-logo {
-    width: 180px;
-    height: 180px;
-  }
-
-  .hero-texto {
-    flex: 1;
+    min-height: 560px;
   }
 
   .hero-titulo {
+    font-size: var(--text-3xl);
     max-width: 26ch;
-    margin-left: 0;
-    margin-right: 0;
   }
+}
 
-  .hero-subtitulo {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
+@media (max-width: 480px) {
   .hero-acoes {
-    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
   }
+
+  .botao-cta {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   Simulador (teaser)
+   ============================================================ */
+.secao-simulador {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-4) var(--space-7);
+  scroll-margin-top: var(--space-4);
+}
+
+.simulador-card {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+  background: var(--color-surface);
+}
+
+.simulador-badge {
+  display: inline-block;
+  background: var(--color-accent-strong);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--space-3);
+}
+
+.simulador-titulo {
+  font-size: var(--text-lg);
+  margin: 0 0 var(--space-2);
+}
+
+.simulador-texto {
+  color: var(--color-muted);
+  margin: 0 auto;
+  max-width: 52ch;
 }
 
 .botao-cta,
@@ -319,6 +535,15 @@ a {
 
 .botao-cta:hover {
   background: var(--color-primary-hover);
+}
+
+.botao-cta--secundario {
+  background: var(--color-accent-strong);
+  color: var(--color-text);
+}
+
+.botao-cta--secundario:hover {
+  background: #8b4ff0;
 }
 
 /* Shimmer: uma faixa de luz diagonal que atravessa o botão no hover. */
@@ -780,12 +1005,19 @@ a {
 }
 
 /* ============================================================
-   Botão flutuante de pedido
+   Botões flutuantes (pedido + WhatsApp)
    ============================================================ */
-.botao-pedido {
+.botoes-flutuantes {
   position: fixed;
   bottom: var(--space-5);
   right: var(--space-5);
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.botao-pedido {
   background: var(--color-primary);
   color: var(--color-ink);
   border: none;
@@ -797,7 +1029,66 @@ a {
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-md);
   cursor: pointer;
-  z-index: 10;
+}
+
+.botao-whatsapp-flutuante {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-success);
+  color: var(--color-success-ink);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  animation: pulsar-whatsapp 2.4s ease-in-out infinite;
+}
+
+@keyframes pulsar-whatsapp {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55), var(--shadow-md);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0), var(--shadow-md);
+  }
+}
+
+.botao-whatsapp-flutuante-dica {
+  position: absolute;
+  right: calc(100% + var(--space-2));
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  font-weight: bold;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms, transform 150ms;
+  box-shadow: var(--shadow-sm);
+}
+
+.botao-whatsapp-flutuante:hover .botao-whatsapp-flutuante-dica,
+.botao-whatsapp-flutuante:focus-visible .botao-whatsapp-flutuante-dica {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+@media (max-width: 420px) {
+  .botoes-flutuantes {
+    right: var(--space-4);
+    bottom: var(--space-4);
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: var(--space-2);
+  }
 }
 
 @keyframes bounce-pedido {
@@ -1010,6 +1301,16 @@ a {
 .rodape p:first-child {
   color: var(--color-text);
   font-weight: bold;
+}
+
+.rodape-instagram a {
+  color: var(--color-accent-hover);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.rodape-instagram a:hover {
+  text-decoration: underline;
 }
 
 @media (min-width: 640px) {

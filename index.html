@@ -28,17 +28,50 @@
 
 <a class="pular-link" href="#catalogo">Pular para o catálogo</a>
 
-<header class="hero">
-  <div class="hero-logo-wrap">
-    <img class="hero-logo" src="img/logo.webp" alt="NJ TCG Store" width="140" height="140">
+<nav class="navbar" aria-label="Navegação principal">
+  <a class="navbar-marca" href="#hero">
+    <img class="navbar-logo" src="img/logo.webp" alt="" width="32" height="32">
+    <span class="navbar-nome">NJ TCG Store</span>
+  </a>
+  <ul class="navbar-links">
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#simulador">Simulador de Pacotes</a></li>
+    <li><a href="#catalogo" id="link-reinado-delta">Reinado Delta</a></li>
+    <li><a href="https://wa.me/5541988686833?text=Ol%C3%A1!%20Quero%20entrar%20no%20Grupo%20VIP%20da%20NJ%20TCG%20Store." id="link-grupo-vip" target="_blank" rel="noopener">Grupo VIP</a></li>
+  </ul>
+  <div class="navbar-busca">
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="search" id="busca-produto" placeholder="Buscar produto..." aria-label="Buscar produto no catálogo">
   </div>
-  <div class="hero-texto">
-    <p class="hero-marca">NJ TCG Store</p>
-    <h1 class="hero-titulo">Pokémon TCG original e lacrado, da loja direto para a sua coleção</h1>
-    <p class="hero-subtitulo">Catálogo atualizado, fechamento rápido pelo WhatsApp e envio para todo o Brasil — sem cadastro, sem burocracia.</p>
+</nav>
+
+<header class="hero" id="hero">
+  <div class="hero-conteudo">
+    <div class="hero-marca-linha">
+      <div class="hero-logo-wrap">
+        <img class="hero-logo" src="img/logo.webp" alt="NJ TCG Store" width="48" height="48">
+      </div>
+      <p class="hero-marca">NJ TCG Store</p>
+    </div>
+    <h1 class="hero-titulo">Pokémon TCG original e lacrado, direto para a sua coleção</h1>
     <div class="hero-acoes">
-      <a class="botao-cta" href="#catalogo">Ver catálogo</a>
-      <a class="botao-instagram" href="https://instagram.com/njtcgstore" id="link-instagram" target="_blank" rel="noopener">@njtcgstore</a>
+      <a class="botao-cta" href="#catalogo">Ver catálogo <span aria-hidden="true">→</span></a>
+      <a class="botao-cta botao-cta--secundario" href="#simulador">Testar sorte no Simulador <span aria-hidden="true">→</span></a>
+    </div>
+    <p class="hero-subtitulo">Monte seu pedido sem cadastro e feche na hora pelo WhatsApp.</p>
+    <div class="hero-metricas">
+      <div class="hero-metrica">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="13" height="18" rx="2"/><rect x="8" y="7" width="13" height="18" rx="2" fill="var(--color-bg)"/></svg>
+        <div><strong>141</strong><span>Cartas de Reinado Delta</span></div>
+      </div>
+      <div class="hero-metrica">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        <div><strong>100%</strong><span>Original e lacrado</span></div>
+      </div>
+      <div class="hero-metrica">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="14" height="11" rx="1"/><path d="M16 10h3l3 3v5h-6z"/><circle cx="6.5" cy="19.5" r="1.5"/><circle cx="17.5" cy="19.5" r="1.5"/></svg>
+        <div><strong>Envio BR</strong><span>Embalagem reforçada</span></div>
+      </div>
     </div>
   </div>
 </header>
@@ -89,11 +122,25 @@
     <div id="grade-produtos" class="grade-produtos"></div>
     <p id="catalogo-vazio" class="catalogo-vazio" hidden>Nenhum produto encontrado com esses filtros. Tente limpar algum filtro.</p>
   </section>
+
+  <section class="secao-simulador" id="simulador" aria-label="Simulador de abertura de pacotes">
+    <div class="simulador-card">
+      <span class="simulador-badge">Em breve</span>
+      <h2 class="simulador-titulo">Simulador de abertura de pacotes</h2>
+      <p class="simulador-texto">Estamos preparando uma simulação para você testar a sorte antes de comprar. Em breve por aqui!</p>
+    </div>
+  </section>
 </main>
 
-<button id="botao-pedido" class="botao-pedido" type="button">
-  Ver pedido <span id="contador-pedido">(0)</span>
-</button>
+<div class="botoes-flutuantes">
+  <button id="botao-pedido" class="botao-pedido" type="button">
+    Ver pedido <span id="contador-pedido">(0)</span>
+  </button>
+  <button id="botao-whatsapp-flutuante" class="botao-whatsapp-flutuante" type="button" aria-label="Falar no WhatsApp">
+    <span class="botao-whatsapp-flutuante-dica" aria-hidden="true">Falar no WhatsApp</span>
+    <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M16.004 3C9.096 3 3.5 8.56 3.5 15.42c0 2.54.72 4.9 1.97 6.9L4 29l6.86-1.8a12.9 12.9 0 0 0 5.14 1.06h.004c6.908 0 12.504-5.56 12.504-12.42S22.912 3 16.004 3zm7.37 17.66c-.31.87-1.8 1.67-2.48 1.77-.63.1-1.43.14-2.31-.15-.53-.17-1.2-.4-2.07-.78-3.64-1.57-6.02-5.23-6.2-5.47-.18-.24-1.48-1.97-1.48-3.76 0-1.79.94-2.67 1.27-3.03.33-.36.72-.45.96-.45.24 0 .48 0 .69.01.22.01.52-.08.81.62.31.75 1.05 2.59 1.14 2.78.1.19.16.42.03.67-.13.25-.2.4-.39.62-.19.22-.4.49-.57.66-.19.19-.39.4-.17.78.22.38 1 1.65 2.15 2.67 1.48 1.32 2.72 1.73 3.11 1.92.39.19.62.16.85-.09.23-.25 1-1.16 1.27-1.56.26-.4.53-.33.89-.2.37.13 2.35 1.11 2.75 1.31.4.2.66.3.76.47.1.17.1.96-.21 1.83z"/></svg>
+  </button>
+</div>
 
 <div id="modal-pedido" class="modal" hidden>
   <div class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-pedido">
@@ -133,6 +180,7 @@
 <footer class="rodape">
   <p id="rodape-info"></p>
   <p class="rodape-aviso" id="rodape-aviso"></p>
+  <p class="rodape-instagram"><a href="https://instagram.com/njtcgstore" id="link-instagram" target="_blank" rel="noopener">@njtcgstore</a></p>
 </footer>
 
 <script src="js/config.js"></script>

@@ -107,5 +107,19 @@
       const url = "https://wa.me/" + CONFIG.whatsappNumero + "?text=" + encodeURIComponent(mensagem);
       window.open(url, "_blank", "noopener");
     });
+
+    document.getElementById("botao-whatsapp-flutuante").addEventListener("click", () => {
+      const mensagem = "Olá! Vim pelo site e quero saber mais sobre os produtos.";
+      const url = "https://wa.me/" + CONFIG.whatsappNumero + "?text=" + encodeURIComponent(mensagem);
+      window.open(url, "_blank", "noopener");
+    });
+
+    document.getElementById("busca-produto").addEventListener("input", (evento) => {
+      Catalogo.definirBusca(evento.target.value);
+    });
+
+    document.getElementById("link-reinado-delta").addEventListener("click", () => {
+      Catalogo.definirFiltroColecao("Reinado Delta");
+    });
   });
 })();

@@ -4,6 +4,7 @@
 const Catalogo = (function () {
   const TODOS = "Todos";
   const filtroAtivo = { colecao: TODOS, idioma: TODOS, categoria: TODOS };
+  let buscaAtiva = "";
 
   function formatarPreco(valor) {
     return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -50,9 +51,22 @@ const Catalogo = (function () {
       return (
         (filtroAtivo.colecao === TODOS || produto.colecao === filtroAtivo.colecao) &&
         (filtroAtivo.idioma === TODOS || produto.idioma === filtroAtivo.idioma) &&
-        (filtroAtivo.categoria === TODOS || produto.categoria === filtroAtivo.categoria)
+        (filtroAtivo.categoria === TODOS || produto.categoria === filtroAtivo.categoria) &&
+        (buscaAtiva === "" || produto.nome.toLowerCase().includes(buscaAtiva))
       );
     });
+  }
+
+  function definirBusca(texto) {
+    buscaAtiva = texto.trim().toLowerCase();
+    renderizarGrade();
+  }
+
+  function definirFiltroColecao(valor) {
+    if (!valoresUnicos("colecao").includes(valor)) return;
+    filtroAtivo.colecao = valor;
+    renderizarFiltros();
+    renderizarGrade();
   }
 
   function criarFoto(produto) {
@@ -267,5 +281,5 @@ const Catalogo = (function () {
     injetarJsonLd();
   }
 
-  return { iniciar, renderizarGrade, formatarPreco, estaEsgotado };
+  return { iniciar, renderizarGrade, formatarPreco, estaEsgotado, definirBusca, definirFiltroColecao };
 })();
