@@ -68,19 +68,51 @@ const Catalogo = (function () {
 
     const inner = document.createElement("div");
     inner.className = "produto-tilt-inner";
+    let fotoDisponivel = Boolean(produto.img);
     if (produto.img) {
       const img = document.createElement("img");
       img.src = produto.img;
       img.alt = produto.nome + " — " + produto.colecao;
       img.loading = "lazy";
       img.addEventListener("error", () => {
+        fotoDisponivel = false;
         inner.textContent = "Foto em breve";
+        tilt.classList.remove("produto-tilt--clicavel");
+        tilt.removeAttribute("role");
+        tilt.removeAttribute("tabindex");
+        tilt.removeAttribute("aria-label");
       });
       inner.appendChild(img);
     } else {
       inner.textContent = "Foto em breve";
     }
     tilt.appendChild(inner);
+
+    if (fotoDisponivel) {
+      tilt.classList.add("produto-tilt--clicavel");
+      tilt.setAttribute("role", "button");
+      tilt.setAttribute("tabindex", "0");
+      tilt.setAttribute("aria-label", "Ampliar foto de " + produto.nome);
+
+      const abrirZoom = () => {
+        if (!fotoDisponivel) return;
+        Zoom.abrir(produto.img, produto.nome + " — " + produto.colecao);
+      };
+      tilt.addEventListener("click", abrirZoom);
+      tilt.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter" || evento.key === " ") {
+          evento.preventDefault();
+          abrirZoom();
+        }
+      });
+
+      const indicador = document.createElement("span");
+      indicador.className = "zoom-indicador";
+      indicador.setAttribute("aria-hidden", "true");
+      indicador.innerHTML =
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+      tilt.appendChild(indicador);
+    }
 
     Tilt.ativar(tilt);
     return tilt;

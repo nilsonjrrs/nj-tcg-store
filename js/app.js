@@ -46,6 +46,12 @@
     return !document.getElementById("modal-pedido").hidden;
   }
 
+  function modalAbertoAtivo() {
+    if (modalEstaAberto()) return document.getElementById("modal-pedido");
+    if (Zoom.estaAberto()) return document.getElementById("modal-zoom");
+    return null;
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     Catalogo.iniciar();
     atualizarContador();
@@ -64,17 +70,23 @@
       if (evento.target.id === "modal-pedido") fecharModal();
     });
 
+    document.getElementById("fechar-zoom").addEventListener("click", Zoom.fechar);
+    document.getElementById("modal-zoom").addEventListener("click", (evento) => {
+      if (evento.target.id === "modal-zoom") Zoom.fechar();
+    });
+
     document.addEventListener("keydown", (evento) => {
-      if (!modalEstaAberto()) return;
+      const modalAtivo = modalAbertoAtivo();
+      if (!modalAtivo) return;
 
       if (evento.key === "Escape") {
-        fecharModal();
+        if (modalAtivo.id === "modal-pedido") fecharModal();
+        else Zoom.fechar();
         return;
       }
 
       if (evento.key === "Tab") {
-        const conteudo = document.querySelector("#modal-pedido .modal-conteudo");
-        const focaveis = elementosFocaveis(conteudo);
+        const focaveis = elementosFocaveis(modalAtivo);
         if (focaveis.length === 0) return;
         const primeiro = focaveis[0];
         const ultimo = focaveis[focaveis.length - 1];
