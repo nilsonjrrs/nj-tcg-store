@@ -20,6 +20,7 @@
   --color-primary-hover: #FF9257;
   --color-accent: #9669D7;        /* roxo */
   --color-accent-hover: #A97EE2;
+  --color-accent-strong: #7C3AED; /* roxo vibrante — usado com texto branco (contraste AA) em estados ativos/pressionados */
 
   /* Cor — estados */
   --color-success: #25D366;       /* verde WhatsApp, exceção deliberada à paleta */
@@ -169,18 +170,56 @@ a {
    ============================================================ */
 .hero {
   text-align: center;
-  padding: var(--space-8) var(--space-4) var(--space-7);
+  padding: var(--space-9) var(--space-4) var(--space-7);
   max-width: var(--container-max);
   margin: 0 auto;
 }
 
+.hero-logo-wrap {
+  position: relative;
+  display: inline-block;
+  animation: flutuar-logo 6s ease-in-out infinite;
+}
+
+.hero-logo-wrap::after {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(150, 105, 215, 0.55), rgba(255, 124, 56, 0.25) 55%, transparent 75%);
+  filter: blur(6px);
+  animation: pulsar-glow 4s ease-in-out infinite;
+}
+
 .hero-logo {
+  display: block;
   width: 140px;
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--color-primary);
   box-shadow: var(--shadow-glow);
+}
+
+@keyframes flutuar-logo {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulsar-glow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
 }
 
 .hero-marca {
@@ -227,8 +266,11 @@ a {
     padding-bottom: var(--space-9);
   }
 
-  .hero-logo {
+  .hero-logo-wrap {
     flex-shrink: 0;
+  }
+
+  .hero-logo {
     width: 180px;
     height: 180px;
   }
@@ -269,12 +311,31 @@ a {
 }
 
 .botao-cta {
+  position: relative;
+  overflow: hidden;
   background: var(--color-primary);
   color: var(--color-ink);
 }
 
 .botao-cta:hover {
   background: var(--color-primary-hover);
+}
+
+/* Shimmer: uma faixa de luz diagonal que atravessa o botão no hover. */
+.botao-cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg) translateX(0);
+  transition: transform 650ms ease;
+}
+
+.botao-cta:hover::after {
+  transform: skewX(-20deg) translateX(420%);
 }
 
 .botao-instagram {
@@ -411,9 +472,9 @@ a {
 }
 
 .chip[aria-pressed="true"] {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-ink);
+  background: var(--color-accent-strong);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--color-text);
   font-weight: bold;
 }
 
@@ -459,6 +520,18 @@ a {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  animation: surgir-card 320ms ease-out both;
+}
+
+@keyframes surgir-card {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .produto-tilt {
@@ -477,6 +550,7 @@ a {
 .produto-tilt-inner {
   position: absolute;
   inset: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -496,12 +570,40 @@ a {
   object-fit: cover;
 }
 
-/* Brilho holo: um degradê cônico que segue o ponteiro, sutil o bastante
+/* Reflexo holográfico (foil) diagonal: uma faixa de luz que varre o card
+   acompanhando o ponteiro — por cima da foto, abaixo do brilho ambiente
+   e do selo de esgotado. */
+.produto-tilt::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.5) 48%,
+    rgba(150, 105, 215, 0.35) 51%,
+    rgba(255, 124, 56, 0.25) 56%,
+    transparent 64%
+  );
+  transform: translate(calc((var(--gx, 50%) - 50%) * 0.6), calc((var(--gy, 50%) - 50%) * 0.6));
+  transition: transform 300ms ease-out;
+  mix-blend-mode: overlay;
+  opacity: 0.85;
+  will-change: transform;
+}
+
+/* Brilho holo ambiente: um degradê que segue o ponteiro, sutil o bastante
    para não atrapalhar a leitura — por cima da foto/placeholder. */
 .produto-tilt::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 3;
   pointer-events: none;
   background: radial-gradient(
     circle at var(--gx) var(--gy),
@@ -515,7 +617,8 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .produto-tilt-inner {
+  .produto-tilt-inner,
+  .produto-tilt::before {
     transition: none;
   }
 }
@@ -524,6 +627,7 @@ a {
   position: absolute;
   top: var(--space-2);
   left: var(--space-2);
+  z-index: 4;
   background: var(--color-danger);
   color: var(--color-ink);
   font-size: var(--text-xs);
@@ -653,9 +757,8 @@ a {
    ============================================================ */
 .botao-pedido {
   position: fixed;
-  bottom: var(--space-4);
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: var(--space-5);
+  right: var(--space-5);
   background: var(--color-primary);
   color: var(--color-ink);
   border: none;
@@ -668,6 +771,25 @@ a {
   box-shadow: var(--shadow-md);
   cursor: pointer;
   z-index: 10;
+}
+
+@keyframes bounce-pedido {
+  0%, 100% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.18);
+  }
+  55% {
+    transform: scale(0.94);
+  }
+  80% {
+    transform: scale(1.06);
+  }
+}
+
+.botao-pedido.bounce {
+  animation: bounce-pedido 420ms ease-out;
 }
 
 /* ============================================================

@@ -160,6 +160,7 @@ const Catalogo = (function () {
       if (botaoAdicionar.disabled) return;
       Carrinho.alterar(produto.id, 1);
       atualizarQtd();
+      document.dispatchEvent(new CustomEvent("carrinho:item-adicionado"));
     });
 
     acoes.appendChild(stepper);
@@ -178,7 +179,11 @@ const Catalogo = (function () {
       vazio.hidden = false;
     } else {
       vazio.hidden = true;
-      lista.forEach((produto) => grade.appendChild(criarCard(produto)));
+      lista.forEach((produto, indice) => {
+        const card = criarCard(produto);
+        card.style.animationDelay = Math.min(indice * 30, 240) + "ms";
+        grade.appendChild(card);
+      });
     }
   }
 

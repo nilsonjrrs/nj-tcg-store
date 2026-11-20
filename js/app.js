@@ -8,6 +8,13 @@
     document.getElementById("contador-pedido").textContent = "(" + Carrinho.totalItens() + ")";
   }
 
+  function pulsarBotaoPedido() {
+    const botao = document.getElementById("botao-pedido");
+    botao.classList.remove("bounce");
+    void botao.offsetWidth; // força reflow pra poder reiniciar a animação em cliques seguidos
+    botao.classList.add("bounce");
+  }
+
   function preencherRodape() {
     const entregaTextos = CONFIG.entregaOpcoes.map((o) => o.nome).join(" ou ");
     const pagamentoTextos = CONFIG.pagamentoOpcoes.map((o) => o.nome).join(" ou ");
@@ -45,8 +52,12 @@
     preencherRodape();
 
     document.addEventListener("carrinho:alterado", atualizarContador);
+    document.addEventListener("carrinho:item-adicionado", pulsarBotaoPedido);
 
     document.getElementById("botao-pedido").addEventListener("click", abrirModal);
+    document.getElementById("botao-pedido").addEventListener("animationend", (evento) => {
+      if (evento.animationName === "bounce-pedido") evento.target.classList.remove("bounce");
+    });
     document.getElementById("fechar-modal").addEventListener("click", fecharModal);
 
     document.getElementById("modal-pedido").addEventListener("click", (evento) => {
