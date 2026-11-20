@@ -49,6 +49,7 @@
   function modalAbertoAtivo() {
     if (modalEstaAberto()) return document.getElementById("modal-pedido");
     if (Zoom.estaAberto()) return document.getElementById("modal-zoom");
+    if (BoosterUI.estaAberto()) return document.getElementById("modal-booster");
     return null;
   }
 
@@ -81,7 +82,8 @@
 
       if (evento.key === "Escape") {
         if (modalAtivo.id === "modal-pedido") fecharModal();
-        else Zoom.fechar();
+        else if (modalAtivo.id === "modal-zoom") Zoom.fechar();
+        else BoosterUI.fechar();
         return;
       }
 
@@ -118,19 +120,17 @@
       Catalogo.definirBusca(evento.target.value);
     });
 
-    document.getElementById("botao-abrir-pacote").addEventListener("click", SimuladorUI.abrirPacote);
-    document.getElementById("pacote-virtual").addEventListener("click", SimuladorUI.abrirPacote);
-    document.getElementById("pacote-virtual").addEventListener("keydown", (evento) => {
-      if (evento.key === "Enter" || evento.key === " ") {
-        evento.preventDefault();
-        SimuladorUI.abrirPacote();
-      }
+    BoosterUI.iniciar();
+    document.getElementById("botao-abrir-pacote").addEventListener("click", BoosterUI.abrir);
+    document.addEventListener("simulador:abrir", BoosterUI.abrir);
+    document.getElementById("fechar-booster").addEventListener("click", BoosterUI.fechar);
+    document.getElementById("modal-booster").addEventListener("click", (evento) => {
+      if (evento.target.id === "modal-booster") BoosterUI.fechar();
     });
-    document.getElementById("botao-virar-todas").addEventListener("click", SimuladorUI.virarTodas);
-    document.getElementById("botao-abrir-outro").addEventListener("click", SimuladorUI.abrirOutro);
 
-    document.getElementById("comprar-booster-real").addEventListener("click", (evento) => {
+    document.getElementById("booster-comprar").addEventListener("click", (evento) => {
       evento.preventDefault();
+      BoosterUI.fechar();
       Catalogo.limparFiltros();
       requestAnimationFrame(() => {
         const alvo = document.getElementById("produto-reinado-delta-booster-avulso");

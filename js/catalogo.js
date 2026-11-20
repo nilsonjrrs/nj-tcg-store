@@ -170,6 +170,18 @@ const Catalogo = (function () {
     }
     card.appendChild(precoLinha);
 
+    if (produto.id === "reinado-delta-booster-avulso") {
+      const botaoSimulador = document.createElement("button");
+      botaoSimulador.type = "button";
+      botaoSimulador.className = "produto-link-simulador";
+      botaoSimulador.innerHTML =
+        '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M3 12h18"/><path d="M12 8v13"/><path d="M12 8c-1.5-4-6-4-6-1s4 1 6 1Z"/><path d="M12 8c1.5-4 6-4 6-1s-4 1-6 1Z"/></svg> Abrir booster virtual';
+      botaoSimulador.addEventListener("click", () => {
+        document.dispatchEvent(new CustomEvent("simulador:abrir"));
+      });
+      card.appendChild(botaoSimulador);
+    }
+
     const acoes = document.createElement("div");
     acoes.className = "produto-acoes";
 

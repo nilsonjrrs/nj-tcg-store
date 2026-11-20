@@ -33,10 +33,10 @@ const Simulador = (function () {
 
   function sortearHit(jaSorteadas) {
     const roll = Math.random();
-    if (roll < 0.15 && sir.length) {
+    if (roll < 0.18 && sir.length) {
       return sortear(sir, 1)[0];
     }
-    if (roll < 0.5 && irfa.length) {
+    if (roll < 0.55 && irfa.length) {
       return sortear(irfa, 1)[0];
     }
     const poolEx = baseEx.filter((c) => !jaSorteadas.includes(c));
