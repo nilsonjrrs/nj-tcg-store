@@ -29,7 +29,7 @@ const PRODUTOS = [
     preco: 14.90,
     precoPix: null,
     estoque: null,
-    img: ""
+    img: "img/reinado-delta-booster-avulso.webp"
   },
   {
     sku: "RD-TP",
@@ -41,7 +41,7 @@ const PRODUTOS = [
     preco: 42.90,
     precoPix: null,
     estoque: null,
-    img: ""
+    img: "img/reinado-delta-triple-pack.webp"
   },
   {
     sku: "RD-QP",
@@ -53,7 +53,7 @@ const PRODUTOS = [
     preco: 54.90,
     precoPix: null,
     estoque: null,
-    img: ""
+    img: "img/reinado-delta-quadpack.webp"
   },
   {
     sku: "RD-MBB",
@@ -65,7 +65,7 @@ const PRODUTOS = [
     preco: 229.90,
     precoPix: null,
     estoque: null,
-    img: ""
+    img: "img/reinado-delta-mini-booster-box.png"
   },
   {
     sku: "RD-BB",
@@ -77,7 +77,7 @@ const PRODUTOS = [
     preco: 419.90,
     precoPix: 399.90,
     estoque: null,
-    img: ""
+    img: "img/reinado-delta-booster-box.webp"
   },
   {
     sku: "C30-BD",

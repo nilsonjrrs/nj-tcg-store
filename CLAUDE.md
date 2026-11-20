@@ -29,7 +29,7 @@ Em `.claude/skills/`: `ecommerce-visual-designer`, `digital-marketing-tcg`, `sen
 
 ## Pendências
 
-- [ ] **Fotos dos produtos**: nenhum produto tem foto ainda (Nilson vai fotografar). Quando tiver, colocar em `img/` e preencher o campo `img` de cada produto em `js/produtos.js`. O efeito de brilho/tilt já funciona nos cards e vale também pra foto real.
+- [ ] **Fotos dos produtos da Celebração 30 Anos** (Blister Duplo, Triple Pack, Box com Pôster, Box Greninja, ETB, Mini Tin, Fichário): ainda sem foto. Os 5 produtos da Reinado Delta já têm foto real (ver abaixo). Mesmo processo: colocar o arquivo em `img/` e preencher o campo `img` em `js/produtos.js`.
 - [ ] **Confirmar local exato de "retirada local"** em Curitiba (bairro/ponto de referência) — hoje o texto em `js/config.js` está genérico ("combinamos pelo WhatsApp").
 - [ ] **Confirmar percentual do acréscimo no cartão** — hoje só diz "com acréscimo de taxa", sem número, em `js/config.js`.
 - [ ] **Números de estoque por produto**, se e quando o Nilson quiser ativar o controle (travar compra ao chegar a 0) — hoje todos os produtos têm `estoque: null`.
@@ -45,4 +45,5 @@ Em `.claude/skills/`: `ecommerce-visual-designer`, `digital-marketing-tcg`, `sen
 - [x] Corrigidos 2 bugs reais durante o teste: modal clicável mesmo escondido (`.modal[hidden]`) e cards de 2 colunas estourando a tela em 390px (catálogo passou a começar em 1 coluna no mobile).
 - [x] Contraste de texto corrigido: botões com fundo laranja/roxo usam texto escuro (`--color-ink`) em vez de branco, para atingir WCAG AA (o branco sobre essas cores ficava abaixo do mínimo).
 - [x] Fundo decorativo (glow + grão) adicionado e depois reduzido bem mais sutil, a pedido do Nilson ("mais minimalista"). Não usa motivo de carta/foil de propósito — a loja vende produtos selados, não cartas avulsas.
+- [x] Fotos reais adicionadas para os 5 produtos da coleção Reinado Delta (Booster Avulso, Triple Pack, Quadpack, Mini Booster Box, Booster Box) — arquivos em `img/reinado-delta-*`.
 - [x] Passada de minimalismo/profissionalização: ícones emoji dos diferenciais trocados por índice numérico (01–04) com regra fina, textos de hero e diferenciais reescritos com tom mais direto/profissional, hero virou um enquadramento editorial de duas colunas no desktop (logo + texto lado a lado, alinhado à esquerda) em vez de tudo empilhado e centralizado.
