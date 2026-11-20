@@ -311,23 +311,110 @@ a {
    ============================================================ */
 .hero {
   position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   min-height: 440px;
   padding: var(--space-7) var(--space-4);
   background-color: var(--color-bg);
-  background-image:
-    linear-gradient(90deg, rgba(23, 18, 31, 0.92) 0%, rgba(23, 18, 31, 0.8) 42%, rgba(23, 18, 31, 0.35) 75%, rgba(23, 18, 31, 0.05) 100%),
-    url("../img/hero-bg.jpg");
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("../img/hero-bg.jpg");
   background-size: cover;
   background-position: right center;
   background-repeat: no-repeat;
+  transform-origin: 85% 50%;
+  animation: hero-zoom 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: linear-gradient(90deg, rgba(23, 18, 31, 0.92) 0%, rgba(23, 18, 31, 0.8) 42%, rgba(23, 18, 31, 0.35) 75%, rgba(23, 18, 31, 0.05) 100%);
+}
+
+/* "Estrelas cadentes" sutis sobre a arte do hero — só decoração, chamam
+   atenção sem interferir na leitura do texto (ficam na metade direita). */
+.hero-brilhos {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-brilho {
+  position: absolute;
+  width: 2px;
+  height: 70px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+  transform: rotate(135deg);
+  opacity: 0;
+  animation: cair-estrela 7s linear infinite;
+}
+
+.hero-brilho:nth-child(1) {
+  top: 6%;
+  right: 32%;
+  animation-delay: 0s;
+}
+
+.hero-brilho:nth-child(2) {
+  top: 16%;
+  right: 14%;
+  animation-delay: 2.3s;
+}
+
+.hero-brilho:nth-child(3) {
+  top: 2%;
+  right: 48%;
+  animation-delay: 4.6s;
+}
+
+@keyframes cair-estrela {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(135deg);
+  }
+  4% {
+    opacity: 1;
+  }
+  22% {
+    opacity: 0;
+    transform: translate(-90px, 90px) rotate(135deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-90px, 90px) rotate(135deg);
+  }
 }
 
 .hero-conteudo {
+  position: relative;
+  z-index: 2;
   max-width: 620px;
   margin: 0 auto;
   width: 100%;
+}
+
+.hero-titulo-destaque {
+  color: var(--color-primary);
 }
 
 .hero-marca-linha {
@@ -428,22 +515,34 @@ a {
 .hero-metrica {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
-.hero-metrica svg {
+.hero-metrica-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 124, 56, 0.14);
   color: var(--color-primary);
   flex-shrink: 0;
 }
 
-.hero-metrica strong {
-  display: block;
+.hero-metrica-texto {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-metrica-texto strong {
   font-size: var(--text-lg);
 }
 
-.hero-metrica span {
-  display: block;
-  font-size: var(--text-xs);
+.hero-metrica-rotulo {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--color-muted);
 }
 
@@ -453,7 +552,8 @@ a {
   }
 
   .hero-titulo {
-    font-size: var(--text-3xl);
+    font-size: 44px;
+    line-height: 1.12;
     max-width: 26ch;
   }
 }
@@ -516,6 +616,7 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--space-2);
   min-height: 44px;
   padding: 0 var(--space-5);
   border-radius: var(--radius-pill);
@@ -531,6 +632,7 @@ a {
   overflow: hidden;
   background: var(--color-primary);
   color: var(--color-ink);
+  box-shadow: 0 6px 20px rgba(255, 124, 56, 0.35);
 }
 
 .botao-cta:hover {
@@ -540,6 +642,7 @@ a {
 .botao-cta--secundario {
   background: var(--color-accent-strong);
   color: var(--color-text);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
 }
 
 .botao-cta--secundario:hover {
