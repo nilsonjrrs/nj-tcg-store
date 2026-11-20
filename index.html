@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NJ TCG Store — Pokémon TCG em Curitiba</title>
+<meta name="description" content="Pokémon TCG original e lacrado. Monte seu pedido e finalize pelo WhatsApp.">
+<link rel="icon" href="img/logo.webp">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topo">
+  <img class="logo" src="img/logo.webp" alt="NJ TCG Store">
+  <h1>NJ TCG Store</h1>
+  <p class="subtitulo">Pokémon TCG original e lacrado</p>
+  <a class="botao-instagram" href="#" id="link-instagram">@njtcgstore</a>
+</header>
+
+<main id="catalogo"></main>
+
+<button id="botao-pedido" class="botao-pedido" type="button">
+  Ver pedido <span id="contador-pedido">(0)</span>
+</button>
+
+<div id="modal-pedido" class="modal" hidden>
+  <div class="modal-conteudo">
+    <div class="modal-cabecalho">
+      <h2>Seu pedido</h2>
+      <button id="fechar-modal" type="button" aria-label="Fechar">&times;</button>
+    </div>
+    <div id="lista-pedido" class="lista-pedido"></div>
+    <p id="pedido-vazio" class="pedido-vazio" hidden>Seu pedido está vazio. Adicione produtos no catálogo.</p>
+    <div class="modal-total">
+      <span>Total</span>
+      <strong id="total-pedido">R$ 0,00</strong>
+    </div>
+    <div class="modal-info">
+      <p><strong>Pagamento:</strong> <span id="info-pagamento"></span></p>
+      <p><strong>Entrega:</strong> <span id="info-entrega"></span></p>
+    </div>
+    <button id="botao-whatsapp" class="botao-whatsapp" type="button">Finalizar pelo WhatsApp</button>
+  </div>
+</div>
+
+<footer class="rodape">
+  <p id="rodape-info"></p>
+  <p class="rodape-aviso" id="rodape-aviso"></p>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/produtos.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
