@@ -62,13 +62,6 @@ const Catalogo = (function () {
     renderizarGrade();
   }
 
-  function definirFiltroColecao(valor) {
-    if (!valoresUnicos("colecao").includes(valor)) return;
-    filtroAtivo.colecao = valor;
-    renderizarFiltros();
-    renderizarGrade();
-  }
-
   function criarFoto(produto) {
     const tilt = document.createElement("div");
     tilt.className = "produto-tilt";
@@ -281,5 +274,5 @@ const Catalogo = (function () {
     injetarJsonLd();
   }
 
-  return { iniciar, renderizarGrade, formatarPreco, estaEsgotado, definirBusca, definirFiltroColecao };
+  return { iniciar, renderizarGrade, formatarPreco, estaEsgotado, definirBusca };
 })();

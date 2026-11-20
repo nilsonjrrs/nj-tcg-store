@@ -117,9 +117,5 @@
     document.getElementById("busca-produto").addEventListener("input", (evento) => {
       Catalogo.definirBusca(evento.target.value);
     });
-
-    document.getElementById("link-reinado-delta").addEventListener("click", () => {
-      Catalogo.definirFiltroColecao("Reinado Delta");
-    });
   });
 })();

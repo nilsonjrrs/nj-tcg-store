@@ -309,14 +309,19 @@ a {
 /* ============================================================
    Hero
    ============================================================ */
-.hero {
+.hero-fundo {
   position: relative;
   overflow: hidden;
+  background-color: var(--color-bg);
+}
+
+.hero {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   min-height: 440px;
-  padding: var(--space-7) var(--space-4);
-  background-color: var(--color-bg);
+  padding: var(--space-7) var(--space-5);
 }
 
 .hero-bg {
@@ -406,10 +411,7 @@ a {
 }
 
 .hero-conteudo {
-  position: relative;
-  z-index: 2;
   max-width: 620px;
-  margin: 0 auto;
   width: 100%;
 }
 
