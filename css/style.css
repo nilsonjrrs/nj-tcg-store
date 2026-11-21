@@ -1701,6 +1701,47 @@ a {
   --gy: 50%;
 }
 
+/* Padrão de enquadramento do catálogo: todo produto com foto fica numa
+   moldura quadrada com o mesmo "selo" de fundo (raios saindo do centro,
+   nas cores roxo/laranja da marca) e a foto inteira, sem cortar nenhuma
+   informação (object-fit:contain) — só os produtos sem foto ainda ("Foto
+   em breve") ficam no fundo escuro plano, sem a moldura clara. Escopado a
+   `.produto-card` (grade do catálogo) pra não mudar o visual das cartas
+   reveladas no simulador de booster, que reaproveitam .produto-tilt com
+   um clima propositalmente mais escuro/dramático. */
+.produto-card .produto-tilt {
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(150, 105, 215, 0.16) 5deg,
+      transparent 12deg,
+      transparent 42deg,
+      rgba(255, 124, 56, 0.14) 47deg,
+      transparent 54deg,
+      transparent 87deg,
+      rgba(150, 105, 215, 0.16) 92deg,
+      transparent 99deg,
+      transparent 132deg,
+      rgba(255, 124, 56, 0.14) 137deg,
+      transparent 144deg,
+      transparent 177deg,
+      rgba(150, 105, 215, 0.16) 182deg,
+      transparent 189deg,
+      transparent 222deg,
+      rgba(255, 124, 56, 0.14) 227deg,
+      transparent 234deg,
+      transparent 267deg,
+      rgba(150, 105, 215, 0.16) 272deg,
+      transparent 279deg,
+      transparent 312deg,
+      rgba(255, 124, 56, 0.14) 317deg,
+      transparent 324deg
+    ),
+    radial-gradient(60% 60% at 50% 50%, rgba(150, 105, 215, 0.22), transparent 72%),
+    var(--color-surface-2);
+}
+
 .produto-tilt-inner {
   position: absolute;
   inset: 0;
@@ -1718,10 +1759,19 @@ a {
   will-change: transform;
 }
 
+/* Com foto real, no catálogo: a imagem inteira (sem cortes) sobre uma
+   "chapa" clara, do jeito que a arte oficial do produto já vem (fundo
+   branco/estúdio) — mantém a moldura decorativa visível só na margem ao
+   redor. Escopado a `.produto-card` pelo mesmo motivo acima. */
+.produto-card .produto-tilt-inner:has(img) {
+  padding: var(--space-4);
+  background: radial-gradient(85% 85% at 50% 42%, #fdfcff 0%, #ece8f5 100%);
+}
+
 .produto-tilt-inner img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* Reflexo holográfico (foil) diagonal: uma faixa de luz que varre o card

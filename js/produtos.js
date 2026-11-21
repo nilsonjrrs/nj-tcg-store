@@ -89,7 +89,7 @@ const PRODUTOS = [
     preco: 119.90,
     precoPix: null,
     estoque: null,
-    img: ""
+    img: "img/celebracao30-blister-duplo.jpg"
   },
   {
     sku: "C30-TP",
@@ -101,7 +101,7 @@ const PRODUTOS = [
     preco: 179.90,
     precoPix: null,
     estoque: null,
-    img: ""
+    img: "img/celebracao30-triple-pack.jpg"
   },
   {
     sku: "C30-BP",
@@ -113,7 +113,7 @@ const PRODUTOS = [
     preco: 209.90,
     precoPix: null,
     estoque: null,
-    img: ""
+    img: "img/celebracao30-box-poster.jpg"
   },
   {
     sku: "C30-BG",
@@ -137,7 +137,7 @@ const PRODUTOS = [
     preco: 649.90,
     precoPix: null,
     estoque: null,
-    img: ""
+    img: "img/celebracao30-etb.jpg"
   },
   {
     sku: "C30-MT-EN",
