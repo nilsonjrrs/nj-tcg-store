@@ -533,7 +533,7 @@ a {
 
 @media (min-width: 1024px) {
   .hero {
-    min-height: 560px;
+    min-height: 600px;
   }
 
   .hero-titulo {
@@ -551,11 +551,31 @@ a {
     pointer-events: none;
   }
 
+  /* Cada carta é arrastável (ver js/hero-cartas.js): left/top em % são
+     atualizados direto no style inline durante o arraste, sobrescrevendo
+     a posição-base de .hero-carta--N (maior especificidade do inline). O
+     rotate/centralização continuam vindo da classe, só a posição muda. */
   .hero-carta {
     position: absolute;
-    width: 108px;
+    width: 170px;
     pointer-events: auto;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+    cursor: grab;
+    touch-action: none;
+    filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.5));
+  }
+
+  .hero-carta.arrastando {
+    cursor: grabbing;
+    z-index: 5;
+    filter: drop-shadow(0 20px 38px rgba(0, 0, 0, 0.65));
+  }
+
+  .hero-carta.arrastando .hero-carta-tilt {
+    transform: scale(1.08);
+  }
+
+  .hero-carta-tilt {
+    transition: transform 150ms ease-out;
   }
 
   .hero-carta-flutuante {
@@ -563,36 +583,40 @@ a {
     animation-delay: var(--flutuar-atraso, 0ms);
   }
 
+  .hero-carta.arrastando .hero-carta-flutuante {
+    animation-play-state: paused;
+  }
+
   .hero-carta--1 {
-    left: 61%;
-    top: 18%;
-    width: 128px;
-    transform: translate(-50%, -50%) rotate(-7deg);
+    left: 58%;
+    top: 24%;
+    width: 210px;
+    transform: translate(-50%, -50%) rotate(-6deg);
   }
 
   .hero-carta--2 {
-    left: 54%;
-    top: 62%;
-    transform: translate(-50%, -50%) rotate(6deg);
+    left: 50%;
+    top: 68%;
+    transform: translate(-50%, -50%) rotate(7deg);
   }
 
   .hero-carta--3 {
-    left: 75%;
-    top: 40%;
-    transform: translate(-50%, -50%) rotate(-4deg);
+    left: 74%;
+    top: 44%;
+    transform: translate(-50%, -50%) rotate(-5deg);
   }
 
   .hero-carta--4 {
     left: 85%;
-    top: 68%;
-    transform: translate(-50%, -50%) rotate(9deg);
+    top: 72%;
+    transform: translate(-50%, -50%) rotate(10deg);
   }
 
   .hero-carta--5 {
-    left: 90%;
-    top: 22%;
-    width: 92px;
-    transform: translate(-50%, -50%) rotate(-10deg);
+    left: 91%;
+    top: 26%;
+    width: 150px;
+    transform: translate(-50%, -50%) rotate(-11deg);
   }
 }
 
