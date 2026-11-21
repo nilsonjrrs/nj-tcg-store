@@ -1,15 +1,17 @@
-// Modal de pedido: lista de itens, escolha de entrega/pagamento e montagem
-// da mensagem final enviada para o WhatsApp.
+// Pedido (o "carrinho" da loja, #modal-pedido): itens com foto e seletor de
+// quantidade, subtotal, escolha de entrega/pagamento e a mensagem final do
+// WhatsApp. Não existe checkout nem pagamento online: frete, estoque e
+// pagamento são confirmados na conversa.
 const Pedido = (function () {
   let entregaSelecionada = CONFIG.entregaOpcoes[0].id;
   let pagamentoSelecionado = CONFIG.pagamentoOpcoes[0].id;
+  let ultimoFoco = null;
 
-  function formatarPreco(valor) {
-    return Catalogo.formatarPreco(valor);
-  }
+  const el = (id) => document.getElementById(id);
+  const formatarPreco = (valor) => Catalogo.formatarPreco(valor);
 
   function renderizarOpcoes(containerId, opcoes, selecionadoId, aoSelecionar) {
-    const container = document.getElementById(containerId);
+    const container = el(containerId);
     container.innerHTML = "";
     opcoes.forEach((opcao) => {
       const botao = document.createElement("button");
@@ -25,54 +27,88 @@ const Pedido = (function () {
     });
   }
 
-  function renderizarLista() {
-    const lista = document.getElementById("lista-pedido");
-    const vazio = document.getElementById("pedido-vazio");
-    const itens = Carrinho.itens();
-    lista.innerHTML = "";
+  function criarItem({ produto, quantidade }) {
+    const li = document.createElement("li");
+    li.className = "pedido-item";
 
-    if (itens.length === 0) {
-      vazio.hidden = false;
-    } else {
-      vazio.hidden = true;
-      itens.forEach(({ produto, quantidade }) => {
-        const linha = document.createElement("div");
-        linha.className = "item-pedido";
-
-        const nome = document.createElement("span");
-        nome.className = "item-nome";
-        nome.textContent = quantidade + "x " + produto.nome + " — " + formatarPreco(produto.preco * quantidade);
-
-        const remover = document.createElement("button");
-        remover.className = "item-remover";
-        remover.type = "button";
-        remover.textContent = "×";
-        remover.setAttribute("aria-label", "Remover " + produto.nome);
-        remover.addEventListener("click", () => {
-          Carrinho.definirQuantidade(produto.id, 0);
-          document.dispatchEvent(new CustomEvent("carrinho:alterado"));
-          renderizar();
-          Catalogo.renderizarGrade();
-        });
-
-        linha.appendChild(nome);
-        linha.appendChild(remover);
-        lista.appendChild(linha);
-      });
+    const foto = document.createElement("div");
+    foto.className = "pedido-item-foto";
+    if (produto.img) {
+      const img = document.createElement("img");
+      img.src = produto.img;
+      img.alt = "";
+      img.addEventListener("error", () => img.remove());
+      foto.appendChild(img);
     }
 
-    document.getElementById("total-pedido").textContent = formatarPreco(Carrinho.totalPreco());
+    const nome = document.createElement("p");
+    nome.className = "pedido-item-nome";
+    nome.textContent = produto.nome;
+    const dados = document.createElement("small");
+    dados.textContent = produto.colecao + ", " + produto.idioma.toLowerCase() + ". " + formatarPreco(produto.preco) + " cada";
+    nome.appendChild(dados);
+
+    const remover = document.createElement("button");
+    remover.type = "button";
+    remover.className = "pedido-item-remover";
+    remover.textContent = "Remover";
+    remover.setAttribute("aria-label", "Remover " + produto.nome + " do pedido");
+    remover.addEventListener("click", () => {
+      Catalogo.alterarQuantidade(produto, -quantidade);
+      el("fechar-modal").focus(); // o botão clicado some junto com a linha
+    });
+
+    const stepper = document.createElement("div");
+    stepper.className = "stepper";
+    stepper.setAttribute("role", "group");
+    stepper.setAttribute("aria-label", "Quantidade de " + produto.nome);
+    const passo = (rotulo, texto, delta) => {
+      const botao = document.createElement("button");
+      botao.type = "button";
+      botao.textContent = texto;
+      botao.setAttribute("aria-label", rotulo);
+      botao.dataset.delta = delta;
+      botao.addEventListener("click", () => {
+        Catalogo.alterarQuantidade(produto, delta);
+        // a lista é redesenhada: devolve o foco pro mesmo botão da mesma linha
+        const mesmo = document.querySelector('.pedido-item[data-id="' + produto.id + '"] [data-delta="' + delta + '"]');
+        (mesmo || el("fechar-modal")).focus();
+      });
+      return botao;
+    };
+    const valor = document.createElement("output");
+    valor.textContent = quantidade;
+    stepper.append(passo("Diminuir", "−", -1), valor, passo("Aumentar", "+", 1));
+
+    const total = document.createElement("span");
+    total.className = "pedido-item-total";
+    total.textContent = formatarPreco(produto.preco * quantidade);
+
+    li.dataset.id = produto.id;
+    li.append(foto, nome, remover, stepper, total);
+    return li;
   }
 
   function renderizar() {
-    renderizarLista();
+    const itens = Carrinho.itens();
+    const lista = el("lista-pedido");
+    lista.innerHTML = "";
+    itens.forEach((item) => lista.appendChild(criarItem(item)));
+
+    const vazio = itens.length === 0;
+    el("pedido-vazio").hidden = !vazio;
+    el("pedido-entrega").hidden = vazio;
+    el("pedido-pagamento").hidden = vazio;
+    el("botao-whatsapp").disabled = vazio;
+    el("total-pedido").textContent = formatarPreco(Carrinho.totalPreco());
+
     renderizarOpcoes("opcoes-entrega", CONFIG.entregaOpcoes, entregaSelecionada, (id) => {
       entregaSelecionada = id;
     });
     renderizarOpcoes("opcoes-pagamento", CONFIG.pagamentoOpcoes, pagamentoSelecionado, (id) => {
       pagamentoSelecionado = id;
     });
-    document.getElementById("botao-whatsapp").disabled = Carrinho.itens().length === 0;
+    el("entrega-detalhe").textContent = CONFIG.entregaOpcoes.find((o) => o.id === entregaSelecionada).detalhe;
   }
 
   function montarMensagem() {
@@ -94,8 +130,43 @@ const Pedido = (function () {
   }
 
   function abrir() {
+    ultimoFoco = document.activeElement;
     renderizar();
+    el("modal-pedido").hidden = false;
+    el("fechar-modal").focus();
   }
 
-  return { abrir, renderizar, montarMensagem };
+  function fechar() {
+    el("modal-pedido").hidden = true;
+    if (ultimoFoco && document.contains(ultimoFoco)) ultimoFoco.focus();
+  }
+
+  function estaAberto() {
+    return !el("modal-pedido").hidden;
+  }
+
+  function finalizar() {
+    if (Carrinho.itens().length === 0) return;
+    const url = "https://wa.me/" + CONFIG.whatsappNumero + "?text=" + encodeURIComponent(montarMensagem());
+    window.open(url, "_blank", "noopener");
+  }
+
+  function iniciar() {
+    el("botao-pedido").addEventListener("click", abrir);
+    el("fechar-modal").addEventListener("click", fechar);
+    el("continuar-comprando").addEventListener("click", fechar);
+    el("pedido-ver-catalogo").addEventListener("click", () => {
+      fechar();
+      el("catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    el("modal-pedido").addEventListener("click", (evento) => {
+      if (evento.target.id === "modal-pedido") fechar();
+    });
+    el("botao-whatsapp").addEventListener("click", finalizar);
+    document.addEventListener("carrinho:alterado", () => {
+      if (estaAberto()) renderizar();
+    });
+  }
+
+  return { iniciar, abrir, fechar, estaAberto, renderizar, montarMensagem };
 })();

@@ -1,99 +1,95 @@
-// Ponto de entrada: liga catálogo, carrinho e pedido aos elementos da página,
-// cuida do contador flutuante, do rodapé e da acessibilidade do modal
-// (fechar com Esc, devolver foco, prender o Tab dentro do modal aberto).
+// Ponto de entrada: inicia os módulos, mantém o contador do pedido e o
+// aviso rápido, preenche textos que vêm de js/config.js e cuida da
+// acessibilidade das janelas (fechar com Esc e prender o Tab dentro da
+// janela aberta).
 (function () {
-  let ultimoFocoAntesDoModal = null;
+  const el = (id) => document.getElementById(id);
+
+  // Da mais "de cima" pra mais "de baixo": a primeira aberta é a que recebe Esc/Tab.
+  const JANELAS = [
+    { elemento: () => el("modal-zoom"), aberta: () => Zoom.estaAberto(), fechar: () => Zoom.fechar() },
+    { elemento: () => el("modal-booster"), aberta: () => BoosterUI.estaAberto(), fechar: () => BoosterUI.fechar() },
+    { elemento: () => el("modal-produto"), aberta: () => ProdutoDetalhe.estaAberto(), fechar: () => ProdutoDetalhe.fechar() },
+    { elemento: () => el("modal-pedido"), aberta: () => Pedido.estaAberto(), fechar: () => Pedido.fechar() },
+    { elemento: () => el("filtros"), aberta: () => Catalogo.filtrosAbertos(), fechar: () => Catalogo.fecharFiltros() },
+  ];
 
   function atualizarContador() {
-    document.getElementById("contador-pedido").textContent = "(" + Carrinho.totalItens() + ")";
+    const total = Carrinho.totalItens();
+    const contador = el("contador-pedido");
+    contador.textContent = total;
+    contador.dataset.vazio = String(total === 0);
+    el("botao-pedido").setAttribute("aria-label", total === 0 ? "Pedido vazio" : "Abrir pedido, " + total + (total === 1 ? " item" : " itens"));
   }
 
   function pulsarBotaoPedido() {
-    const botao = document.getElementById("botao-pedido");
+    const botao = el("botao-pedido");
     botao.classList.remove("bounce");
-    void botao.offsetWidth; // força reflow pra poder reiniciar a animação em cliques seguidos
+    void botao.offsetWidth; // força reflow pra reiniciar a animação em cliques seguidos
     botao.classList.add("bounce");
   }
 
-  function preencherRodape() {
-    const entregaTextos = CONFIG.entregaOpcoes.map((o) => o.nome).join(" ou ");
-    const pagamentoTextos = CONFIG.pagamentoOpcoes.map((o) => o.nome).join(" ou ");
-    document.getElementById("rodape-info").textContent =
-      "Pagamento: " + pagamentoTextos + " • Entrega: " + entregaTextos;
-    document.getElementById("rodape-aviso").textContent = CONFIG.avisoPrecos;
+  let avisoTimer = null;
+  function mostrarAviso(evento) {
+    const aviso = el("aviso");
+    aviso.textContent = evento.detail.texto;
+    aviso.dataset.tipo = evento.detail.tipo;
+    aviso.hidden = false;
+    clearTimeout(avisoTimer);
+    avisoTimer = setTimeout(() => {
+      aviso.hidden = true;
+    }, evento.detail.tipo === "erro" ? 5000 : 2600);
+  }
+
+  function preencherTextosDaLoja() {
+    const entrega = CONFIG.entregaOpcoes.map((o) => o.nome).join(" ou ");
+    const pagamento = CONFIG.pagamentoOpcoes.map((o) => o.nome).join(" ou ");
+    el("passo-entrega").textContent = "Entrega: " + entrega + ". Pagamento: " + pagamento + ".";
+    el("rodape-info").textContent = "Pagamento: " + pagamento + ". Entrega: " + entrega + ".";
+    el("rodape-aviso").textContent = CONFIG.avisoPrecos;
+    const numero = CONFIG.whatsappNumero.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+    const whats = el("rodape-whatsapp");
+    whats.textContent = numero;
+    whats.href = "https://wa.me/" + CONFIG.whatsappNumero;
   }
 
   function elementosFocaveis(container) {
-    return Array.from(
-      container.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')
-    ).filter((el) => !el.disabled && el.offsetParent !== null);
-  }
-
-  function abrirModal() {
-    ultimoFocoAntesDoModal = document.activeElement;
-    Pedido.abrir();
-    const modal = document.getElementById("modal-pedido");
-    modal.hidden = false;
-    document.getElementById("fechar-modal").focus();
-  }
-
-  function fecharModal() {
-    document.getElementById("modal-pedido").hidden = true;
-    if (ultimoFocoAntesDoModal) ultimoFocoAntesDoModal.focus();
-  }
-
-  function modalEstaAberto() {
-    return !document.getElementById("modal-pedido").hidden;
-  }
-
-  function modalAbertoAtivo() {
-    if (modalEstaAberto()) return document.getElementById("modal-pedido");
-    if (Zoom.estaAberto()) return document.getElementById("modal-zoom");
-    if (BoosterUI.estaAberto()) return document.getElementById("modal-booster");
-    return null;
+    return Array.from(container.querySelectorAll('button, a[href], input, select, [tabindex]:not([tabindex="-1"])')).filter(
+      (item) => !item.disabled && item.offsetParent !== null
+    );
   }
 
   document.addEventListener("DOMContentLoaded", () => {
     Catalogo.iniciar();
+    ProdutoDetalhe.iniciar();
+    Pedido.iniciar();
     atualizarContador();
-    preencherRodape();
+    preencherTextosDaLoja();
     HeroCartas.montar();
 
     document.addEventListener("carrinho:alterado", atualizarContador);
     document.addEventListener("carrinho:item-adicionado", pulsarBotaoPedido);
+    document.addEventListener("loja:aviso", mostrarAviso);
 
-    document.getElementById("botao-pedido").addEventListener("click", abrirModal);
-    document.getElementById("botao-pedido").addEventListener("animationend", (evento) => {
-      if (evento.animationName === "bounce-pedido") evento.target.classList.remove("bounce");
-    });
-    document.getElementById("fechar-modal").addEventListener("click", fecharModal);
-
-    document.getElementById("modal-pedido").addEventListener("click", (evento) => {
-      if (evento.target.id === "modal-pedido") fecharModal();
-    });
-
-    document.getElementById("fechar-zoom").addEventListener("click", Zoom.fechar);
-    document.getElementById("modal-zoom").addEventListener("click", (evento) => {
+    el("fechar-zoom").addEventListener("click", Zoom.fechar);
+    el("modal-zoom").addEventListener("click", (evento) => {
       if (evento.target.id === "modal-zoom") Zoom.fechar();
     });
 
     document.addEventListener("keydown", (evento) => {
-      const modalAtivo = modalAbertoAtivo();
-      if (!modalAtivo) return;
+      const janela = JANELAS.find((j) => j.aberta());
+      if (!janela) return;
 
       if (evento.key === "Escape") {
-        if (modalAtivo.id === "modal-pedido") fecharModal();
-        else if (modalAtivo.id === "modal-zoom") Zoom.fechar();
-        else BoosterUI.fechar();
+        janela.fechar();
         return;
       }
 
       if (evento.key === "Tab") {
-        const focaveis = elementosFocaveis(modalAtivo);
+        const focaveis = elementosFocaveis(janela.elemento());
         if (focaveis.length === 0) return;
         const primeiro = focaveis[0];
         const ultimo = focaveis[focaveis.length - 1];
-
         if (evento.shiftKey && document.activeElement === primeiro) {
           evento.preventDefault();
           ultimo.focus();
@@ -104,40 +100,30 @@
       }
     });
 
-    document.getElementById("botao-whatsapp").addEventListener("click", () => {
-      if (Carrinho.itens().length === 0) return;
-      const mensagem = Pedido.montarMensagem();
-      const url = "https://wa.me/" + CONFIG.whatsappNumero + "?text=" + encodeURIComponent(mensagem);
-      window.open(url, "_blank", "noopener");
-    });
-
-    document.getElementById("botao-whatsapp-flutuante").addEventListener("click", () => {
+    el("botao-whatsapp-flutuante").addEventListener("click", () => {
       const mensagem = "Olá! Vim pelo site e quero saber mais sobre os produtos.";
-      const url = "https://wa.me/" + CONFIG.whatsappNumero + "?text=" + encodeURIComponent(mensagem);
-      window.open(url, "_blank", "noopener");
-    });
-
-    document.getElementById("busca-produto").addEventListener("input", (evento) => {
-      Catalogo.definirBusca(evento.target.value);
+      window.open("https://wa.me/" + CONFIG.whatsappNumero + "?text=" + encodeURIComponent(mensagem), "_blank", "noopener");
     });
 
     CartasCatalogo.montar();
 
     BoosterUI.iniciar();
+    Colecao.iniciar();
     SimuladorVitrine.iniciar();
-    // o link "Abrir booster virtual" fica no card do Booster Avulso de Reinado Delta
+    // o link "Abrir booster virtual" do produto usa este evento
     document.addEventListener("simulador:abrir", () => BoosterUI.abrir("reinado-delta"));
-    document.getElementById("fechar-booster").addEventListener("click", BoosterUI.fechar);
-    document.getElementById("modal-booster").addEventListener("click", (evento) => {
+    el("fechar-booster").addEventListener("click", BoosterUI.fechar);
+    el("modal-booster").addEventListener("click", (evento) => {
       if (evento.target.id === "modal-booster") BoosterUI.fechar();
     });
 
-    document.getElementById("booster-comprar").addEventListener("click", (evento) => {
+    // "Comprar booster real no catálogo": limpa filtros e destaca o produto da coleção aberta
+    el("booster-comprar").addEventListener("click", (evento) => {
       evento.preventDefault();
       BoosterUI.fechar();
       Catalogo.limparFiltros();
       requestAnimationFrame(() => {
-        const alvo = document.getElementById("produto-" + BoosterUI.colecaoAtual().produtoId);
+        const alvo = el("produto-" + BoosterUI.colecaoAtual().produtoId);
         if (!alvo) return;
         alvo.scrollIntoView({ behavior: "smooth", block: "center" });
         alvo.classList.add("produto-card--destaque");

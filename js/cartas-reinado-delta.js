@@ -1,7 +1,8 @@
 // Dados das 141 cartas de Reinado Delta, usados só pelo Simulador de Pacotinhos.
 // numero: ex. "104/103" (acima de 103 = secretas). preco_num em reais (tabela do Nilson).
-// raridade vem do TCGdex, coleção me06 em português (api.tcgdex.net). As imagens (600x825, baixadas
-// de lá) ficam no próprio site, em img/cartas/NNN.webp, com miniatura de 240px em img/cartas/p/NNN.webp.
+// raridade vem do TCGdex, coleção me06 em português (api.tcgdex.net). As imagens (736x1024, do CDN do
+// Limitless TCG, coleção DLR em português) ficam no próprio site, em img/cartas/NNN.webp, com miniatura
+// de 300px em img/cartas/p/NNN.webp.
 const CARTAS_REINADO_DELTA = [
   {
     "numero": "141/103",

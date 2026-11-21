@@ -22,7 +22,11 @@ const SimuladorVitrine = (function () {
       botao.setAttribute("aria-label", posicao === 0 ? "Abrir booster de " + nome : "Trazer o booster de " + nome + " pra frente");
     });
     const atual = Simulador.colecoes[frente];
-    document.getElementById("simulador-titulo").textContent = "Simulador de Pacotinhos — " + atual.nome;
+    // a coleção atual aparece pela logo (não pelo nome); clicar nela leva ao fichário da coleção
+    const logo = document.getElementById("simulador-logo");
+    logo.querySelector("img").src = atual.logo;
+    logo.querySelector("img").alt = atual.nome;
+    logo.setAttribute("aria-label", "Ver todas as cartas de " + atual.nome);
     document.getElementById("simulador-legenda").textContent = atual.aviso;
   }
 
@@ -91,6 +95,9 @@ const SimuladorVitrine = (function () {
       return botao;
     });
     desenhar();
+    document.getElementById("simulador-logo").addEventListener("click", () => {
+      Colecao.irPara(Simulador.colecoes[frente].id);
+    });
     document.getElementById("botao-abrir-pacote").addEventListener("click", () => {
       BoosterUI.abrir(Simulador.colecoes[frente].id);
     });

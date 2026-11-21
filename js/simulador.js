@@ -13,14 +13,17 @@
 // shortcut: assume que o booster brasileiro de 6 cartas tem as mesmas chances
 // por pacote do de 10 em inglês; trocar aqui se aparecer medição do de 6.
 // shortcut: a Celebração de 30 Anos não tem medição nenhuma; reaproveita as
-// chances da Megaevolução e chuta 1 em 3 pra "Pikachu Rare". Trocar quando houver dado.
+// chances da Megaevolução (a Coleção Clássica, CC1 a CC30, não entra no sorteio: só no fichário). A "Pikachu Rare" é slot fixo porque a divulgação do produto
+// fala em uma garantida por pacote (hypebeast.com, jun/2026). Trocar quando houver dado.
 const Simulador = (function () {
   const colecoes = [
     {
       id: "reinado-delta",
       nome: "Reinado Delta",
+      codigo: "DLR", // sigla da coleção impressa no canto inferior esquerdo da carta
       cartas: CARTAS_REINADO_DELTA,
       artes: [1, 2, 3, 4].map((n) => "img/booster-reinado-delta-" + n + ".webp"),
+      logo: "img/logo-reinado-delta.webp",
       produtoId: "reinado-delta-booster-avulso",
       temPreco: true,
       aviso: "Simulação com a ordem das cartas e as chances de raridade estimadas pela comunidade para a série Megaevolução. A Pokémon não divulga taxas oficiais.",
@@ -49,8 +52,10 @@ const Simulador = (function () {
     {
       id: "celebracao-30",
       nome: "Celebração de 30 Anos",
+      codigo: "30C",
       cartas: CARTAS_CELEBRACAO_30,
       artes: ["img/booster-celebracao-30.webp"],
+      logo: "img/logo-celebracao-30.webp",
       produtoId: "celebracao30-blister-duplo",
       temPreco: false,
       aviso: "Ainda não existe medição das chances desta coleção: a simulação usa as estimativas da série Megaevolução como aproximação. A Pokémon não divulga taxas oficiais.",
@@ -58,13 +63,13 @@ const Simulador = (function () {
         ["Comum"],
         ["Comum"],
         ["Comum"],
-        ["Comum"],
+        ["Pikachu Rare"],
         {
           tabela: [
             ["Futuristic Rare", 1 / 1260],
+            ["RGB Rare", 1 / 1260],
             ["Ilustração Rara Especial", 1 / 101],
             ["Ilustração Rara", 1 / 9],
-            ["Pikachu Rare", 1 / 3],
           ],
           padrao: ["Comum"],
         },
@@ -82,6 +87,10 @@ const Simulador = (function () {
       (colecao.porRaridade[c.raridade] = colecao.porRaridade[c.raridade] || []).push(c);
     });
   });
+
+  function codigoDaCarta(c, carta) {
+    return carta.codigo || c.codigo + " " + carta.numero;
+  }
 
   function colecao(id) {
     return colecoes.find((c) => c.id === id);
@@ -132,5 +141,5 @@ const Simulador = (function () {
     return cartas.reduce((soma, c) => soma + (c.preco_num || 0), 0);
   }
 
-  return { colecoes, colecao, abrirPacote, nivelRaridade, valorTotal, formatarPreco };
+  return { colecoes, colecao, codigoDaCarta, abrirPacote, nivelRaridade, valorTotal, formatarPreco };
 })();

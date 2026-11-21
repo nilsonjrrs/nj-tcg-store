@@ -19,63 +19,49 @@
 <meta name="twitter:image" content="https://nilsonjrrs.github.io/nj-tcg-store/img/logo.webp">
 
 <link rel="icon" href="img/logo.webp">
+<link rel="preload" href="fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/loja.css">
 </head>
 <body>
 
-<div class="fundo-glow" aria-hidden="true"></div>
-<div class="fundo-grao" aria-hidden="true"></div>
-
 <a class="pular-link" href="#catalogo">Pular para o catálogo</a>
 
-<nav class="navbar" aria-label="Navegação principal">
-  <a class="navbar-marca" href="#hero">
-    <img class="navbar-logo" src="img/logo.webp" alt="" width="32" height="32">
-    <span class="navbar-nome">NJ TCG Store</span>
-  </a>
-  <ul class="navbar-links">
-    <li><a href="#catalogo">Loja</a></li>
-    <li><a href="#cartas-avulsas">Cartas Avulsas</a></li>
-    <li><a href="#simulador">Simulador de Pacotes</a></li>
-    <li><a href="https://wa.me/5541988686833?text=Ol%C3%A1!%20Quero%20entrar%20no%20Grupo%20VIP%20da%20NJ%20TCG%20Store." id="link-grupo-vip" target="_blank" rel="noopener">Grupo VIP</a></li>
-  </ul>
-  <div class="navbar-busca">
-    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="search" id="busca-produto" placeholder="Buscar produto..." aria-label="Buscar produto no catálogo">
+<header class="topo" id="topo">
+  <div class="topo-linha">
+    <a class="marca" href="#inicio" aria-label="NJ TCG’Store, início">
+      <img src="img/logo.webp" alt="" width="40" height="40">
+      <span class="marca-nome">NJ TCG’STORE</span>
+    </a>
+    <form class="busca" role="search" id="form-busca">
+      <label class="visualmente-oculto" for="busca-produto">Buscar no catálogo</label>
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+      <input type="search" id="busca-produto" placeholder="Buscar produto, coleção ou código" autocomplete="off">
+    </form>
+    <nav class="topo-links" aria-label="Outras seções">
+      <a href="#cartas-avulsas">Cartas avulsas</a>
+      <a href="#simulador">Simulador</a>
+      <a href="#colecao">Fichário</a>
+      <a href="https://wa.me/5541988686833?text=Ol%C3%A1!%20Quero%20entrar%20no%20Grupo%20VIP%20da%20NJ%20TCG%20Store." id="link-grupo-vip" target="_blank" rel="noopener">Grupo VIP</a>
+    </nav>
+    <button id="botao-pedido" class="botao-pedido" type="button" aria-haspopup="dialog">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <span>Pedido</span>
+      <span class="botao-pedido-qtd" id="contador-pedido" data-vazio="true">0</span>
+    </button>
   </div>
-</nav>
+  <nav class="categorias" id="nav-categorias" aria-label="Tipos de produto"><span class="categorias-divisor so-celular" aria-hidden="true"></span><a class="so-celular" href="#cartas-avulsas">Cartas avulsas</a><a class="so-celular" href="#simulador">Simulador</a><a class="so-celular" href="#colecao">Fichário</a></nav>
+</header>
 
-<div class="hero-fundo" id="hero">
-  <div class="hero-bg" aria-hidden="true"></div>
-  <div class="hero-overlay" aria-hidden="true"></div>
-  <header class="hero">
-  <div class="hero-conteudo">
-    <div class="hero-marca-linha">
-      <div class="hero-logo-wrap">
-        <img class="hero-logo" src="img/logo.webp" alt="NJ TCG Store" width="48" height="48">
-      </div>
-      <p class="hero-marca">NJ TCG Store</p>
-    </div>
-    <h1 class="hero-titulo">Pokémon TCG <span class="hero-titulo-destaque">original e lacrado</span>, direto para a sua coleção</h1>
-    <div class="hero-acoes">
-      <a class="botao-cta" href="#catalogo">
-        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        Ver catálogo <span aria-hidden="true">→</span>
-      </a>
-      <a class="botao-cta botao-cta--secundario" href="#simulador">
-        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"/></svg>
-        Testar sorte no Simulador <span aria-hidden="true">→</span>
-      </a>
-    </div>
-    <p class="hero-subtitulo">Monte seu pedido sem cadastro e feche na hora pelo WhatsApp.</p>
-    <div class="hero-metricas">
-      <div class="hero-metrica">
-        <span class="hero-metrica-icone" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span>
-        <div class="hero-metrica-texto"><strong>100%</strong><span class="hero-metrica-rotulo">Original e lacrado</span></div>
-      </div>
-      <div class="hero-metrica">
-        <span class="hero-metrica-icone" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="14" height="11" rx="1"/><path d="M16 10h3l3 3v5h-6z"/><circle cx="6.5" cy="19.5" r="1.5"/><circle cx="17.5" cy="19.5" r="1.5"/></svg></span>
-        <div class="hero-metrica-texto"><strong>Envio BR</strong><span class="hero-metrica-rotulo">Embalagem reforçada</span></div>
+<section class="vitrine" id="inicio" aria-labelledby="vitrine-titulo">
+  <div class="vitrine-fundo" aria-hidden="true"></div>
+  <div class="vitrine-conteudo">
+    <div class="vitrine-texto">
+      <h1 id="vitrine-titulo">Pokémon TCG lacrado, de Curitiba para a sua coleção</h1>
+      <p class="vitrine-apoio">Boosters, boxes e acessórios de Reinado Delta e Celebração de 30 Anos. Monte o pedido aqui e feche pelo WhatsApp, sem cadastro.</p>
+      <div class="vitrine-acoes">
+        <a class="botao botao--primario" href="#catalogo">Ver catálogo</a>
+        <a class="botao botao--neutro" href="#colecao">Explorar as coleções</a>
       </div>
     </div>
     <div class="hero-expositor" id="hero-expositor" role="group" aria-label="Cartas em destaque da coleção Reinado Delta" tabindex="0">
@@ -90,71 +76,83 @@
       </div>
     </div>
   </div>
-  </header>
-</div>
-
-<section class="diferenciais" aria-label="Diferenciais da loja">
-  <div class="diferencial">
-    <span class="diferencial-indice" aria-hidden="true">01</span>
-    <p class="diferencial-titulo">Produto original</p>
-    <p class="diferencial-texto">Lacrado de fábrica, com procedência garantida.</p>
-  </div>
-  <div class="diferencial">
-    <span class="diferencial-indice" aria-hidden="true">02</span>
-    <p class="diferencial-titulo">Envio protegido</p>
-    <p class="diferencial-texto">Embalagem reforçada para chegar com segurança.</p>
-  </div>
-  <div class="diferencial">
-    <span class="diferencial-indice" aria-hidden="true">03</span>
-    <p class="diferencial-titulo">Atendimento direto</p>
-    <p class="diferencial-texto">Fale com a loja pelo WhatsApp, sem intermediários.</p>
-  </div>
-  <div class="diferencial">
-    <span class="diferencial-indice" aria-hidden="true">04</span>
-    <p class="diferencial-titulo">Pagamento flexível</p>
-    <p class="diferencial-texto">Pix ou cartão, você escolhe no fechamento do pedido.</p>
-  </div>
 </section>
 
 <main>
-  <section class="secao-catalogo" id="catalogo">
-    <h2 class="secao-titulo">Catálogo</h2>
-    <p class="secao-subtitulo">Boosters, displays e produtos selados, prontos para fechar pelo WhatsApp.</p>
-
-    <div class="filtros" role="group" aria-label="Filtrar produtos">
-      <div class="filtro-grupo">
-        <span class="filtro-rotulo">Coleção</span>
-        <div class="filtro-chips" id="filtro-colecao" data-filtro="colecao"></div>
-      </div>
-      <div class="filtro-grupo">
-        <span class="filtro-rotulo">Idioma</span>
-        <div class="filtro-chips" id="filtro-idioma" data-filtro="idioma"></div>
-      </div>
-      <div class="filtro-grupo">
-        <span class="filtro-rotulo">Categoria</span>
-        <div class="filtro-chips" id="filtro-categoria" data-filtro="categoria"></div>
-      </div>
+  <section class="catalogo" id="catalogo" aria-labelledby="catalogo-titulo">
+    <div class="catalogo-cabecalho">
+      <h2 class="titulo-secao" id="catalogo-titulo">Catálogo</h2>
+      <p class="catalogo-contagem" id="catalogo-contagem" aria-live="polite"></p>
+      <button type="button" class="botao botao--neutro catalogo-abrir-filtros" id="abrir-filtros" aria-controls="filtros" aria-expanded="false">Filtros <span id="filtros-qtd"></span></button>
+      <label class="ordenar">
+        <span>Ordenar por</span>
+        <select id="ordenar">
+          <option value="destaque">Destaques</option>
+          <option value="preco-menor">Menor preço</option>
+          <option value="preco-maior">Maior preço</option>
+          <option value="nome">Nome, de A a Z</option>
+        </select>
+      </label>
     </div>
 
-    <div id="grade-produtos" class="grade-produtos"></div>
-    <p id="catalogo-vazio" class="catalogo-vazio" hidden>Nenhum produto encontrado com esses filtros. Tente limpar algum filtro.</p>
+    <div class="filtros-ativos" id="filtros-ativos"></div>
+
+    <div class="catalogo-corpo">
+      <aside class="filtros" id="filtros" aria-label="Filtros do catálogo" data-aberto="false">
+        <div class="filtros-topo">
+          <h3>Filtros</h3>
+          <button type="button" class="fechar" id="fechar-filtros" aria-label="Fechar filtros">&times;</button>
+        </div>
+        <div class="filtros-grupos" id="filtros-grupos"></div>
+        <div class="filtros-rodape">
+          <button type="button" class="botao botao--neutro" id="limpar-filtros">Limpar filtros</button>
+          <button type="button" class="botao botao--primario" id="aplicar-filtros">Ver produtos</button>
+        </div>
+      </aside>
+
+      <div class="catalogo-resultados">
+        <div id="grade-produtos" class="grade"></div>
+        <div id="catalogo-vazio" class="vazio" hidden>
+          <p><strong>Nenhum produto encontrado.</strong>Confira a busca ou tire algum filtro.</p>
+          <button type="button" class="botao botao--primario" id="vazio-limpar">Limpar busca e filtros</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="como-comprar" aria-labelledby="como-comprar-titulo">
+    <h2 class="titulo-secao" id="como-comprar-titulo">Como comprar</h2>
+    <ol class="passos">
+      <li>
+        <h3>Monte o pedido</h3>
+        <p>Adicione os produtos do catálogo. Não precisa de cadastro.</p>
+      </li>
+      <li>
+        <h3>Escolha entrega e pagamento</h3>
+        <p id="passo-entrega"></p>
+      </li>
+      <li>
+        <h3>Feche pelo WhatsApp</h3>
+        <p>O pedido chega pronto na conversa. Lá confirmamos estoque, frete e pagamento.</p>
+      </li>
+    </ol>
   </section>
 
   <section class="secao-cartas" id="cartas-avulsas" aria-label="Catálogo de cartas avulsas">
     <h2 class="secao-titulo">Cartas Avulsas</h2>
     <p class="secao-subtitulo">Cartas das coleções Reinado Delta e Celebração 30 Anos, uma por uma. A maioria ainda está sem preço fechado — fale no WhatsApp pra consultar.</p>
 
-    <div class="filtros" role="group" aria-label="Filtrar cartas avulsas">
-      <div class="filtro-grupo">
-        <span class="filtro-rotulo">Coleção</span>
-        <div class="filtro-chips" id="filtro-cartas-colecao"></div>
+    <div class="cartas-filtros" role="group" aria-label="Filtrar cartas avulsas">
+      <div class="cartas-filtro">
+        <span class="cartas-filtro-rotulo">Coleção</span>
+        <div class="cartas-filtro-chips" id="filtro-cartas-colecao"></div>
       </div>
-      <div class="filtro-grupo">
-        <label class="filtro-rotulo" for="busca-carta">Buscar</label>
+      <div class="cartas-filtro">
+        <label class="cartas-filtro-rotulo" for="busca-carta">Buscar</label>
         <input type="search" id="busca-carta" class="campo-busca-cartas" placeholder="Nome ou número da carta...">
       </div>
-      <div class="filtro-grupo">
-        <label class="filtro-rotulo" for="ordenar-cartas">Ordenar</label>
+      <div class="cartas-filtro">
+        <label class="cartas-filtro-rotulo" for="ordenar-cartas">Ordenar</label>
         <select id="ordenar-cartas" class="campo-select-cartas">
           <option value="numero">Número</option>
           <option value="nome">Nome (A-Z)</option>
@@ -169,10 +167,11 @@
   </section>
 
   <section class="secao-simulador" id="simulador" aria-label="Simulador de Pacotinhos">
-    <h2 class="secao-titulo" id="simulador-titulo">Simulador de Pacotinhos — Reinado Delta</h2>
+    <h2 class="secao-titulo" id="simulador-titulo">Simulador de Pacotinhos</h2>
     <p class="secao-subtitulo">Abra um booster virtual e veja quais cartas poderiam sair. É só uma demonstração — as cartas de verdade vêm dentro do booster lacrado.</p>
 
     <div class="simulador-abertura">
+      <button class="simulador-logo" id="simulador-logo" type="button"><img src="img/logo-reinado-delta.webp" alt="Reinado Delta"><span>Ver todas as cartas</span></button>
       <div class="simulador-vitrine" id="simulador-vitrine"></div>
       <p class="simulador-vitrine-dica">Arraste o booster pro lado pra trocar de coleção</p>
       <button id="botao-abrir-pacote" class="botao-cta" type="button">
@@ -182,6 +181,26 @@
     </div>
 
     <p class="simulador-legenda" id="simulador-legenda">Simulação com a ordem das cartas e as chances de raridade estimadas pela comunidade para a série Megaevolução. A Pokémon não divulga taxas oficiais.</p>
+  </section>
+
+  <section class="secao-colecao" id="colecao" aria-label="Coleção">
+    <h2 class="secao-titulo">Coleção</h2>
+    <p class="secao-subtitulo">Todas as cartas de cada coleção, em ordem. Toque numa carta pra ampliar.</p>
+
+    <div class="colecao-abas" id="colecao-abas"></div>
+
+    <input class="fichario-busca" type="search" id="fichario-busca" placeholder="Buscar por nome ou código (ex.: DLR 141)" aria-label="Buscar carta por nome ou código">
+
+    <div class="fichario" id="fichario" role="group">
+      <div class="fichario-argolas" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="fichario-folhas" id="fichario-folhas"></div>
+    </div>
+
+    <div class="fichario-nav">
+      <button id="fichario-anterior" class="botao-secundario-sim" type="button">← Anterior</button>
+      <p class="fichario-posicao" id="fichario-posicao" aria-live="polite"></p>
+      <button id="fichario-proxima" class="botao-secundario-sim" type="button">Próxima →</button>
+    </div>
   </section>
 </main>
 
@@ -249,40 +268,73 @@
 </div>
 
 <div class="botoes-flutuantes">
-  <button id="botao-pedido" class="botao-pedido" type="button">
-    Ver pedido <span id="contador-pedido">(0)</span>
-  </button>
   <button id="botao-whatsapp-flutuante" class="botao-whatsapp-flutuante" type="button" aria-label="Falar no WhatsApp">
     <span class="botao-whatsapp-flutuante-dica" aria-hidden="true">Falar no WhatsApp</span>
     <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M16.004 3C9.096 3 3.5 8.56 3.5 15.42c0 2.54.72 4.9 1.97 6.9L4 29l6.86-1.8a12.9 12.9 0 0 0 5.14 1.06h.004c6.908 0 12.504-5.56 12.504-12.42S22.912 3 16.004 3zm7.37 17.66c-.31.87-1.8 1.67-2.48 1.77-.63.1-1.43.14-2.31-.15-.53-.17-1.2-.4-2.07-.78-3.64-1.57-6.02-5.23-6.2-5.47-.18-.24-1.48-1.97-1.48-3.76 0-1.79.94-2.67 1.27-3.03.33-.36.72-.45.96-.45.24 0 .48 0 .69.01.22.01.52-.08.81.62.31.75 1.05 2.59 1.14 2.78.1.19.16.42.03.67-.13.25-.2.4-.39.62-.19.22-.4.49-.57.66-.19.19-.39.4-.17.78.22.38 1 1.65 2.15 2.67 1.48 1.32 2.72 1.73 3.11 1.92.39.19.62.16.85-.09.23-.25 1-1.16 1.27-1.56.26-.4.53-.33.89-.2.37.13 2.35 1.11 2.75 1.31.4.2.66.3.76.47.1.17.1.96-.21 1.83z"/></svg>
   </button>
 </div>
 
-<div id="modal-pedido" class="modal" hidden>
-  <div class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-pedido">
-    <div class="modal-cabecalho">
+<p class="aviso" id="aviso" role="status" aria-live="polite" hidden></p>
+
+<div id="modal-produto" class="modal modal-produto" hidden>
+  <div class="detalhe" role="dialog" aria-modal="true" aria-labelledby="detalhe-nome">
+    <button type="button" class="fechar" id="fechar-produto" aria-label="Fechar produto">&times;</button>
+    <div class="detalhe-midia">
+      <button type="button" class="detalhe-foto" id="detalhe-foto"></button>
+      <p class="detalhe-nota-foto" id="detalhe-nota-foto">Imagem ilustrativa do produto lacrado.</p>
+    </div>
+    <div class="detalhe-info">
+      <p class="produto-colecao" id="detalhe-colecao"></p>
+      <h2 id="detalhe-nome"></h2>
+      <dl class="ficha" id="detalhe-ficha"></dl>
+      <p class="detalhe-preco" id="detalhe-preco"></p>
+      <p class="detalhe-estoque" id="detalhe-estoque"></p>
+      <div class="detalhe-compra">
+        <div class="stepper" role="group" aria-label="Quantidade">
+          <button type="button" id="detalhe-menos" aria-label="Diminuir">−</button>
+          <output id="detalhe-qtd">1</output>
+          <button type="button" id="detalhe-mais" aria-label="Aumentar">+</button>
+        </div>
+        <button type="button" class="botao botao--primario" id="detalhe-adicionar">Adicionar ao pedido</button>
+      </div>
+      <p class="detalhe-aviso" id="detalhe-aviso" aria-live="polite"></p>
+      <button type="button" class="botao botao--texto" id="detalhe-simulador" hidden>Abrir um booster virtual desta coleção</button>
+      <ul class="detalhe-entrega" id="detalhe-entrega"></ul>
+    </div>
+  </div>
+</div>
+
+<div id="modal-pedido" class="modal modal-pedido" hidden>
+  <div class="pedido" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-pedido">
+    <div class="pedido-topo">
       <h2 id="titulo-modal-pedido">Seu pedido</h2>
-      <button id="fechar-modal" type="button" aria-label="Fechar pedido">&times;</button>
+      <button id="fechar-modal" class="fechar" type="button" aria-label="Fechar pedido">&times;</button>
     </div>
-    <div id="lista-pedido" class="lista-pedido"></div>
-    <p id="pedido-vazio" class="pedido-vazio" hidden>Seu pedido está vazio. Adicione produtos no catálogo.</p>
-
-    <div class="modal-total">
-      <span>Total</span>
-      <strong id="total-pedido">R$ 0,00</strong>
+    <div class="pedido-corpo">
+      <ul id="lista-pedido" class="pedido-itens"></ul>
+      <div id="pedido-vazio" class="vazio" hidden>
+        <p><strong>Seu pedido está vazio.</strong>Escolha os produtos no catálogo.</p>
+        <button type="button" class="botao botao--primario" id="pedido-ver-catalogo">Ver catálogo</button>
+      </div>
+      <fieldset class="pedido-opcoes" id="pedido-entrega">
+        <legend>Entrega</legend>
+        <div id="opcoes-entrega" class="opcoes"></div>
+        <p class="pedido-nota" id="entrega-detalhe"></p>
+      </fieldset>
+      <fieldset class="pedido-opcoes" id="pedido-pagamento">
+        <legend>Pagamento</legend>
+        <div id="opcoes-pagamento" class="opcoes"></div>
+      </fieldset>
     </div>
-
-    <fieldset class="modal-opcoes">
-      <legend>Entrega</legend>
-      <div id="opcoes-entrega" class="opcoes-chips"></div>
-    </fieldset>
-
-    <fieldset class="modal-opcoes">
-      <legend>Pagamento</legend>
-      <div id="opcoes-pagamento" class="opcoes-chips"></div>
-    </fieldset>
-
-    <button id="botao-whatsapp" class="botao-whatsapp" type="button">Finalizar pelo WhatsApp</button>
+    <div class="pedido-rodape">
+      <div class="pedido-subtotal">
+        <span>Subtotal</span>
+        <strong id="total-pedido">R$ 0,00</strong>
+      </div>
+      <p class="pedido-nota">Frete e disponibilidade são confirmados no WhatsApp, antes do pagamento.</p>
+      <button id="botao-whatsapp" class="botao botao--whatsapp" type="button">Finalizar pelo WhatsApp</button>
+      <button id="continuar-comprando" class="botao botao--texto" type="button">Continuar comprando</button>
+    </div>
   </div>
 </div>
 
@@ -297,10 +349,24 @@
   </div>
 </div>
 
-<footer class="rodape">
-  <p id="rodape-info"></p>
-  <p class="rodape-aviso" id="rodape-aviso"></p>
-  <p class="rodape-instagram"><a href="https://instagram.com/njtcgstore" id="link-instagram" target="_blank" rel="noopener">@njtcgstore</a></p>
+<footer class="rodape-loja">
+  <div class="rodape-loja-conteudo">
+    <div>
+      <h2>NJ TCG’Store</h2>
+      <p>Pokémon TCG lacrado, em Curitiba.</p>
+      <p>WhatsApp: <a href="#" id="rodape-whatsapp" target="_blank" rel="noopener"></a></p>
+      <p>Instagram: <a href="https://instagram.com/njtcgstore" id="link-instagram" target="_blank" rel="noopener">@njtcgstore</a></p>
+    </div>
+    <div>
+      <h2>Compra</h2>
+      <p id="rodape-info"></p>
+      <p id="rodape-aviso"></p>
+    </div>
+    <div>
+      <h2>Sobre o site</h2>
+      <p>Loja independente, sem vínculo com The Pokémon Company, Nintendo, Game Freak ou Creatures. Pokémon e os nomes das coleções são marcas dos seus donos.</p>
+    </div>
+  </div>
 </footer>
 
 <script src="js/config.js"></script>
@@ -312,10 +378,12 @@
 <script src="js/carrinho.js"></script>
 <script src="js/zoom.js"></script>
 <script src="js/catalogo.js"></script>
+<script src="js/produto-detalhe.js"></script>
 <script src="js/cartas-celebracao-30.js"></script>
 <script src="js/simulador.js"></script>
 <script src="js/cartas-catalogo.js"></script>
 <script src="js/booster-ui.js"></script>
+<script src="js/colecao.js"></script>
 <script src="js/simulador-vitrine.js"></script>
 <script src="js/pedido.js"></script>
 <script src="js/app.js"></script>

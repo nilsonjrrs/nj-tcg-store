@@ -1,7 +1,10 @@
-// Cartas da Celebração de 30 Anos, usadas só pelo Simulador de Pacotinhos.
-// Nome, número e raridade vêm do TCGdex (coleção "30th" em português, api.tcgdex.net); as imagens
-// (600x825) ficam em img/cartas/c30/, com miniatura de 240px em img/cartas/p/c30/.
-// Sem preço: a tabela do Nilson só cobre Reinado Delta. As 3 "RGB Rare" (Mew) não têm imagem na fonte e ficaram de fora.
+// Cartas da Celebração de 30 Anos, usadas pelo Simulador de Pacotinhos e pelo fichário.
+// 001 a 158: nome, número e raridade do TCGdex (coleção "30th" em português, api.tcgdex.net).
+// B, G e R (Mew "RGB Rare") e a Coleção Clássica (30 reimpressões, arquivos CC1..CC30): imagens do Limitless TCG
+// (limitlesstcg.com/cards/30C); nome e número impresso de cada clássica vêm de js/cartas-celebracao-30-anos.js.
+// 8 energias básicas (MEE 009 a 016): dados e imagem do arquivo do Nilson. Total: 199 cartas.
+// Imagens (736x1024, do CDN do Limitless TCG, coleção 30C em português) em img/cartas/c30/, com miniatura
+// de 300px em img/cartas/p/c30/. Sem preço: a tabela do Nilson só cobre Reinado Delta.
 const CARTAS_CELEBRACAO_30 = [
   {
     "numero": "001/128",
@@ -950,5 +953,292 @@ const CARTAS_CELEBRACAO_30 = [
     "nome": "Mew ex",
     "raridade": "Futuristic Rare",
     "imagem_url": "img/cartas/c30/158.webp"
+  },
+  {
+    "numero": "B",
+    "nome": "Mew",
+    "raridade": "RGB Rare",
+    "imagem_url": "img/cartas/c30/B.webp",
+    "codigo": "30C RGB-B"
+  },
+  {
+    "numero": "G",
+    "nome": "Mew",
+    "raridade": "RGB Rare",
+    "imagem_url": "img/cartas/c30/G.webp",
+    "codigo": "30C RGB-G"
+  },
+  {
+    "numero": "R",
+    "nome": "Mew",
+    "raridade": "RGB Rare",
+    "imagem_url": "img/cartas/c30/R.webp",
+    "codigo": "30C RGB-R"
+  },
+  {
+    "numero": "58/102",
+    "nome": "Pikachu",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC1.webp",
+    "codigo": "Clássica 58/102"
+  },
+  {
+    "numero": "4/102",
+    "nome": "Charizard",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC2.webp",
+    "codigo": "Clássica 4/102"
+  },
+  {
+    "numero": "18/132",
+    "nome": "Misty",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC3.webp",
+    "codigo": "Clássica 18/132"
+  },
+  {
+    "numero": "69/132",
+    "nome": "Jigglypuff da Érica",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC4.webp",
+    "codigo": "Clássica 69/132"
+  },
+  {
+    "numero": "25/111",
+    "nome": "Sneasel",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC5.webp",
+    "codigo": "Clássica 25/111"
+  },
+  {
+    "numero": "106/105",
+    "nome": "Celebi Luminescente",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC6.webp",
+    "codigo": "Clássica 106/105"
+  },
+  {
+    "numero": "149/147",
+    "nome": "Lugia",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC7.webp",
+    "codigo": "Clássica 149/147"
+  },
+  {
+    "numero": "5/109",
+    "nome": "Delcatty",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC8.webp",
+    "codigo": "Clássica 5/109"
+  },
+  {
+    "numero": "19/109",
+    "nome": "Tyranitar Sombrio",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC9.webp",
+    "codigo": "Clássica 19/109"
+  },
+  {
+    "numero": "108/115",
+    "nome": "Scizor ex",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC10.webp",
+    "codigo": "Clássica 108/115"
+  },
+  {
+    "numero": "11/113",
+    "nome": "Metagross δ",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC11.webp",
+    "codigo": "Clássica 11/113"
+  },
+  {
+    "numero": "106/106",
+    "nome": "Palkia LV.X",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC12.webp",
+    "codigo": "Clássica 106/106"
+  },
+  {
+    "numero": "43/146",
+    "nome": "Uxie",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC13.webp",
+    "codigo": "Clássica 43/146"
+  },
+  {
+    "numero": "47/127",
+    "nome": "Crobat G",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC14.webp",
+    "codigo": "Clássica 47/127"
+  },
+  {
+    "numero": "94/102",
+    "nome": "Gengar",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC15.webp",
+    "codigo": "Clássica 94/102"
+  },
+  {
+    "numero": "99/102",
+    "nome": "Darkrai & Cresselia LENDA",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC16.webp",
+    "codigo": "Clássica 99/102"
+  },
+  {
+    "numero": "100/102",
+    "nome": "Darkrai & Cresselia LENDA",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC17.webp",
+    "codigo": "Clássica 100/102"
+  },
+  {
+    "numero": "101/101",
+    "nome": "N",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC18.webp",
+    "codigo": "Clássica 101/101"
+  },
+  {
+    "numero": "85/124",
+    "nome": "Rayquaza-EX",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC19.webp",
+    "codigo": "Clássica 85/124"
+  },
+  {
+    "numero": "11/101",
+    "nome": "Genesect-EX",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC20.webp",
+    "codigo": "Clássica 11/101"
+  },
+  {
+    "numero": "106/160",
+    "nome": "M Gardevoir-EX",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC21.webp",
+    "codigo": "Clássica 106/160"
+  },
+  {
+    "numero": "41/122",
+    "nome": "Greninja TURBO",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC22.webp",
+    "codigo": "Clássica 41/122"
+  },
+  {
+    "numero": "89/149",
+    "nome": "Solgaleo-GX",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC23.webp",
+    "codigo": "Clássica 89/149"
+  },
+  {
+    "numero": "57/111",
+    "nome": "Buzzwole-GX",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC24.webp",
+    "codigo": "Clássica 57/111"
+  },
+  {
+    "numero": "33/181",
+    "nome": "Pikachu e Zekrom-GX",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC25.webp",
+    "codigo": "Clássica 33/181"
+  },
+  {
+    "numero": "138/202",
+    "nome": "Zacian-V",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC26.webp",
+    "codigo": "Clássica 138/202"
+  },
+  {
+    "numero": "050/185",
+    "nome": "Raikou",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC27.webp",
+    "codigo": "Clássica 050/185"
+  },
+  {
+    "numero": "114/264",
+    "nome": "Mew-VMAX",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC28.webp",
+    "codigo": "Clássica 114/264"
+  },
+  {
+    "numero": "123/172",
+    "nome": "Arceus-V-ASTRO",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC29.webp",
+    "codigo": "Clássica 123/172"
+  },
+  {
+    "numero": "203/193",
+    "nome": "Magikarp",
+    "raridade": "Coleção Clássica",
+    "imagem_url": "img/cartas/c30/CC30.webp",
+    "codigo": "Clássica 203/193"
+  },
+  {
+    "numero": "MEE 009",
+    "nome": "Energia de Planta Básica",
+    "raridade": "Energia Básica",
+    "imagem_url": "img/cartas/c30/MEE009.webp",
+    "codigo": "MEE 009"
+  },
+  {
+    "numero": "MEE 010",
+    "nome": "Energia de Fogo Básica",
+    "raridade": "Energia Básica",
+    "imagem_url": "img/cartas/c30/MEE010.webp",
+    "codigo": "MEE 010"
+  },
+  {
+    "numero": "MEE 011",
+    "nome": "Energia de Água Básica",
+    "raridade": "Energia Básica",
+    "imagem_url": "img/cartas/c30/MEE011.webp",
+    "codigo": "MEE 011"
+  },
+  {
+    "numero": "MEE 012",
+    "nome": "Energia de Raio Básica",
+    "raridade": "Energia Básica",
+    "imagem_url": "img/cartas/c30/MEE012.webp",
+    "codigo": "MEE 012"
+  },
+  {
+    "numero": "MEE 013",
+    "nome": "Energia Psíquica Básica",
+    "raridade": "Energia Básica",
+    "imagem_url": "img/cartas/c30/MEE013.webp",
+    "codigo": "MEE 013"
+  },
+  {
+    "numero": "MEE 014",
+    "nome": "Energia de Luta Básica",
+    "raridade": "Energia Básica",
+    "imagem_url": "img/cartas/c30/MEE014.webp",
+    "codigo": "MEE 014"
+  },
+  {
+    "numero": "MEE 015",
+    "nome": "Energia de Escuridão Básica",
+    "raridade": "Energia Básica",
+    "imagem_url": "img/cartas/c30/MEE015.webp",
+    "codigo": "MEE 015"
+  },
+  {
+    "numero": "MEE 016",
+    "nome": "Energia de Metal Básica",
+    "raridade": "Energia Básica",
+    "imagem_url": "img/cartas/c30/MEE016.webp",
+    "codigo": "MEE 016"
   }
 ];

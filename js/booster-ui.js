@@ -277,7 +277,7 @@ const BoosterUI = (function () {
     }
   }
 
-  // pequena: miniatura de 240px (bandeja e resumo); sem isso, a imagem cheia de 600x825
+  // pequena: miniatura de 300px (bandeja e resumo); sem isso, a imagem cheia de 736x1024
   function criarImagemCarta(carta, pequena) {
     const img = document.createElement("img");
     img.src = pequena ? carta.imagem_url.replace("cartas/", "cartas/p/") : carta.imagem_url;
@@ -346,7 +346,7 @@ const BoosterUI = (function () {
 
     // nome, raridade, número e preço ficam embaixo da carta, sem cobrir a arte
     el("carta-legenda").innerHTML =
-      "<strong>" + item.carta.nome + "</strong><span>" + item.carta.raridade + " · Nº " + item.carta.numero +
+      "<strong>" + item.carta.nome + "</strong><span>" + item.carta.raridade + " · " + Simulador.codigoDaCarta(colecao, item.carta) +
       (item.carta.preco_brl ? " · <span class=\"carta-palco-preco\">" + item.carta.preco_brl + "</span>" : "") + "</span>";
     el("carta-ampliar").hidden = false;
 
