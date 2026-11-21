@@ -139,26 +139,25 @@
     <p id="catalogo-vazio" class="catalogo-vazio" hidden>Nenhum produto encontrado com esses filtros. Tente limpar algum filtro.</p>
   </section>
 
-  <section class="secao-simulador" id="simulador" aria-label="Simulador de Pacotinhos — Reinado Delta">
-    <h2 class="secao-titulo">Simulador de Pacotinhos — Reinado Delta</h2>
+  <section class="secao-simulador" id="simulador" aria-label="Simulador de Pacotinhos">
+    <h2 class="secao-titulo" id="simulador-titulo">Simulador de Pacotinhos — Reinado Delta</h2>
     <p class="secao-subtitulo">Abra um booster virtual e veja quais cartas poderiam sair. É só uma demonstração — as cartas de verdade vêm dentro do booster lacrado.</p>
 
     <div class="simulador-abertura">
-      <div class="pacote-virtual" aria-hidden="true">
-        <img src="img/booster-reinado-delta-1.webp" alt="" width="780" height="1426">
-      </div>
+      <div class="simulador-vitrine" id="simulador-vitrine"></div>
+      <p class="simulador-vitrine-dica">Arraste o booster pro lado pra trocar de coleção</p>
       <button id="botao-abrir-pacote" class="botao-cta" type="button">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"/></svg>
         Abrir Booster Grátis
       </button>
     </div>
 
-    <p class="simulador-legenda">Simulação com a ordem das cartas e as chances de raridade estimadas pela comunidade para a série Megaevolução. A Pokémon não divulga taxas oficiais.</p>
+    <p class="simulador-legenda" id="simulador-legenda">Simulação com a ordem das cartas e as chances de raridade estimadas pela comunidade para a série Megaevolução. A Pokémon não divulga taxas oficiais.</p>
   </section>
 </main>
 
 <div id="modal-booster" class="modal modal-booster" hidden>
-  <div class="booster-palco" id="booster-palco" role="dialog" aria-modal="true" aria-label="Abrir booster Reinado Delta">
+  <div class="booster-palco" id="booster-palco" role="dialog" aria-modal="true" aria-label="Abrir booster">
     <button id="fechar-booster" class="fechar-booster" type="button" aria-label="Fechar">&times;</button>
 
     <div class="booster-fx" aria-hidden="true">
@@ -211,7 +210,7 @@
     <div class="booster-resumo" id="booster-resumo" hidden>
       <h3 class="booster-resumo-titulo">Pacote revelado!</h3>
       <div class="booster-miniaturas" id="booster-miniaturas"></div>
-      <p class="simulador-total">Valor simulado do pacote: <strong id="booster-valor-total">R$ 0,00</strong></p>
+      <p class="simulador-total" id="booster-total-linha">Valor simulado do pacote: <strong id="booster-valor-total">R$ 0,00</strong></p>
       <div class="simulador-acoes">
         <button id="booster-abrir-outro" class="botao-cta" type="button">Abrir outro booster</button>
         <a href="#catalogo" id="booster-comprar" class="botao-cta botao-cta--secundario">Comprar booster real no catálogo</a>
@@ -283,8 +282,10 @@
 <script src="js/carrinho.js"></script>
 <script src="js/zoom.js"></script>
 <script src="js/catalogo.js"></script>
+<script src="js/cartas-celebracao-30.js"></script>
 <script src="js/simulador.js"></script>
 <script src="js/booster-ui.js"></script>
+<script src="js/simulador-vitrine.js"></script>
 <script src="js/pedido.js"></script>
 <script src="js/app.js"></script>
 </body>

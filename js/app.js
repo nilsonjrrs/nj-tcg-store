@@ -122,9 +122,9 @@
     });
 
     BoosterUI.iniciar();
-    document.getElementById("botao-abrir-pacote").addEventListener("click", BoosterUI.abrir);
-    document.querySelector(".pacote-virtual").addEventListener("click", BoosterUI.abrir);
-    document.addEventListener("simulador:abrir", BoosterUI.abrir);
+    SimuladorVitrine.iniciar();
+    // o link "Abrir booster virtual" fica no card do Booster Avulso de Reinado Delta
+    document.addEventListener("simulador:abrir", () => BoosterUI.abrir("reinado-delta"));
     document.getElementById("fechar-booster").addEventListener("click", BoosterUI.fechar);
     document.getElementById("modal-booster").addEventListener("click", (evento) => {
       if (evento.target.id === "modal-booster") BoosterUI.fechar();
@@ -135,7 +135,7 @@
       BoosterUI.fechar();
       Catalogo.limparFiltros();
       requestAnimationFrame(() => {
-        const alvo = document.getElementById("produto-reinado-delta-booster-avulso");
+        const alvo = document.getElementById("produto-" + BoosterUI.colecaoAtual().produtoId);
         if (!alvo) return;
         alvo.scrollIntoView({ behavior: "smooth", block: "center" });
         alvo.classList.add("produto-card--destaque");

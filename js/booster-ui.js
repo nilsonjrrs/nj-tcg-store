@@ -14,6 +14,7 @@ const BoosterUI = (function () {
 
   const COR = { sir: "#ffd166", irfa: "#a97ee2", base: "#ff7c38" };
 
+  let colecao = null; // coleção do booster aberto (ver Simulador.colecoes)
   let cartasAtuais = [];
   let indiceAtual = 0;
   let ocupado = false; // uma animação está em curso: ignora toques até acabar
@@ -99,16 +100,20 @@ const BoosterUI = (function () {
     raios.classList.add("booster-raios-fundo--ativo");
   }
 
-  function abrir() {
+  // id: coleção a abrir; sem id (ex.: "Abrir outro booster"), repete a última
+  function abrir(id) {
+    if (typeof id === "string") colecao = Simulador.colecao(id);
+    if (!colecao) colecao = Simulador.colecoes[0];
+    el("booster-palco").setAttribute("aria-label", "Abrir booster " + colecao.nome);
     geracao += 1;
     ocupado = false;
     cartasAtuais = [];
     indiceAtual = 0;
     const pacote = el("booster-pacote-visual");
     cancelarAnimacoes(pacote);
-    // cada abertura sorteia uma das 4 artes do booster de Reinado Delta
+    // cada abertura sorteia uma das artes do booster da coleção
     // (URL absoluta: url() relativa numa custom property seria resolvida a partir do css/)
-    pacote.style.setProperty("--arte-pacote", 'url("' + new URL("img/booster-reinado-delta-" + (1 + Math.floor(Math.random() * 4)) + ".webp", document.baseURI).href + '")');
+    pacote.style.setProperty("--arte-pacote", 'url("' + new URL(colecao.artes[Math.floor(Math.random() * colecao.artes.length)], document.baseURI).href + '")');
     cancelarAnimacoes(el("carta-palco"));
     raiosDeFundo(null);
     el("booster-resumo").hidden = true;
@@ -167,7 +172,7 @@ const BoosterUI = (function () {
 
     // Sorteia o pacote já aqui (e não só na revelação) pra saber a raridade
     // do melhor hit e dar ao brilho e à explosão de abertura a cor certa.
-    cartasAtuais = Simulador.abrirPacote().map((carta) => ({ carta }));
+    cartasAtuais = Simulador.abrirPacote(colecao.id).map((carta) => ({ carta }));
     const raridades = cartasAtuais.map((item) => Simulador.nivelRaridade(item.carta));
     const cor = COR[raridades.includes("sir") ? "sir" : raridades.includes("irfa") ? "irfa" : "base"];
 
@@ -341,7 +346,8 @@ const BoosterUI = (function () {
 
     // nome, raridade, número e preço ficam embaixo da carta, sem cobrir a arte
     el("carta-legenda").innerHTML =
-      "<strong>" + item.carta.nome + "</strong><span>" + item.carta.raridade + " · Nº " + item.carta.numero + " · <span class=\"carta-palco-preco\">" + item.carta.preco_brl + "</span></span>";
+      "<strong>" + item.carta.nome + "</strong><span>" + item.carta.raridade + " · Nº " + item.carta.numero +
+      (item.carta.preco_brl ? " · <span class=\"carta-palco-preco\">" + item.carta.preco_brl + "</span>" : "") + "</span>";
     el("carta-ampliar").hidden = false;
 
     const rotulo = el("booster-raridade");
@@ -458,7 +464,9 @@ const BoosterUI = (function () {
       miniaturas.appendChild(mini);
     });
 
-    animarContagemValor(Simulador.valorTotal(cartasAtuais.map((item) => item.carta)));
+    // coleção sem tabela de preço não mostra valor do pacote
+    el("booster-total-linha").hidden = !colecao.temPreco;
+    if (colecao.temPreco) animarContagemValor(Simulador.valorTotal(cartasAtuais.map((item) => item.carta)));
     el("booster-abrir-outro").focus();
   }
 
@@ -508,8 +516,8 @@ const BoosterUI = (function () {
       Zoom.abrir(carta.imagem_url, carta.nome, Simulador.nivelRaridade(carta));
     });
     el("booster-pular").addEventListener("click", pular);
-    el("booster-abrir-outro").addEventListener("click", abrir);
+    el("booster-abrir-outro").addEventListener("click", () => abrir());
   }
 
-  return { abrir, fechar, estaAberto, iniciar };
+  return { abrir, fechar, estaAberto, iniciar, colecaoAtual: () => colecao };
 })();
