@@ -123,6 +123,7 @@
 
     BoosterUI.iniciar();
     document.getElementById("botao-abrir-pacote").addEventListener("click", BoosterUI.abrir);
+    document.querySelector(".pacote-virtual").addEventListener("click", BoosterUI.abrir);
     document.addEventListener("simulador:abrir", BoosterUI.abrir);
     document.getElementById("fechar-booster").addEventListener("click", BoosterUI.fechar);
     document.getElementById("modal-booster").addEventListener("click", (evento) => {

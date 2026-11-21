@@ -1,56 +1,63 @@
-// Simulador de Pacotinhos — Reinado Delta. Demonstrativo: sorteia 6 cartas
-// (estilo "pacote") a partir de js/cartas-reinado-delta.js, com chances de
-// hit bem maiores que num pacote real, só pra mostrar os destaques da coleção.
+// Simulador de Pacotinhos — Reinado Delta. Sorteia um booster de 6 cartas a
+// partir de js/cartas-reinado-delta.js, na ordem em que as cartas vêm num
+// pacote de verdade: comuns, incomum, o slot "reverse" e, por último, o slot
+// da rara.
+//
+// Taxas por pacote: medição da comunidade na série Megaevolução (milhares de
+// pacotes abertos, cardcodex.com/blog/mega-evolution-base-set-pull-rates).
+// A Pokémon não publica taxas oficiais. Nos pacotes em inglês (10 cartas) a
+// Ilustração Rara, a Ilustração Rara Especial e a Mega Hiper Rara saem no
+// slot reverse, e a Rara Dupla e a Ultra Rara no slot da rara — os dois são
+// sorteados separadamente, então dá pra vir um hit em cada.
+// shortcut: assume que o booster brasileiro de 6 cartas tem as mesmas chances
+// por pacote do de 10 em inglês; trocar em TAXAS se aparecer medição do de 6.
 const Simulador = (function () {
-  function numeroDaCarta(carta) {
-    return parseInt(carta.numero.split("/")[0], 10);
-  }
+  const TAXAS = {
+    slotReverse: [
+      ["Mega Hiper Raro", 1 / 1260],
+      ["Ilustração Rara Especial", 1 / 101],
+      ["Ilustração Rara", 1 / 9],
+    ],
+    slotRara: [
+      ["Ultra Rara", 1 / 12],
+      ["Rara Dupla", 1 / 5],
+    ],
+  };
 
+  const porRaridade = {};
+  CARTAS_REINADO_DELTA.forEach((c) => {
+    (porRaridade[c.raridade] = porRaridade[c.raridade] || []).push(c);
+  });
+
+  // Nível de efeito visual na revelação (não é a raridade em si, que está em carta.raridade).
   function nivelRaridade(carta) {
-    const n = numeroDaCarta(carta);
-    if (n >= 135) return "sir";
-    if (n >= 104) return "irfa";
+    if (carta.raridade === "Mega Hiper Raro" || carta.raridade === "Ilustração Rara Especial") return "sir";
+    if (carta.raridade === "Ilustração Rara" || carta.raridade === "Ultra Rara" || carta.raridade === "Rara Dupla") return "irfa";
     return "base";
   }
 
-  function sortear(lista, qtd) {
-    const pool = lista.slice();
-    const resultado = [];
-    for (let i = 0; i < qtd && pool.length > 0; i++) {
-      const indice = Math.floor(Math.random() * pool.length);
-      resultado.push(pool.splice(indice, 1)[0]);
-    }
-    return resultado;
+  function umaDe(raridades, fora) {
+    const pool = raridades.flatMap((r) => porRaridade[r] || []).filter((c) => !fora.includes(c));
+    return pool[Math.floor(Math.random() * pool.length)];
   }
 
-  const base = CARTAS_REINADO_DELTA.filter((c) => numeroDaCarta(c) <= 103);
-  const baseEx = base.filter((c) => /\sex$/i.test(c.nome.trim()));
-  const irfa = CARTAS_REINADO_DELTA.filter((c) => {
-    const n = numeroDaCarta(c);
-    return n >= 104 && n <= 134;
-  });
-  const sir = CARTAS_REINADO_DELTA.filter((c) => numeroDaCarta(c) >= 135);
-
-  function sortearHit(jaSorteadas) {
-    const roll = Math.random();
-    if (roll < 0.18 && sir.length) {
-      return sortear(sir, 1)[0];
+  // Sorteia a raridade de um slot: percorre a tabela (da mais rara pra menos) e cai no padrão se nada sair.
+  function raridadeDoSlot(tabela, padrao) {
+    let roll = Math.random();
+    for (const [raridade, chance] of tabela) {
+      if (roll < chance) return [raridade];
+      roll -= chance;
     }
-    if (roll < 0.55 && irfa.length) {
-      return sortear(irfa, 1)[0];
-    }
-    const poolEx = baseEx.filter((c) => !jaSorteadas.includes(c));
-    if (poolEx.length) {
-      return sortear(poolEx, 1)[0];
-    }
-    const poolBase = base.filter((c) => !jaSorteadas.includes(c));
-    return sortear(poolBase, 1)[0];
+    return padrao;
   }
 
   function abrirPacote() {
-    const comuns = sortear(base, 5);
-    const hit = sortearHit(comuns);
-    return comuns.concat([hit]);
+    const pacote = [];
+    for (let i = 0; i < 3; i++) pacote.push(umaDe(["Comum"], pacote));
+    pacote.push(umaDe(["Incomum"], pacote));
+    pacote.push(umaDe(raridadeDoSlot(TAXAS.slotReverse, ["Comum", "Incomum"]), pacote));
+    pacote.push(umaDe(raridadeDoSlot(TAXAS.slotRara, ["Rara"]), pacote));
+    return pacote;
   }
 
   function formatarPreco(valor) {
@@ -61,5 +68,5 @@ const Simulador = (function () {
     return cartas.reduce((soma, c) => soma + c.preco_num, 0);
   }
 
-  return { abrirPacote, nivelRaridade, valorTotal, formatarPreco };
+  return { abrirPacote, nivelRaridade, valorTotal, formatarPreco, TAXAS };
 })();

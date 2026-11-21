@@ -145,7 +145,7 @@
 
     <div class="simulador-abertura">
       <div class="pacote-virtual" aria-hidden="true">
-        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M3 12h18"/><path d="M12 8v13"/><path d="M12 8c-1.5-4-6-4-6-1s4 1 6 1Z"/><path d="M12 8c1.5-4 6-4 6-1s-4 1-6 1Z"/></svg>
+        <img src="img/booster-reinado-delta-1.webp" alt="" width="780" height="1426">
       </div>
       <button id="botao-abrir-pacote" class="botao-cta" type="button">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.3" fill="currentColor" stroke="none"/></svg>
@@ -153,7 +153,7 @@
       </button>
     </div>
 
-    <p class="simulador-legenda">Simulador demonstrativo com chances ampliadas para você conhecer os hits da coleção.</p>
+    <p class="simulador-legenda">Simulação com a ordem das cartas e as chances de raridade estimadas pela comunidade para a série Megaevolução. A Pokémon não divulga taxas oficiais.</p>
   </section>
 </main>
 
@@ -167,6 +167,10 @@
       <div class="booster-particulas" id="booster-particulas"></div>
     </div>
 
+    <div class="booster-fx booster-fx--fundo" aria-hidden="true">
+      <div class="booster-raios-fundo" id="booster-raios-fundo"></div>
+    </div>
+
     <div class="booster-fechado" id="booster-fechado">
       <div class="booster-pacote" id="booster-pacote-visual">
         <div class="booster-pacote-flap booster-pacote-flap--topo" id="booster-flap-topo">
@@ -174,11 +178,11 @@
         </div>
         <div class="booster-pacote-flap booster-pacote-flap--base" id="booster-flap-base">
           <div class="booster-arte" aria-hidden="true"></div>
-          <p class="booster-rotulo" aria-hidden="true">Reinado Delta</p>
         </div>
+        <div class="booster-rasgo-luz" aria-hidden="true"></div>
         <div class="booster-corte" id="booster-corte" role="button" tabindex="0" aria-label="Arraste ou pressione Enter para rasgar o pacote">
           <span class="booster-corte-linha" aria-hidden="true"></span>
-          <span class="booster-corte-dica" id="booster-corte-dica">Deslize para rasgar</span>
+          <span class="booster-corte-dica" id="booster-corte-dica" aria-hidden="true"></span>
         </div>
       </div>
       <button id="botao-rasgar" class="botao-secundario-sim" type="button">Rasgar pacote</button>
@@ -186,15 +190,22 @@
 
     <div class="booster-revelacao" id="booster-revelacao" hidden>
       <p class="booster-progresso" id="booster-progresso">Carta 1 de 6</p>
-      <div class="carta-palco" id="carta-palco" role="button" tabindex="0" aria-label="Virar carta">
+      <p class="booster-raridade" id="booster-raridade" aria-live="polite"></p>
+      <div class="carta-palco-area" id="carta-palco-area">
+        <div class="carta-pilha" id="carta-pilha" aria-hidden="true"></div>
+        <div class="carta-palco" id="carta-palco" role="button" tabindex="0" aria-label="Próxima carta">
         <div class="carta-palco-inner" id="carta-palco-inner">
-          <div class="carta-face carta-verso">
-            <svg aria-hidden="true" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><circle cx="12" cy="12" r="4" fill="var(--color-bg)"/><circle cx="12" cy="12" r="4"/></svg>
-          </div>
           <div class="carta-face carta-frente" id="carta-palco-frente"></div>
         </div>
       </div>
-      <p class="carta-dica" id="carta-dica">Toque na carta pra virar</p>
+        <button id="carta-ampliar" class="carta-ampliar" type="button" aria-label="Ampliar carta" hidden>
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/></svg>
+        </button>
+      </div>
+      <p class="carta-legenda" id="carta-legenda"></p>
+      <p class="carta-dica" id="carta-dica">Toque pra ver a próxima</p>
+      <div class="booster-bandeja" id="booster-bandeja" aria-hidden="true"></div>
+      <button id="booster-pular" class="botao-secundario-sim" type="button">Pular para o resumo</button>
     </div>
 
     <div class="booster-resumo" id="booster-resumo" hidden>
@@ -250,7 +261,11 @@
 <div id="modal-zoom" class="modal modal-zoom" hidden>
   <div class="modal-zoom-conteudo" role="dialog" aria-modal="true" aria-label="Foto ampliada do produto">
     <button id="fechar-zoom" class="fechar-zoom" type="button" aria-label="Fechar foto ampliada">&times;</button>
-    <img id="zoom-imagem" src="" alt="">
+    <div class="zoom-carta-3d" id="zoom-carta-3d">
+      <img id="zoom-imagem" src="" alt="">
+      <div class="zoom-brilho" aria-hidden="true"></div>
+      <div class="carta-holo" id="zoom-holo" aria-hidden="true" hidden></div>
+    </div>
   </div>
 </div>
 
