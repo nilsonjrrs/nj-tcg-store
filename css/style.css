@@ -807,7 +807,6 @@ a {
   pointer-events: none;
 }
 
-
 @keyframes pulsar-pacote {
   0%, 100% {
     transform: scale(1);
@@ -1898,7 +1897,8 @@ a {
 /* ============================================================
    Catálogo
    ============================================================ */
-.secao-catalogo {
+.secao-catalogo,
+.secao-cartas {
   max-width: var(--container-max);
   margin: 0 auto;
   padding: var(--space-6) var(--space-4) var(--space-9);
@@ -2044,8 +2044,11 @@ a {
    em breve") ficam no fundo escuro plano, sem a moldura clara. Escopado a
    `.produto-card` (grade do catálogo) pra não mudar o visual das cartas
    reveladas no simulador de booster, que reaproveitam .produto-tilt com
-   um clima propositalmente mais escuro/dramático. */
-.produto-card .produto-tilt {
+   um clima propositalmente mais escuro/dramático. Também vale pro card de
+   carta avulsa (.carta-avulsa-card, ver js/cartas-catalogo.js), que reaproveita
+   o mesmo .produto-tilt pra manter os dois catálogos com a cara igual. */
+.produto-card .produto-tilt,
+.carta-avulsa-card .produto-tilt {
   background:
     conic-gradient(
       from 0deg,
@@ -2099,9 +2102,17 @@ a {
    "chapa" clara, do jeito que a arte oficial do produto já vem (fundo
    branco/estúdio) — mantém a moldura decorativa visível só na margem ao
    redor. Escopado a `.produto-card` pelo mesmo motivo acima. */
-.produto-card .produto-tilt-inner:has(img) {
+.produto-card .produto-tilt-inner:has(img),
+.carta-avulsa-card .produto-tilt-inner:has(img) {
   padding: var(--space-4);
   background: radial-gradient(85% 85% at 50% 42%, #fdfcff 0%, #ece8f5 100%);
+}
+
+/* Carta avulsa é retrato (5:7), não quadrada como foto de produto — sem isso
+   o object-fit:contain funcionaria, mas o quadro ficaria com sobra enorme em
+   cima/embaixo da carta. */
+.carta-avulsa-card .produto-tilt {
+  aspect-ratio: 5 / 7;
 }
 
 .produto-tilt-inner img {
@@ -2206,6 +2217,116 @@ a {
 .produto-tilt--clicavel:focus-visible .zoom-indicador {
   opacity: 1;
   transform: scale(1.12);
+}
+
+/* ============================================================
+   Cartas Avulsas (js/cartas-catalogo.js)
+   ============================================================ */
+.campo-busca-cartas,
+.campo-select-cartas {
+  min-height: 36px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  padding: 0 var(--space-4);
+}
+
+.campo-busca-cartas {
+  width: 220px;
+  max-width: 100%;
+}
+
+.campo-busca-cartas::placeholder {
+  color: var(--color-muted);
+}
+
+.cartas-contagem {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  margin-top: var(--space-5);
+}
+
+.grade-cartas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-4);
+}
+
+.carta-avulsa-card {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  cursor: zoom-in;
+  transition: border-color 150ms;
+}
+
+.carta-avulsa-card[hidden] {
+  display: none;
+}
+
+.carta-avulsa-card:hover,
+.carta-avulsa-card:focus-visible {
+  border-color: var(--color-accent);
+}
+
+.carta-avulsa-badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 4;
+  font-size: var(--text-xs);
+  font-weight: bold;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+}
+
+.carta-avulsa-badge--irfa {
+  background: rgba(169, 126, 226, 0.25);
+  color: #e4d6fb;
+}
+
+.carta-avulsa-badge--sir {
+  background: rgba(255, 209, 102, 0.25);
+  color: #ffe9ab;
+}
+
+.carta-avulsa-info {
+  padding: 0 var(--space-1);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.carta-avulsa-nome {
+  font-size: var(--text-sm);
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+.carta-avulsa-meta {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.carta-avulsa-preco {
+  font-size: var(--text-sm);
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.carta-avulsa-preco--consulta {
+  color: var(--color-muted);
+  font-weight: normal;
+  font-style: italic;
 }
 
 .produto-etiquetas {

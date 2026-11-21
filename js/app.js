@@ -121,6 +121,8 @@
       Catalogo.definirBusca(evento.target.value);
     });
 
+    CartasCatalogo.montar();
+
     BoosterUI.iniciar();
     SimuladorVitrine.iniciar();
     // o link "Abrir booster virtual" fica no card do Booster Avulso de Reinado Delta
