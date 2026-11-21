@@ -140,18 +140,6 @@ const PRODUTOS = [
     img: "img/celebracao30-etb.jpg"
   },
   {
-    sku: "C30-MT-EN",
-    id: "celebracao30-mini-tin-en",
-    nome: "Mini Tin",
-    categoria: "Acessório",
-    colecao: "Celebração 30 Anos",
-    idioma: "Inglês · importado",
-    preco: 219.90,
-    precoPix: null,
-    estoque: null,
-    img: ""
-  },
-  {
     sku: "C30-FC-EN",
     id: "celebracao30-aglutinador-en",
     nome: "Fichário",
