@@ -57,6 +57,7 @@
     Catalogo.iniciar();
     atualizarContador();
     preencherRodape();
+    HeroCartas.montar();
 
     document.addEventListener("carrinho:alterado", atualizarContador);
     document.addEventListener("carrinho:item-adicionado", pulsarBotaoPedido);

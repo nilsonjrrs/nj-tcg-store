@@ -497,6 +497,40 @@ a {
   color: var(--color-muted);
 }
 
+/* Cartas reais da coleção (ver js/hero-cartas.js) — mobile-first como uma
+   fileira horizontal com rolagem, abaixo do texto, sem sobrepor nada. Em
+   telas largas (ver media query abaixo) vira posicionamento absoluto ao
+   redor do vórtice, do lado direito da arte de fundo do hero. */
+.hero-cartas {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  overflow-x: auto;
+  padding-bottom: var(--space-1);
+}
+
+.hero-carta {
+  flex-shrink: 0;
+  width: 72px;
+}
+
+.hero-carta[hidden] {
+  display: none;
+}
+
+/* Especificidade combinada (em vez de .hero-carta-tilt sozinho) porque
+   .produto-tilt define aspect-ratio:1/1 mais abaixo no arquivo — com a
+   mesma especificidade, quem vem depois ganharia. */
+.hero-carta-tilt.produto-tilt {
+  aspect-ratio: 5 / 7;
+  border-radius: var(--radius-sm);
+}
+
+.hero-carta-tilt .produto-tilt-inner img {
+  object-fit: contain;
+  background: var(--color-surface-2);
+}
+
 @media (min-width: 1024px) {
   .hero {
     min-height: 560px;
@@ -506,6 +540,68 @@ a {
     font-size: 44px;
     line-height: 1.12;
     max-width: 26ch;
+  }
+
+  .hero-cartas {
+    position: absolute;
+    inset: 0;
+    margin-top: 0;
+    padding-bottom: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .hero-carta {
+    position: absolute;
+    width: 108px;
+    pointer-events: auto;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+  }
+
+  .hero-carta-flutuante {
+    animation: hero-carta-flutuar var(--flutuar-duracao, 6s) ease-in-out infinite;
+    animation-delay: var(--flutuar-atraso, 0ms);
+  }
+
+  .hero-carta--1 {
+    left: 61%;
+    top: 18%;
+    width: 128px;
+    transform: translate(-50%, -50%) rotate(-7deg);
+  }
+
+  .hero-carta--2 {
+    left: 54%;
+    top: 62%;
+    transform: translate(-50%, -50%) rotate(6deg);
+  }
+
+  .hero-carta--3 {
+    left: 75%;
+    top: 40%;
+    transform: translate(-50%, -50%) rotate(-4deg);
+  }
+
+  .hero-carta--4 {
+    left: 85%;
+    top: 68%;
+    transform: translate(-50%, -50%) rotate(9deg);
+  }
+
+  .hero-carta--5 {
+    left: 90%;
+    top: 22%;
+    width: 92px;
+    transform: translate(-50%, -50%) rotate(-10deg);
+  }
+}
+
+@keyframes hero-carta-flutuar {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
 
