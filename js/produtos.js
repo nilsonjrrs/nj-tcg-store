@@ -125,7 +125,7 @@ const PRODUTOS = [
     preco: 299.90,
     precoPix: null,
     estoque: null,
-    img: ""
+    img: "img/celebracao30-box-greninja.jpg"
   },
   {
     sku: "C30-ETB",
@@ -161,6 +161,6 @@ const PRODUTOS = [
     preco: 479.90,
     precoPix: null,
     estoque: null,
-    img: ""
+    img: "img/celebracao30-aglutinador-en.jpg"
   }
 ];
