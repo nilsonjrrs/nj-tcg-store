@@ -147,13 +147,24 @@
 </main>
 
 <div id="modal-booster" class="modal modal-booster" hidden>
-  <div class="booster-palco" role="dialog" aria-modal="true" aria-label="Abrir booster Reinado Delta">
+  <div class="booster-palco" id="booster-palco" role="dialog" aria-modal="true" aria-label="Abrir booster Reinado Delta">
     <button id="fechar-booster" class="fechar-booster" type="button" aria-label="Fechar">&times;</button>
 
+    <div class="booster-fx" aria-hidden="true">
+      <div class="booster-flash" id="booster-flash"></div>
+      <div class="booster-raios" id="booster-raios"></div>
+      <div class="booster-particulas" id="booster-particulas"></div>
+    </div>
+
     <div class="booster-fechado" id="booster-fechado">
-      <div class="booster-pacote" id="booster-pacote">
-        <div class="booster-arte" aria-hidden="true"></div>
-        <p class="booster-rotulo" aria-hidden="true">Reinado Delta</p>
+      <div class="booster-pacote" id="booster-pacote-visual">
+        <div class="booster-pacote-flap booster-pacote-flap--topo" id="booster-flap-topo">
+          <div class="booster-arte" aria-hidden="true"></div>
+        </div>
+        <div class="booster-pacote-flap booster-pacote-flap--base" id="booster-flap-base">
+          <div class="booster-arte" aria-hidden="true"></div>
+          <p class="booster-rotulo" aria-hidden="true">Reinado Delta</p>
+        </div>
         <div class="booster-corte" id="booster-corte" role="button" tabindex="0" aria-label="Arraste ou pressione Enter para rasgar o pacote">
           <span class="booster-corte-linha" aria-hidden="true"></span>
           <span class="booster-corte-dica" id="booster-corte-dica">Deslize para rasgar</span>

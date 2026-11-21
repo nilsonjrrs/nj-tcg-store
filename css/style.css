@@ -715,6 +715,161 @@ a {
   text-align: center;
 }
 
+.booster-palco.entrando {
+  animation: booster-palco-entrar 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes booster-palco-entrar {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.booster-palco.tremer {
+  animation: booster-tremer 320ms ease-in-out;
+}
+
+@keyframes booster-tremer {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-6px, 2px);
+  }
+  40% {
+    transform: translate(5px, -3px);
+  }
+  60% {
+    transform: translate(-4px, 3px);
+  }
+  80% {
+    transform: translate(3px, -2px);
+  }
+}
+
+/* Camada de efeitos (flash, raios de luz, partículas) por cima de todo o
+   palco, sempre com pointer-events desligado pra nunca capturar cliques. */
+.booster-fx {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.booster-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 70%);
+  opacity: 0;
+}
+
+.booster-flash--ativo {
+  animation: booster-flash-pulso 420ms ease-out;
+}
+
+@keyframes booster-flash-pulso {
+  0% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.booster-raios {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 255, 255, 0.55) 6deg,
+    transparent 16deg,
+    transparent 36deg,
+    rgba(255, 255, 255, 0.4) 42deg,
+    transparent 52deg,
+    transparent 76deg,
+    rgba(255, 255, 255, 0.5) 82deg,
+    transparent 92deg,
+    transparent 116deg,
+    rgba(255, 255, 255, 0.4) 122deg,
+    transparent 132deg,
+    transparent 156deg,
+    rgba(255, 255, 255, 0.5) 162deg,
+    transparent 172deg,
+    transparent 196deg,
+    rgba(255, 255, 255, 0.4) 202deg,
+    transparent 212deg,
+    transparent 236deg,
+    rgba(255, 255, 255, 0.5) 242deg,
+    transparent 252deg,
+    transparent 276deg,
+    rgba(255, 255, 255, 0.4) 282deg,
+    transparent 292deg,
+    transparent 316deg,
+    rgba(255, 255, 255, 0.5) 322deg,
+    transparent 332deg
+  );
+}
+
+.booster-raios--ativo {
+  animation: booster-raios-explodir 650ms ease-out;
+}
+
+@keyframes booster-raios-explodir {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.3) rotate(35deg);
+  }
+}
+
+.booster-particula {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: var(--tam, 7px);
+  height: var(--tam, 7px);
+  border-radius: 50%;
+  background: var(--cor, #ffd166);
+  box-shadow: 0 0 6px var(--cor, #ffd166);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: booster-particula-voar var(--duracao, 700ms) ease-out forwards;
+}
+
+@keyframes booster-particula-voar {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--dx, 0), var(--dy, 0)) scale(0.3);
+  }
+}
+
 .fechar-booster {
   position: absolute;
   top: var(--space-3);
@@ -751,22 +906,52 @@ a {
   width: 200px;
   aspect-ratio: 5 / 7;
   border-radius: var(--radius-md);
-  overflow: hidden;
   background-color: var(--color-accent-strong);
   box-shadow: 0 10px 34px rgba(124, 58, 237, 0.5);
-  transform-origin: top center;
-  transition: transform 300ms ease-in, opacity 300ms ease-in;
-  transform: rotateX(calc(var(--progresso-corte) * -70deg));
-  opacity: calc(1 - var(--progresso-corte) * 0.3);
 }
 
-.booster-pacote.sem-transicao {
+/* O pacote é dividido em duas metades independentes (acima/abaixo da linha
+   de corte) pra rasgar de verdade: cada uma recorta sua parte da arte via
+   clip-path e gira/sai da tela por conta própria no final, em vez do pacote
+   inteiro dobrar como uma aba só. */
+.booster-pacote-flap {
+  position: absolute;
+  inset: 0;
+  transition: transform 300ms ease-in, opacity 300ms ease-in;
+}
+
+.booster-pacote-flap--topo {
+  clip-path: inset(0 0 74% 0 round var(--radius-md) var(--radius-md) 0 0);
+  transform-origin: top center;
+  transform: rotateX(calc(var(--progresso-corte) * -70deg)) translateY(calc(var(--progresso-corte) * -4px));
+}
+
+.booster-pacote-flap--base {
+  clip-path: inset(26% 0 0 0 round 0 0 var(--radius-md) var(--radius-md));
+  transform-origin: bottom center;
+  transform: rotateX(calc(var(--progresso-corte) * 18deg));
+}
+
+.booster-pacote.sem-transicao .booster-pacote-flap {
   transition: none;
 }
 
-.booster-pacote--rasgado {
-  transform: rotateX(-100deg) translateY(-30px) !important;
+.booster-pacote--rasgado .booster-pacote-flap--topo {
+  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1), opacity 420ms ease-out;
+  transform: rotateX(-170deg) translateY(-90px) translateX(-18px) !important;
   opacity: 0 !important;
+}
+
+.booster-pacote--rasgado .booster-pacote-flap--base {
+  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1) 70ms, opacity 420ms ease-out 70ms;
+  transform: rotateX(60deg) translateY(60px) translateX(14px) !important;
+  opacity: 0 !important;
+}
+
+.booster-pacote--rasgado .booster-corte {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease-out;
 }
 
 .booster-arte {
@@ -849,12 +1034,40 @@ a {
   touch-action: pan-y;
 }
 
+.carta-palco.entrando {
+  animation: carta-palco-entrar 320ms ease-out;
+}
+
+@keyframes carta-palco-entrar {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.94) rotateZ(-3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .carta-palco-inner {
   position: relative;
   width: 100%;
   aspect-ratio: 5 / 7;
   transition: transform 500ms;
   transform-style: preserve-3d;
+}
+
+.carta-palco-inner:not(.virada) {
+  animation: carta-verso-pulso 2.2s ease-in-out infinite;
+}
+
+@keyframes carta-verso-pulso {
+  0%, 100% {
+    box-shadow: 0 10px 28px rgba(124, 58, 237, 0.35);
+  }
+  50% {
+    box-shadow: 0 10px 40px rgba(124, 58, 237, 0.65);
+  }
 }
 
 .carta-palco-inner.virada {
@@ -873,6 +1086,28 @@ a {
   background: var(--color-bg);
 }
 
+/* Reflexo de brilho (sheen) que varre toda carta revelada uma única vez,
+   bem depois do flip terminar — dá o acabamento "foil brilhando" de
+   abertura real de pacote. Elemento real (não ::before/::after) porque os
+   dois pseudo-elementos de .produto-tilt já são usados pelo foil/brilho
+   ambiente que seguem o ponteiro. */
+.carta-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.7) 50%, transparent 65%);
+  transform: translateX(-130%);
+  animation: carta-sheen-varrer 700ms ease-out 420ms;
+  mix-blend-mode: overlay;
+}
+
+@keyframes carta-sheen-varrer {
+  to {
+    transform: translateX(130%);
+  }
+}
+
 .carta-palco-tilt--irfa {
   box-shadow: 0 0 22px rgba(150, 105, 215, 0.75);
   border: 2px solid var(--color-accent-strong);
@@ -882,7 +1117,7 @@ a {
 .carta-palco-tilt--sir {
   box-shadow: 0 0 28px rgba(255, 209, 102, 0.85);
   border: 2px solid #ffd166;
-  animation: aura-revelar 700ms ease-out;
+  animation: aura-revelar 700ms ease-out, aura-pulso-sir 1.8s ease-in-out 700ms infinite;
 }
 
 @keyframes aura-revelar {
@@ -893,6 +1128,15 @@ a {
   100% {
     transform: scale(1);
     filter: brightness(1);
+  }
+}
+
+@keyframes aura-pulso-sir {
+  0%, 100% {
+    box-shadow: 0 0 28px rgba(255, 209, 102, 0.85);
+  }
+  50% {
+    box-shadow: 0 0 44px rgba(255, 209, 102, 1);
   }
 }
 
@@ -943,6 +1187,20 @@ a {
   overflow: hidden;
   border: 1px solid var(--color-border);
   background: var(--color-surface-2);
+  opacity: 0;
+  animation: booster-miniatura-entrar 420ms ease-out forwards;
+  animation-delay: var(--retardo, 0ms);
+}
+
+@keyframes booster-miniatura-entrar {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .booster-miniatura img {
