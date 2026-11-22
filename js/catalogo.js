@@ -111,29 +111,6 @@ const Catalogo = (function () {
     });
   }
 
-  // Atalho do cabeçalho: um tipo de produto por vez (ou todos).
-  function renderizarCategorias() {
-    const nav = el("nav-categorias");
-    nav.querySelectorAll("button").forEach((b) => b.remove());
-    const referencia = nav.firstChild;
-    const criar = (rotulo, valor) => {
-      const botao = document.createElement("button");
-      botao.type = "button";
-      botao.textContent = rotulo;
-      const ativo = valor === null ? selecionados.categoria.size === 0 : selecionados.categoria.size === 1 && selecionados.categoria.has(valor);
-      botao.setAttribute("aria-pressed", String(ativo));
-      botao.addEventListener("click", () => {
-        selecionados.categoria.clear();
-        if (valor !== null) selecionados.categoria.add(valor);
-        atualizar();
-        Vistas.abrir("loja", "catalogo");
-      });
-      nav.insertBefore(botao, referencia);
-    };
-    criar("Todos os produtos", null);
-    valoresUnicos("categoria").forEach((valor) => criar(valor, valor));
-  }
-
   function renderizarAtivos() {
     const container = el("filtros-ativos");
     container.innerHTML = "";
@@ -339,7 +316,6 @@ const Catalogo = (function () {
 
   function atualizar() {
     renderizarFiltros();
-    renderizarCategorias();
     renderizarAtivos();
     renderizarGrade();
   }
