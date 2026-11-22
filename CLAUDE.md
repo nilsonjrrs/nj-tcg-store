@@ -24,7 +24,7 @@ Em `.claude/skills/`: `ecommerce-visual-designer`, `digital-marketing-tcg`, `sen
 - Pagamento: Pix ou cartão (cartão com acréscimo de taxa, percentual não definido)
 - Entrega: Envio protegido (Correios/motoboy) ou retirada local em Curitiba — cliente escolhe no carrinho
 - Catálogo (produtos selados): 11 produtos das coleções Reinado Delta e Celebração 30 Anos (português e inglês importado), com preços da tabela enviada pelo Nilson. Nenhum tem `estoque` numérico ainda (controle de estoque desligado por enquanto, de propósito). O Mini Tin foi retirado do catálogo a pedido do Nilson (ver "Feito" abaixo) — os dados dele não ficaram em nenhum lugar do código, só aqui na memória do projeto; se ele quiser recolocar, os dados eram: sku `C30-MT-EN`, categoria Acessório, idioma Inglês · importado, preço R$ 219,90.
-- Cartas Avulsas (seção separada, `#cartas-avulsas`): 141 cartas de Reinado Delta + 199 de Celebração 30 Anos = 340 cartas navegáveis, com filtro de coleção, busca e ordenação. Praticamente nenhuma carta de Celebração 30 Anos tem preço real ainda (tudo "Sob consulta").
+- Cartas Avulsas: **seção removida do site em 22/11/2026** a pedido do Vinicius (ver o último item de "Feito"). As cartas das duas coleções continuam navegáveis pelo Fichário (`#colecao`), sem preço.
 - Logo: `img/logo.webp` (arte do Gengar, já usada na tabela de preços da loja).
 - Site publicado: https://nilsonjrrs.github.io/nj-tcg-store/ (repositório: github.com/nilsonjrrs/nj-tcg-store)
 
@@ -110,3 +110,8 @@ Em `.claude/skills/`: `ecommerce-visual-designer`, `digital-marketing-tcg`, `sen
   - **Cartas avulsas**: miniatura de 300px no lugar da imagem cheia (o zoom segue abrindo a cheia), sem `Tilt.ativar` por carta, sem as camadas de brilho do `.produto-tilt`, e `content-visibility: auto` nos cards. Continua sendo a aba mais pesada (340 cards na mesma lista); se travar, paginar.
   - **Animações contínuas removidas**: pulso do botão do WhatsApp e do pacote do simulador. O expositor do topo não é montado abaixo de 720px (já ficava escondido).
   - Página inicial depois: 468 elementos, 4.887px. Testado na prévia local (troca de abas, atalhos entre abas, zoom); a fluidez em celular real não foi medida.
+- [x] **Cartas Avulsas removida + cartas corrigidas no celular** (22/11/2026, sessão do Vinicius):
+  - **Cartas Avulsas**: saíram a seção `#cartas-avulsas`, os links do menu, a aba em `js/vistas.js`, o módulo `js/cartas-catalogo.js` e o CSS dela (o código continua no histórico do git, commit `2765777`, se o Nilson quiser de volta). `js/cartas-celebracao-30-anos.js` ficou no repositório mas **não é mais carregado** pela página — serve de referência (é de onde vieram os números impressos das clássicas usados no fichário). Um link antigo `#cartas-avulsas` cai na Loja.
+  - **Zoom da carta no celular**: a carta ampliada ficava esticada (327x690 numa tela de 375px), porque a altura era fixa em 85vh e o `max-width` espremia só a largura. Agora a largura é que manda (`min(100vw - margem, 85vh x 0,719, 736px)`) e a altura segue a proporção (`css/style.css`, `.zoom-carta-3d.zoom-carta #zoom-imagem`).
+  - **Fichário no celular** (até 719px): capa e folhas mais finas, cada carta passou de 76 pra 91px de largura; mais respiro no rodapé pro botão do WhatsApp não cobrir os botões de página.
+  - Testado na prévia local em 375 e 1440px; não testado em celular real.

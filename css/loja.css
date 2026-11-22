@@ -746,58 +746,6 @@ body {
   outline-offset: 3px;
 }
 
-/* ---------- Cartas avulsas (seção do Nilson, js/cartas-catalogo.js) ---------- */
-.secao-cartas {
-  max-width: var(--loja-max);
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-4) var(--space-7);
-  scroll-margin-top: var(--topo-h);
-}
-
-/* 340 cartas: o navegador só desenha as que estão perto da tela, e a moldura fica sem as
-   camadas de brilho que seguem o ponteiro (elas custavam caro com tantas cartas) */
-.carta-avulsa-card {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 320px;
-}
-
-.carta-avulsa-card .produto-tilt::before,
-.carta-avulsa-card .produto-tilt::after {
-  content: none;
-}
-
-.cartas-filtros {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: var(--space-4);
-  margin: var(--space-5) 0;
-}
-
-.cartas-filtro {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.cartas-filtro-rotulo {
-  color: var(--color-muted);
-  font-size: var(--text-sm);
-  font-weight: bold;
-}
-
-.cartas-filtro-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.campo-busca-cartas,
-.campo-select-cartas {
-  min-height: 44px;
-  border-radius: var(--raio-1);
-}
-
 /* ---------- Estados vazios ---------- */
 .vazio {
   padding: var(--space-7) var(--space-4);
@@ -1395,6 +1343,37 @@ body {
 
   .grade {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Celular: fichário com mais área de carta ---------- */
+@media (max-width: 719px) {
+  .secao-colecao {
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+
+  .fichario {
+    padding: var(--space-2) var(--space-2) var(--space-2) 26px;
+  }
+
+  .fichario-argolas {
+    left: 3px;
+    width: 22px;
+  }
+
+  .fichario-folha {
+    gap: 6px;
+    padding: var(--space-2);
+  }
+
+  .fichario-bolso {
+    padding: 4% 4% 3%;
+  }
+
+  /* o botão do WhatsApp não fica por cima do último bolso nem dos botões de página */
+  .rodape-loja-conteudo {
+    padding-bottom: calc(var(--space-9) + var(--space-4));
   }
 }
 

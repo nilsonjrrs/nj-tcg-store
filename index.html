@@ -40,7 +40,6 @@
     </form>
     <nav class="topo-links" aria-label="Outras seções">
       <a href="#inicio" data-vista="loja">Loja</a>
-      <a href="#cartas-avulsas" data-vista="cartas-avulsas">Cartas avulsas</a>
       <a href="#simulador" data-vista="simulador">Simulador</a>
       <a href="#colecao" data-vista="colecao">Fichário</a>
       <a href="https://wa.me/5541988686833?text=Ol%C3%A1!%20Quero%20entrar%20no%20Grupo%20VIP%20da%20NJ%20TCG%20Store." id="link-grupo-vip" target="_blank" rel="noopener">Grupo VIP</a>
@@ -51,7 +50,7 @@
       <span class="botao-pedido-qtd" id="contador-pedido" data-vazio="true">0</span>
     </button>
   </div>
-  <nav class="categorias" id="nav-categorias" aria-label="Tipos de produto"><span class="categorias-divisor so-celular" aria-hidden="true"></span><a class="so-celular" href="#cartas-avulsas" data-vista="cartas-avulsas">Cartas avulsas</a><a class="so-celular" href="#simulador" data-vista="simulador">Simulador</a><a class="so-celular" href="#colecao" data-vista="colecao">Fichário</a></nav>
+  <nav class="categorias" id="nav-categorias" aria-label="Tipos de produto"><span class="categorias-divisor so-celular" aria-hidden="true"></span><a class="so-celular" href="#simulador" data-vista="simulador">Simulador</a><a class="so-celular" href="#colecao" data-vista="colecao">Fichário</a></nav>
 </header>
 
 <section class="vitrine" id="inicio" aria-labelledby="vitrine-titulo">
@@ -137,34 +136,6 @@
         <p>O pedido chega pronto na conversa. Lá confirmamos estoque, frete e pagamento.</p>
       </li>
     </ol>
-  </section>
-
-  <section class="secao-cartas" id="cartas-avulsas" aria-label="Catálogo de cartas avulsas" hidden>
-    <h2 class="secao-titulo">Cartas Avulsas</h2>
-    <p class="secao-subtitulo">Cartas das coleções Reinado Delta e Celebração 30 Anos, uma por uma. A maioria ainda está sem preço fechado — fale no WhatsApp pra consultar.</p>
-
-    <div class="cartas-filtros" role="group" aria-label="Filtrar cartas avulsas">
-      <div class="cartas-filtro">
-        <span class="cartas-filtro-rotulo">Coleção</span>
-        <div class="cartas-filtro-chips" id="filtro-cartas-colecao"></div>
-      </div>
-      <div class="cartas-filtro">
-        <label class="cartas-filtro-rotulo" for="busca-carta">Buscar</label>
-        <input type="search" id="busca-carta" class="campo-busca-cartas" placeholder="Nome ou número da carta...">
-      </div>
-      <div class="cartas-filtro">
-        <label class="cartas-filtro-rotulo" for="ordenar-cartas">Ordenar</label>
-        <select id="ordenar-cartas" class="campo-select-cartas">
-          <option value="numero">Número</option>
-          <option value="nome">Nome (A-Z)</option>
-          <option value="preco-desc">Preço: maior primeiro</option>
-          <option value="preco-asc">Preço: menor primeiro</option>
-        </select>
-      </div>
-    </div>
-
-    <div id="grade-cartas" class="grade-cartas"></div>
-    <p id="cartas-contagem" class="cartas-contagem" aria-live="polite"></p>
   </section>
 
   <section class="secao-simulador" id="simulador" aria-label="Simulador de Pacotinhos" hidden>
@@ -373,7 +344,6 @@
 <script src="js/config.js"></script>
 <script src="js/produtos.js"></script>
 <script src="js/cartas-reinado-delta.js"></script>
-<script src="js/cartas-celebracao-30-anos.js"></script>
 <script src="js/tilt.js"></script>
 <script src="js/hero-cartas.js"></script>
 <script src="js/carrinho.js"></script>
@@ -382,7 +352,6 @@
 <script src="js/produto-detalhe.js"></script>
 <script src="js/cartas-celebracao-30.js"></script>
 <script src="js/simulador.js"></script>
-<script src="js/cartas-catalogo.js"></script>
 <script src="js/booster-ui.js"></script>
 <script src="js/colecao.js"></script>
 <script src="js/simulador-vitrine.js"></script>

@@ -1,13 +1,11 @@
-// Abas do site: Loja, Cartas avulsas, Simulador e Fichário dividem a mesma
-// página, mas só uma fica visível por vez — e as duas pesadas (340 cartas
-// avulsas, fichário) só são montadas na primeira vez que alguém abre.
-// A aba vem do endereço (#cartas-avulsas, #simulador, #colecao; qualquer
+// Abas do site: Loja, Simulador e Fichário dividem a mesma página, mas só
+// uma fica visível por vez — e o fichário só é montado na primeira vez que
+// alguém abre. A aba vem do endereço (#simulador, #colecao; qualquer
 // outro # é uma âncora dentro da Loja), então links, voltar do navegador e
 // endereço compartilhado continuam funcionando.
 const Vistas = (function () {
   const VISTAS = {
     loja: { secoes: ["#inicio", "#catalogo", "#como-comprar"] },
-    "cartas-avulsas": { secoes: ["#cartas-avulsas"], aoAbrir: () => CartasCatalogo.montar() },
     simulador: { secoes: ["#simulador"] },
     colecao: { secoes: ["#colecao"], aoAbrir: () => Colecao.iniciar() },
   };
