@@ -118,7 +118,7 @@ const Catalogo = (function () {
         selecionados.categoria.clear();
         if (valor !== null) selecionados.categoria.add(valor);
         atualizar();
-        el("catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+        Vistas.abrir("loja", "catalogo");
       });
       nav.insertBefore(botao, referencia);
     };
@@ -390,7 +390,7 @@ const Catalogo = (function () {
     el("busca-produto").addEventListener("input", (evento) => definirBusca(evento.target.value));
     el("form-busca").addEventListener("submit", (evento) => {
       evento.preventDefault();
-      el("catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+      Vistas.abrir("loja", "catalogo");
     });
     el("ordenar").addEventListener("change", (evento) => {
       ordem = evento.target.value;

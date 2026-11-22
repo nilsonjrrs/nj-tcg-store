@@ -65,7 +65,8 @@
     Pedido.iniciar();
     atualizarContador();
     preencherTextosDaLoja();
-    HeroCartas.montar();
+    // o expositor fica escondido no celular: lá nem monta (são 5 imagens de carta em tamanho cheio)
+    if (window.matchMedia("(min-width: 720px)").matches) HeroCartas.montar();
 
     document.addEventListener("carrinho:alterado", atualizarContador);
     document.addEventListener("carrinho:item-adicionado", pulsarBotaoPedido);
@@ -105,10 +106,8 @@
       window.open("https://wa.me/" + CONFIG.whatsappNumero + "?text=" + encodeURIComponent(mensagem), "_blank", "noopener");
     });
 
-    CartasCatalogo.montar();
 
     BoosterUI.iniciar();
-    Colecao.iniciar();
     SimuladorVitrine.iniciar();
     // o link "Abrir booster virtual" do produto usa este evento
     document.addEventListener("simulador:abrir", () => BoosterUI.abrir("reinado-delta"));
@@ -121,6 +120,7 @@
     el("booster-comprar").addEventListener("click", (evento) => {
       evento.preventDefault();
       BoosterUI.fechar();
+      Vistas.abrir("loja");
       Catalogo.limparFiltros();
       requestAnimationFrame(() => {
         const alvo = el("produto-" + BoosterUI.colecaoAtual().produtoId);
@@ -130,5 +130,7 @@
         setTimeout(() => alvo.classList.remove("produto-card--destaque"), 1600);
       });
     });
+
+    Vistas.iniciar();
   });
 })();

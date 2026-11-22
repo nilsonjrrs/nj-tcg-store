@@ -39,9 +39,10 @@
       <input type="search" id="busca-produto" placeholder="Buscar produto, coleção ou código" autocomplete="off">
     </form>
     <nav class="topo-links" aria-label="Outras seções">
-      <a href="#cartas-avulsas">Cartas avulsas</a>
-      <a href="#simulador">Simulador</a>
-      <a href="#colecao">Fichário</a>
+      <a href="#inicio" data-vista="loja">Loja</a>
+      <a href="#cartas-avulsas" data-vista="cartas-avulsas">Cartas avulsas</a>
+      <a href="#simulador" data-vista="simulador">Simulador</a>
+      <a href="#colecao" data-vista="colecao">Fichário</a>
       <a href="https://wa.me/5541988686833?text=Ol%C3%A1!%20Quero%20entrar%20no%20Grupo%20VIP%20da%20NJ%20TCG%20Store." id="link-grupo-vip" target="_blank" rel="noopener">Grupo VIP</a>
     </nav>
     <button id="botao-pedido" class="botao-pedido" type="button" aria-haspopup="dialog">
@@ -50,7 +51,7 @@
       <span class="botao-pedido-qtd" id="contador-pedido" data-vazio="true">0</span>
     </button>
   </div>
-  <nav class="categorias" id="nav-categorias" aria-label="Tipos de produto"><span class="categorias-divisor so-celular" aria-hidden="true"></span><a class="so-celular" href="#cartas-avulsas">Cartas avulsas</a><a class="so-celular" href="#simulador">Simulador</a><a class="so-celular" href="#colecao">Fichário</a></nav>
+  <nav class="categorias" id="nav-categorias" aria-label="Tipos de produto"><span class="categorias-divisor so-celular" aria-hidden="true"></span><a class="so-celular" href="#cartas-avulsas" data-vista="cartas-avulsas">Cartas avulsas</a><a class="so-celular" href="#simulador" data-vista="simulador">Simulador</a><a class="so-celular" href="#colecao" data-vista="colecao">Fichário</a></nav>
 </header>
 
 <section class="vitrine" id="inicio" aria-labelledby="vitrine-titulo">
@@ -120,7 +121,7 @@
     </div>
   </section>
 
-  <section class="como-comprar" aria-labelledby="como-comprar-titulo">
+  <section class="como-comprar" id="como-comprar" aria-labelledby="como-comprar-titulo">
     <h2 class="titulo-secao" id="como-comprar-titulo">Como comprar</h2>
     <ol class="passos">
       <li>
@@ -138,7 +139,7 @@
     </ol>
   </section>
 
-  <section class="secao-cartas" id="cartas-avulsas" aria-label="Catálogo de cartas avulsas">
+  <section class="secao-cartas" id="cartas-avulsas" aria-label="Catálogo de cartas avulsas" hidden>
     <h2 class="secao-titulo">Cartas Avulsas</h2>
     <p class="secao-subtitulo">Cartas das coleções Reinado Delta e Celebração 30 Anos, uma por uma. A maioria ainda está sem preço fechado — fale no WhatsApp pra consultar.</p>
 
@@ -166,7 +167,7 @@
     <p id="cartas-contagem" class="cartas-contagem" aria-live="polite"></p>
   </section>
 
-  <section class="secao-simulador" id="simulador" aria-label="Simulador de Pacotinhos">
+  <section class="secao-simulador" id="simulador" aria-label="Simulador de Pacotinhos" hidden>
     <h2 class="secao-titulo" id="simulador-titulo">Simulador de Pacotinhos</h2>
     <p class="secao-subtitulo">Abra um booster virtual e veja quais cartas poderiam sair. É só uma demonstração — as cartas de verdade vêm dentro do booster lacrado.</p>
 
@@ -183,7 +184,7 @@
     <p class="simulador-legenda" id="simulador-legenda">Simulação com a ordem das cartas e as chances de raridade estimadas pela comunidade para a série Megaevolução. A Pokémon não divulga taxas oficiais.</p>
   </section>
 
-  <section class="secao-colecao" id="colecao" aria-label="Coleção">
+  <section class="secao-colecao" id="colecao" aria-label="Coleção" hidden>
     <h2 class="secao-titulo">Coleção</h2>
     <p class="secao-subtitulo">Todas as cartas de cada coleção, em ordem. Toque numa carta pra ampliar.</p>
 
@@ -386,6 +387,7 @@
 <script src="js/colecao.js"></script>
 <script src="js/simulador-vitrine.js"></script>
 <script src="js/pedido.js"></script>
+<script src="js/vistas.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

@@ -10,6 +10,7 @@ const Colecao = (function () {
   let cartas = [];
   let todas = []; // a coleção inteira, em ordem
   let inicio = 0; // índice da primeira carta à mostra
+  let iniciado = false;
 
   const el = (id) => document.getElementById(id);
 
@@ -101,11 +102,13 @@ const Colecao = (function () {
 
   // usado pela logo do simulador: troca pra coleção e rola até o fichário
   function irPara(id) {
+    Vistas.abrir("colecao"); // monta o fichário se for a primeira vez
     mostrar(id);
-    el("colecao").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function iniciar() {
+    if (iniciado) return;
+    iniciado = true;
     const abas = el("colecao-abas");
     Simulador.colecoes.forEach((c) => {
       const aba = document.createElement("button");

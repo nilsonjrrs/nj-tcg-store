@@ -465,9 +465,6 @@ a {
   cursor: grabbing;
 }
 
-.pacote-virtual--frente:not(.arrastando) img {
-  animation: pulsar-pacote 2.6s ease-in-out infinite;
-}
 
 .simulador-vitrine-dica {
   margin: calc(var(--space-3) * -1) 0 0;
@@ -2195,7 +2192,6 @@ button.fichario-bolso:focus-visible {
   justify-content: center;
   cursor: pointer;
   box-shadow: var(--shadow-md);
-  animation: pulsar-whatsapp 2.4s ease-in-out infinite;
 }
 
 @keyframes pulsar-whatsapp {

@@ -354,6 +354,7 @@ body {
   color: var(--color-text);
 }
 
+.categorias a[aria-current="page"],
 .categorias button[aria-pressed="true"] {
   color: var(--color-text);
   border-bottom-color: var(--color-primary);
@@ -751,6 +752,18 @@ body {
   margin: 0 auto;
   padding: var(--space-6) var(--space-4) var(--space-7);
   scroll-margin-top: var(--topo-h);
+}
+
+/* 340 cartas: o navegador só desenha as que estão perto da tela, e a moldura fica sem as
+   camadas de brilho que seguem o ponteiro (elas custavam caro com tantas cartas) */
+.carta-avulsa-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
+}
+
+.carta-avulsa-card .produto-tilt::before,
+.carta-avulsa-card .produto-tilt::after {
+  content: none;
 }
 
 .cartas-filtros {
@@ -1263,8 +1276,13 @@ body {
     text-decoration: none;
   }
 
-  .topo-links a:hover {
+  .topo-links a:hover,
+  .topo-links a[aria-current="page"] {
     color: var(--color-text);
+  }
+
+  .topo-links a[aria-current="page"] {
+    box-shadow: inset 0 -3px 0 var(--color-primary);
   }
 
   .grade {

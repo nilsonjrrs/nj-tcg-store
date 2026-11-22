@@ -157,7 +157,7 @@ const Pedido = (function () {
     el("continuar-comprando").addEventListener("click", fechar);
     el("pedido-ver-catalogo").addEventListener("click", () => {
       fechar();
-      el("catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
+      Vistas.abrir("loja", "catalogo");
     });
     el("modal-pedido").addEventListener("click", (evento) => {
       if (evento.target.id === "modal-pedido") fechar();

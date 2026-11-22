@@ -53,16 +53,18 @@ const CartasCatalogo = (function () {
     const inner = document.createElement("div");
     inner.className = "produto-tilt-inner";
     const img = document.createElement("img");
-    img.src = carta.imagem_url;
+    img.src = carta.imagem_url.replace("img/cartas/", "img/cartas/p/");
     img.alt = carta.nome;
     img.loading = "lazy";
+    img.decoding = "async";
+    img.width = 300;
+    img.height = 417;
     img.addEventListener("error", () => {
       inner.textContent = carta.nome;
     });
     inner.appendChild(img);
     tilt.appendChild(inner);
     el.appendChild(tilt);
-    Tilt.ativar(tilt);
 
     const nivel = nivelDe(carta);
     if (nivel !== "base") {
@@ -176,6 +178,7 @@ const CartasCatalogo = (function () {
     aplicarFiltros();
   }
 
+  // Chamado por js/vistas.js na primeira vez que a aba "Cartas avulsas" é aberta.
   function montar() {
     if (typeof CARTAS_REINADO_DELTA === "undefined" || typeof CARTAS_CELEBRACAO_30_ANOS === "undefined") return;
 
