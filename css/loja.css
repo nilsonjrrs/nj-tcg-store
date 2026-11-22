@@ -3,8 +3,8 @@
 
    Direção: "galeria de colecionáveis com precisão de catálogo".
    Parede escura e neutra, fotos de produto sobre um passe-partout claro
-   (como numa galeria), títulos numa condensada de etiqueta e um único
-   detalhe holográfico: o filete do cabeçalho e do produto em foco.
+   (como numa galeria), títulos numa condensada de etiqueta e um
+   detalhe holográfico no produto em foco.
    Os tokens de cor/espaço base continuam em css/style.css (:root); aqui
    ficam só os tokens novos da loja.
    ============================================================ */
@@ -191,15 +191,6 @@ body {
   background: var(--color-bg);
 }
 
-/* o único filete holográfico fixo da página */
-.topo::after {
-  content: "";
-  display: block;
-  height: 2px;
-  background: var(--holo);
-  opacity: 0.7;
-}
-
 .topo-linha {
   max-width: var(--loja-max);
   margin: 0 auto;
@@ -342,6 +333,7 @@ body {
 
 /* navegação por tipo de produto (rola na horizontal no celular) */
 .categorias {
+  position: relative;
   max-width: var(--loja-max);
   margin: 0 auto;
   padding: 0 var(--space-4);
@@ -389,6 +381,21 @@ body {
   width: 1px;
   margin: var(--space-3) var(--space-2);
   background: var(--color-border);
+}
+
+/* no celular a faixa quase sempre transborda; um degradê na borda direita
+   avisa que dá pra arrastar, em vez de simplesmente cortar o último item */
+@media (max-width: 899px) {
+  .categorias::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 28px;
+    background: linear-gradient(to right, transparent, var(--color-bg));
+    pointer-events: none;
+  }
 }
 
 /* ---------- Vitrine (primeira dobra, compacta) ---------- */
