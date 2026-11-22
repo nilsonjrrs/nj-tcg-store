@@ -196,7 +196,7 @@ body {
   margin: 0 auto;
   padding: var(--space-3) var(--space-4) var(--space-2);
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas: "marca pedido" "busca busca" "links links";
   align-items: center;
   gap: var(--space-2) var(--space-3);
@@ -207,6 +207,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  min-width: 0;
   color: var(--color-text);
   text-decoration: none;
 }
@@ -215,15 +216,27 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .marca-nome {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-family: var(--font-display);
   font-size: 26px;
   font-weight: 900;
   line-height: 1;
   letter-spacing: 0.02em;
   white-space: nowrap;
+}
+
+/* celular estreito: logo+nome e tema+pedido disputam a mesma linha; um nome
+   um pouco menor evita truncar "NJ TCG STORE" por poucos pixels */
+@media (max-width: 420px) {
+  .marca-nome {
+    font-size: 21px;
+  }
 }
 
 .busca {
@@ -351,6 +364,19 @@ body {
 
 .botao-pedido.bounce .botao-pedido-qtd {
   animation: pedido-pulso 360ms ease-out;
+}
+
+/* celular bem estreito: tira o texto "Pedido" (fica só o ícone + contador)
+   pra sobrar espaço pro nome da marca não truncar tanto */
+@media (max-width: 400px) {
+  .botao-pedido span:not(.botao-pedido-qtd) {
+    display: none;
+  }
+
+  .botao-pedido {
+    padding: 0 var(--space-2);
+    gap: var(--space-1);
+  }
 }
 
 @keyframes pedido-pulso {
