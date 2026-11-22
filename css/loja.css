@@ -357,7 +357,7 @@ body {
 .categorias a[aria-current="page"],
 .categorias button[aria-pressed="true"] {
   color: var(--color-text);
-  border-bottom-color: var(--color-primary);
+  border-bottom-color: var(--color-primary-text);
 }
 
 .categorias .categorias-divisor {
@@ -728,7 +728,7 @@ body {
 /* Preço do Pix em destaque: é o preço "principal" sempre que o produto
    tiver um valor de Pix cadastrado (produto.precoPix em js/produtos.js). */
 .produto-preco--pix {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .produto-preco-cartao {
@@ -819,7 +819,7 @@ body {
   font-size: 44px;
   font-weight: 900;
   line-height: 1;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .passos h3 {
@@ -1118,8 +1118,8 @@ body {
 
 .opcoes .chip[aria-pressed="true"] {
   background: var(--color-surface-2);
-  border-color: var(--color-primary);
-  box-shadow: inset 0 0 0 1px var(--color-primary);
+  border-color: var(--color-primary-text);
+  box-shadow: inset 0 0 0 1px var(--color-primary-text);
 }
 
 .pedido-nota {

@@ -18,6 +18,7 @@
   /* Cor — marca */
   --color-primary: #FF7C38;       /* laranja */
   --color-primary-hover: #FF9257;
+  --color-primary-text: var(--color-primary); /* laranja usado como TEXTO direto sobre o fundo da página (preço em destaque, números de passo) — separado de --color-primary porque o laranja "cheio" não tem contraste AA sobre fundo claro (ver bloco [data-theme="light"] abaixo); sobre fundo escuro os dois são iguais */
   --color-accent: #9669D7;        /* roxo */
   --color-accent-hover: #A97EE2;
   --color-accent-strong: #7C3AED; /* roxo vibrante — usado com texto branco (contraste AA) em estados ativos/pressionados */
@@ -73,6 +74,11 @@
 
   --color-text: #1C1824;
   --color-muted: #6B6475;
+
+  /* Laranja mais escuro ("ferrugem") só pra texto — o laranja de marca
+     (var(--color-primary), usado em botões) não passa 4.5:1 sobre fundo
+     claro; este token passa (4.5:1+) nos fundos claros do site. */
+  --color-primary-text: #B25627;
 
   --shadow-sm: 0 2px 8px rgba(28, 24, 36, 0.1);
   --shadow-md: 0 4px 16px rgba(28, 24, 36, 0.14);
@@ -555,7 +561,7 @@ a {
 }
 
 .simulador-total strong {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .simulador-acoes {
@@ -1112,7 +1118,7 @@ a {
 
 .carta-palco-preco {
   font-weight: bold;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .carta-dica {
@@ -1501,7 +1507,7 @@ a {
 .colecao-aba[aria-pressed="true"] {
   opacity: 1;
   background: var(--color-surface);
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-text);
 }
 
 .fichario-busca {
