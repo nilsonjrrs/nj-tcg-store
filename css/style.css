@@ -67,7 +67,7 @@
    superfícies/texto neutros; laranja, roxo e os efeitos holo/foil dos
    cards (que já têm sua própria "chapa" branca) continuam os mesmos. */
 :root[data-theme="light"] {
-  --color-bg: #F7F4EF;
+  --color-bg: #FFFFFF; /* branco puro, igual ao --color-mat (fundo das fotos de produto) */
   --color-surface: #FFFFFF;
   --color-surface-2: #EFEAE2;
   --color-border: #DDD6C9;
