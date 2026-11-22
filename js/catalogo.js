@@ -14,6 +14,14 @@ const Catalogo = (function () {
     return typeof produto.estoque === "number" && produto.estoque <= 0;
   }
 
+  // Preço que vale pro carrinho/mensagem de WhatsApp, de acordo com a forma
+  // de pagamento escolhida: Pix usa produto.precoPix quando o produto tiver
+  // um (senão cai no preço normal do cartão).
+  function precoParaPagamento(produto, formaPagamentoId) {
+    if (formaPagamentoId === "pix" && produto.precoPix) return produto.precoPix;
+    return produto.preco;
+  }
+
   function valoresUnicos(campo) {
     const vistos = [];
     PRODUTOS.forEach((produto) => {
@@ -156,17 +164,30 @@ const Catalogo = (function () {
     nome.textContent = produto.nome;
     card.appendChild(nome);
 
+    if (produto.frase) {
+      const frase = document.createElement("p");
+      frase.className = "produto-frase";
+      frase.textContent = produto.frase;
+      card.appendChild(frase);
+    }
+
     const precoLinha = document.createElement("div");
     precoLinha.className = "produto-preco-linha";
-    const preco = document.createElement("p");
-    preco.className = "produto-preco";
-    preco.textContent = formatarPreco(produto.preco);
-    precoLinha.appendChild(preco);
     if (produto.precoPix) {
-      const pix = document.createElement("span");
-      pix.className = "produto-preco-pix";
+      const pix = document.createElement("p");
+      pix.className = "produto-preco produto-preco--pix";
       pix.textContent = formatarPreco(produto.precoPix) + " no Pix";
       precoLinha.appendChild(pix);
+
+      const cartao = document.createElement("p");
+      cartao.className = "produto-preco-cartao";
+      cartao.textContent = formatarPreco(produto.preco) + " no cartão";
+      precoLinha.appendChild(cartao);
+    } else {
+      const preco = document.createElement("p");
+      preco.className = "produto-preco";
+      preco.textContent = formatarPreco(produto.preco);
+      precoLinha.appendChild(preco);
     }
     card.appendChild(precoLinha);
 
@@ -295,5 +316,5 @@ const Catalogo = (function () {
     injetarJsonLd();
   }
 
-  return { iniciar, renderizarGrade, formatarPreco, estaEsgotado, definirBusca, limparFiltros };
+  return { iniciar, renderizarGrade, formatarPreco, estaEsgotado, precoParaPagamento, definirBusca, limparFiltros };
 })();

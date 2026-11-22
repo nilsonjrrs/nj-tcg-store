@@ -2357,11 +2357,18 @@ a {
   flex: 1;
 }
 
+.produto-frase {
+  margin: 0;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
 .produto-preco-linha {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
 }
 
 .produto-preco {
@@ -2370,14 +2377,16 @@ a {
   margin: 0;
 }
 
-.produto-preco-pix {
-  display: inline-block;
-  background: var(--color-primary);
-  color: var(--color-ink);
-  font-size: 11px;
-  font-weight: bold;
-  padding: 2px var(--space-2);
-  border-radius: var(--radius-pill);
+/* Preço do Pix em destaque: é o preço "principal" sempre que o produto tiver
+   um valor de Pix cadastrado (ver produto.precoPix em js/produtos.js). */
+.produto-preco--pix {
+  color: var(--color-primary);
+}
+
+.produto-preco-cartao {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-muted);
 }
 
 .produto-acoes {

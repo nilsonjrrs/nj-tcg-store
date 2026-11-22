@@ -25,6 +25,14 @@ const Pedido = (function () {
     });
   }
 
+  function precoItem(produto) {
+    return Catalogo.precoParaPagamento(produto, pagamentoSelecionado);
+  }
+
+  function totalPedido() {
+    return Carrinho.itens().reduce((soma, item) => soma + precoItem(item.produto) * item.quantidade, 0);
+  }
+
   function renderizarLista() {
     const lista = document.getElementById("lista-pedido");
     const vazio = document.getElementById("pedido-vazio");
@@ -41,7 +49,7 @@ const Pedido = (function () {
 
         const nome = document.createElement("span");
         nome.className = "item-nome";
-        nome.textContent = quantidade + "x " + produto.nome + " — " + formatarPreco(produto.preco * quantidade);
+        nome.textContent = quantidade + "x " + produto.nome + " — " + formatarPreco(precoItem(produto) * quantidade);
 
         const remover = document.createElement("button");
         remover.className = "item-remover";
@@ -61,7 +69,7 @@ const Pedido = (function () {
       });
     }
 
-    document.getElementById("total-pedido").textContent = formatarPreco(Carrinho.totalPreco());
+    document.getElementById("total-pedido").textContent = formatarPreco(totalPedido());
   }
 
   function renderizar() {
@@ -85,9 +93,9 @@ const Pedido = (function () {
       msg +=
         (indice + 1) + ". " + quantidade + "x " + produto.nome +
         " (" + produto.colecao + " | " + produto.idioma + ") — " +
-        formatarPreco(produto.preco * quantidade) + "\n";
+        formatarPreco(precoItem(produto) * quantidade) + "\n";
     });
-    msg += "\nTotal: " + formatarPreco(Carrinho.totalPreco());
+    msg += "\nTotal: " + formatarPreco(totalPedido());
     msg += "\nEntrega: " + entrega.nome + " — " + entrega.detalhe;
     msg += "\nPagamento: " + pagamento.nome;
     return msg;
