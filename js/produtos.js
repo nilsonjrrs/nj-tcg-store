@@ -73,8 +73,7 @@ const PRODUTOS = [
     idioma: "Português",
     preco: 229.90,
     precoPix: null,
-    // PENDÊNCIA: mesma observação do Triple Pack acima.
-    estoque: 0,
+    estoque: 10,
     img: "img/reinado-delta-mini-booster-box.png"
   },
   {
