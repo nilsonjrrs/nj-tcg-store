@@ -377,7 +377,10 @@ body {
 .vitrine-fundo {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, var(--color-bg) 0%, rgba(23, 21, 28, 0.9) 45%, rgba(23, 21, 28, 0.55) 100%), url("../img/hero-bg.jpg") right center / cover no-repeat;
+  /* Sempre escuro, nos dois temas: a foto de fundo é fixa e nunca fica clara,
+     então o degradê também não pode (senão o texto branco abaixo, que
+     também é fixo, perde contraste na borda esquerda). */
+  background: linear-gradient(90deg, #17151C 0%, rgba(23, 21, 28, 0.9) 45%, rgba(23, 21, 28, 0.55) 100%), url("../img/hero-bg.jpg") right center / cover no-repeat;
 }
 
 .vitrine-conteudo {
@@ -396,18 +399,31 @@ body {
   font-weight: 900;
   line-height: 0.95;
   letter-spacing: 0.005em;
+  color: #FFFFFF; /* fixo: o fundo da vitrine (.vitrine-fundo) também é sempre escuro */
 }
 
 .vitrine-apoio {
   max-width: 46ch;
   margin: var(--space-4) 0 var(--space-5);
-  color: var(--color-muted);
+  color: rgba(255, 255, 255, 0.75); /* fixo, mesmo motivo do h1 acima */
 }
 
 .vitrine-acoes {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+}
+
+/* Botão "Explorar as coleções": versão neutra, mas fixa (mesmo motivo do h1/apoio
+   acima) — sem isso ficava com texto/borda escuros, somem no fundo escuro da vitrine. */
+.vitrine .botao--neutro {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+}
+
+.vitrine .botao--neutro:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* expositor de cartas do Nilson (js/hero-cartas.js), reaproveitado: aqui ele entra no fluxo da
@@ -716,6 +732,7 @@ body {
   font-size: var(--text-lg);
   font-weight: bold;
   font-variant-numeric: tabular-nums;
+  color: var(--color-primary-text); /* todo preço de card usa a mesma cor, tenha Pix ou não */
 }
 
 .produto-preco small {
@@ -723,12 +740,6 @@ body {
   color: var(--color-muted);
   font-size: var(--text-sm);
   font-weight: normal;
-}
-
-/* Preço do Pix em destaque: é o preço "principal" sempre que o produto
-   tiver um valor de Pix cadastrado (produto.precoPix em js/produtos.js). */
-.produto-preco--pix {
-  color: var(--color-primary-text);
 }
 
 .produto-preco-cartao {
@@ -917,6 +928,7 @@ body {
   font-size: 30px;
   font-weight: bold;
   font-variant-numeric: tabular-nums;
+  color: var(--color-primary-text); /* mesma cor do preço no card, com ou sem Pix */
 }
 
 .detalhe-preco small {

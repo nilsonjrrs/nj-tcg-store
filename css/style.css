@@ -354,9 +354,12 @@ a {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid var(--color-border);
+  /* fixos, não ligados ao tema: o expositor fica sobre o fundo sempre escuro
+     da vitrine (.vitrine-fundo) — com --color-border/--color-text do tema
+     claro o ícone (currentColor) sumia dentro do círculo. */
+  border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(23, 18, 31, 0.6);
-  color: var(--color-text);
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
