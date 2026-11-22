@@ -91,6 +91,16 @@
   box-sizing: border-box;
 }
 
+/* Transição suave ao trocar de tema (botão de sol/lua, js/tema.js): só as
+   propriedades de cor, pra não interferir com as animações/transições que já
+   existem (tilt, modais, etc.). `prefers-reduced-motion: reduce` já zera a
+   duração de toda transição da página (regra logo abaixo), incluindo esta. */
+*,
+*::before,
+*::after {
+  transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease, fill 220ms ease, stroke 220ms ease;
+}
+
 html {
   scroll-behavior: smooth;
 }
