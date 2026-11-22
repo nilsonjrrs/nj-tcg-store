@@ -61,6 +61,23 @@
   --navbar-h: 64px;
 }
 
+/* Fundo claro, em teste (22/11/2026) — some com <html data-theme="light">;
+   sem o atributo, o site continua no escuro de sempre. Só troca as
+   superfícies/texto neutros; laranja, roxo e os efeitos holo/foil dos
+   cards (que já têm sua própria "chapa" branca) continuam os mesmos. */
+:root[data-theme="light"] {
+  --color-bg: #F7F4EF;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #EFEAE2;
+  --color-border: #DDD6C9;
+
+  --color-text: #1C1824;
+  --color-muted: #6B6475;
+
+  --shadow-sm: 0 2px 8px rgba(28, 24, 36, 0.1);
+  --shadow-md: 0 4px 16px rgba(28, 24, 36, 0.14);
+}
+
 /* ============================================================
    Base
    ============================================================ */
