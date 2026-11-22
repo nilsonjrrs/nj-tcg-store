@@ -60,6 +60,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
+    Tema.iniciar();
     Catalogo.iniciar();
     ProdutoDetalhe.iniciar();
     Pedido.iniciar();
