@@ -704,6 +704,13 @@ body {
   font-size: var(--text-sm);
 }
 
+.produto-frase {
+  margin: 2px 0 0;
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--color-muted);
+}
+
 .produto-preco {
   margin: var(--space-2) 0 var(--space-3);
   font-size: var(--text-lg);
@@ -716,6 +723,19 @@ body {
   color: var(--color-muted);
   font-size: var(--text-sm);
   font-weight: normal;
+}
+
+/* Preço do Pix em destaque: é o preço "principal" sempre que o produto
+   tiver um valor de Pix cadastrado (produto.precoPix em js/produtos.js). */
+.produto-preco--pix {
+  color: var(--color-primary);
+}
+
+.produto-preco-cartao {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .produto-acao {

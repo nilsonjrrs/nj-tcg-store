@@ -6,15 +6,21 @@
 //   sku        código interno curto (livre, só pra referência/organização).
 //   nome       nome exibido.
 //   categoria  uma das: "Booster", "Multipack", "Mini Booster Box",
-//              "Booster Box", "Box Temático", "ETB", "Acessório".
+//              "Booster Box", "Box Temático", "ETB", "Acessório", "Kit Presente".
 //              Usado nos filtros do catálogo.
 //   colecao    nome da coleção (ex.: "Reinado Delta").
 //   idioma     "Português" ou "Inglês · importado".
-//   preco      preço normal, em reais (número).
-//   precoPix   preço especial no Pix, se houver (número) — ou null se não tiver.
+//   preco      preço no cartão, em reais (número) — é o preço "cheio".
+//   precoPix   preço no Pix, se houver (número, menor que "preco") — ou null
+//              se o produto só tiver um preço único (sem desconto no Pix).
+//              Quando presente, o Pix aparece em destaque no card e o preço
+//              do cartão abaixo, menor; e é o valor usado no carrinho/mensagem
+//              do WhatsApp sempre que o cliente escolher "Pix" como pagamento.
 //   estoque    número de unidades disponíveis, ou null se não controla estoque.
 //              Quando for um número e chegar a 0, o produto aparece como
 //              esgotado e não pode ser adicionado ao carrinho.
+//   frase      frase curta opcional exibida embaixo do nome (ex.: um diferencial
+//              do produto) — deixe de fora do objeto se não precisar de uma.
 //   img        caminho da foto dentro da pasta img/ (ex.: "img/booster-avulso.jpg").
 //              Deixe "" (vazio) se ainda não tiver a foto — o site mostra um
 //              espaço reservado com efeito de brilho no lugar da imagem.
@@ -26,9 +32,9 @@ const PRODUTOS = [
     categoria: "Booster",
     colecao: "Reinado Delta",
     idioma: "Português",
-    preco: 14.90,
-    precoPix: null,
-    estoque: null,
+    preco: 13.90,
+    precoPix: 12.90,
+    estoque: 36,
     img: "img/reinado-delta-booster-avulso.webp"
   },
   {
@@ -40,19 +46,22 @@ const PRODUTOS = [
     idioma: "Português",
     preco: 42.90,
     precoPix: null,
-    estoque: null,
+    // PENDÊNCIA: não está na tabela de reposição de 22/11/2026 — marcado
+    // esgotado em vez de removido, ver CLAUDE.md (perguntar ao Nilson antes
+    // de apagar de vez ou repor estoque).
+    estoque: 0,
     img: "img/reinado-delta-triple-pack.webp"
   },
   {
     sku: "RD-QP",
     id: "reinado-delta-quadpack",
-    nome: "Quadpack (4 boosters)",
+    nome: "Blister Quádruplo (Quadpack)",
     categoria: "Multipack",
     colecao: "Reinado Delta",
     idioma: "Português",
-    preco: 54.90,
-    precoPix: null,
-    estoque: null,
+    preco: 59.90,
+    precoPix: 54.90,
+    estoque: 8,
     img: "img/reinado-delta-quadpack.webp"
   },
   {
@@ -64,7 +73,8 @@ const PRODUTOS = [
     idioma: "Português",
     preco: 229.90,
     precoPix: null,
-    estoque: null,
+    // PENDÊNCIA: mesma observação do Triple Pack acima.
+    estoque: 0,
     img: "img/reinado-delta-mini-booster-box.png"
   },
   {
@@ -74,10 +84,36 @@ const PRODUTOS = [
     categoria: "Booster Box",
     colecao: "Reinado Delta",
     idioma: "Português",
-    preco: 419.90,
-    precoPix: 399.90,
-    estoque: null,
+    preco: 449.90,
+    precoPix: 429.90,
+    estoque: 2,
     img: "img/reinado-delta-booster-box.webp"
+  },
+  {
+    sku: "RD-KP",
+    id: "reinado-delta-kit-presente",
+    nome: "Kit Presente: Quadpack + Case Magnético",
+    categoria: "Kit Presente",
+    colecao: "Reinado Delta",
+    idioma: "Português",
+    preco: 74.90,
+    precoPix: 69.90,
+    estoque: 4,
+    frase: "Presente pronto para o Natal",
+    img: ""
+  },
+  {
+    sku: "RD-CM",
+    id: "reinado-delta-case-magnetico",
+    nome: "Case Magnético 4 mm",
+    categoria: "Acessório",
+    colecao: "Reinado Delta",
+    idioma: "Português",
+    preco: 21.90,
+    precoPix: 19.90,
+    estoque: 6,
+    frase: "Proteja o hit da sua abertura",
+    img: ""
   },
   {
     sku: "C30-BD",

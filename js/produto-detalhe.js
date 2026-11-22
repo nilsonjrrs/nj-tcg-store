@@ -77,12 +77,16 @@ const ProdutoDetalhe = (function () {
     linhaDaFicha("Condição", "Novo, lacrado");
     linhaDaFicha("Código", produto.sku);
 
+    // Pix em destaque (preço principal) quando o produto tiver um; cartão
+    // vem abaixo, menor (ver produto.precoPix em js/produtos.js).
     const preco = el("detalhe-preco");
-    preco.textContent = Catalogo.formatarPreco(produto.preco);
     if (produto.precoPix) {
-      const pix = document.createElement("small");
-      pix.textContent = Catalogo.formatarPreco(produto.precoPix) + " no Pix";
-      preco.appendChild(pix);
+      preco.textContent = Catalogo.formatarPreco(produto.precoPix) + " no Pix";
+      const cartao = document.createElement("small");
+      cartao.textContent = Catalogo.formatarPreco(produto.preco) + " no cartão";
+      preco.appendChild(cartao);
+    } else {
+      preco.textContent = Catalogo.formatarPreco(produto.preco);
     }
 
     const entrega = el("detalhe-entrega");

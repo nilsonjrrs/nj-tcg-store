@@ -27,6 +27,14 @@ const Pedido = (function () {
     });
   }
 
+  function precoItem(produto) {
+    return Catalogo.precoParaPagamento(produto, pagamentoSelecionado);
+  }
+
+  function totalPedido() {
+    return Carrinho.itens().reduce((soma, item) => soma + precoItem(item.produto) * item.quantidade, 0);
+  }
+
   function criarItem({ produto, quantidade }) {
     const li = document.createElement("li");
     li.className = "pedido-item";
@@ -45,7 +53,7 @@ const Pedido = (function () {
     nome.className = "pedido-item-nome";
     nome.textContent = produto.nome;
     const dados = document.createElement("small");
-    dados.textContent = produto.colecao + ", " + produto.idioma.toLowerCase() + ". " + formatarPreco(produto.preco) + " cada";
+    dados.textContent = produto.colecao + ", " + produto.idioma.toLowerCase() + ". " + formatarPreco(precoItem(produto)) + " cada";
     nome.appendChild(dados);
 
     const remover = document.createElement("button");
@@ -82,7 +90,7 @@ const Pedido = (function () {
 
     const total = document.createElement("span");
     total.className = "pedido-item-total";
-    total.textContent = formatarPreco(produto.preco * quantidade);
+    total.textContent = formatarPreco(precoItem(produto) * quantidade);
 
     li.dataset.id = produto.id;
     li.append(foto, nome, remover, stepper, total);
@@ -100,7 +108,7 @@ const Pedido = (function () {
     el("pedido-entrega").hidden = vazio;
     el("pedido-pagamento").hidden = vazio;
     el("botao-whatsapp").disabled = vazio;
-    el("total-pedido").textContent = formatarPreco(Carrinho.totalPreco());
+    el("total-pedido").textContent = formatarPreco(totalPedido());
 
     renderizarOpcoes("opcoes-entrega", CONFIG.entregaOpcoes, entregaSelecionada, (id) => {
       entregaSelecionada = id;
@@ -121,9 +129,9 @@ const Pedido = (function () {
       msg +=
         (indice + 1) + ". " + quantidade + "x " + produto.nome +
         " (" + produto.colecao + " | " + produto.idioma + ") — " +
-        formatarPreco(produto.preco * quantidade) + "\n";
+        formatarPreco(precoItem(produto) * quantidade) + "\n";
     });
-    msg += "\nTotal: " + formatarPreco(Carrinho.totalPreco());
+    msg += "\nTotal: " + formatarPreco(totalPedido());
     msg += "\nEntrega: " + entrega.nome + " — " + entrega.detalhe;
     msg += "\nPagamento: " + pagamento.nome;
     return msg;

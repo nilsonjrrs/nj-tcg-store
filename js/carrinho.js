@@ -56,11 +56,7 @@ const Carrinho = (function () {
     return Object.values(estado).reduce((a, b) => a + b, 0);
   }
 
-  function totalPreco() {
-    return itens().reduce((soma, item) => soma + item.produto.preco * item.quantidade, 0);
-  }
-
   carregar();
 
-  return { obterQuantidade, definirQuantidade, alterar, itens, totalItens, totalPreco };
+  return { obterQuantidade, definirQuantidade, alterar, itens, totalItens };
 })();

@@ -22,6 +22,14 @@ const Catalogo = (function () {
     return typeof produto.estoque === "number" && produto.estoque <= 0;
   }
 
+  // Preço que vale pro carrinho/mensagem de WhatsApp, de acordo com a forma
+  // de pagamento escolhida (ver js/pedido.js): Pix usa produto.precoPix
+  // quando o produto tiver um (senão cai no preço normal do cartão).
+  function precoParaPagamento(produto, formaPagamentoId) {
+    if (formaPagamentoId === "pix" && produto.precoPix) return produto.precoPix;
+    return produto.preco;
+  }
+
   // minúsculas e sem acento, pra "celebracao" achar "Celebração"
   function normalizar(texto) {
     return String(texto).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -273,15 +281,30 @@ const Catalogo = (function () {
     dados.textContent = produto.categoria + ", " + produto.idioma.toLowerCase();
     card.appendChild(dados);
 
-    const preco = document.createElement("p");
-    preco.className = "produto-preco";
-    preco.textContent = formatarPreco(produto.preco);
-    if (produto.precoPix) {
-      const pix = document.createElement("small");
-      pix.textContent = formatarPreco(produto.precoPix) + " no Pix";
-      preco.appendChild(pix);
+    if (produto.frase) {
+      const frase = document.createElement("p");
+      frase.className = "produto-frase";
+      frase.textContent = produto.frase;
+      card.appendChild(frase);
     }
-    card.appendChild(preco);
+
+    if (produto.precoPix) {
+      // Pix em destaque (preço principal); cartão vem abaixo, menor.
+      const pix = document.createElement("p");
+      pix.className = "produto-preco produto-preco--pix";
+      pix.textContent = formatarPreco(produto.precoPix) + " no Pix";
+      card.appendChild(pix);
+
+      const cartao = document.createElement("p");
+      cartao.className = "produto-preco-cartao";
+      cartao.textContent = formatarPreco(produto.preco) + " no cartão";
+      card.appendChild(cartao);
+    } else {
+      const preco = document.createElement("p");
+      preco.className = "produto-preco";
+      preco.textContent = formatarPreco(produto.preco);
+      card.appendChild(preco);
+    }
 
     const acao = document.createElement("div");
     acao.className = "produto-acao";
@@ -404,5 +427,5 @@ const Catalogo = (function () {
     document.addEventListener("carrinho:alterado", sincronizar);
   }
 
-  return { iniciar, formatarPreco, estaEsgotado, alterarQuantidade, limparFiltros, filtrosAbertos, fecharFiltros };
+  return { iniciar, formatarPreco, estaEsgotado, precoParaPagamento, alterarQuantidade, limparFiltros, filtrosAbertos, fecharFiltros };
 })();
