@@ -99,7 +99,7 @@ const PRODUTOS = [
     precoPix: 69.90,
     estoque: 4,
     frase: "Presente pronto para o Natal",
-    img: ""
+    img: "img/reinado-delta-kit-presente.webp"
   },
   {
     sku: "RD-CM",
