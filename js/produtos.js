@@ -91,7 +91,7 @@ const PRODUTOS = [
   {
     sku: "RD-KP",
     id: "reinado-delta-kit-presente",
-    nome: "Kit Presente: Quadpack + Case Magnético",
+    nome: "Kit Presente: Quadpack + Toploader Magnético",
     categoria: "Kit Presente",
     colecao: "Reinado Delta",
     idioma: "Português",
@@ -104,7 +104,7 @@ const PRODUTOS = [
   {
     sku: "RD-CM",
     id: "reinado-delta-case-magnetico",
-    nome: "Case Magnético 4 mm",
+    nome: "Toploader Magnético 4 mm",
     categoria: "Acessório",
     colecao: "Reinado Delta",
     idioma: "Português",
@@ -112,7 +112,7 @@ const PRODUTOS = [
     precoPix: 19.90,
     estoque: 6,
     frase: "Proteja o hit da sua abertura",
-    img: ""
+    img: "img/reinado-delta-toploader-magnetico.webp"
   },
   {
     sku: "C30-BD",

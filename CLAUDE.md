@@ -31,8 +31,8 @@ Em `.claude/skills/`: `ecommerce-visual-designer`, `digital-marketing-tcg`, `sen
   |---|---|---|---|
   | Booster Box Reinado Delta (36 boosters) | R$ 429,90 | R$ 449,90 | 2 |
   | Blister Quádruplo (Quadpack) Reinado Delta | R$ 54,90 | R$ 59,90 | 8 |
-  | Kit Presente: Quadpack + Case Magnético | R$ 69,90 | R$ 74,90 | 4 |
-  | Case Magnético 4 mm | R$ 19,90 | R$ 21,90 | 6 |
+  | Kit Presente: Quadpack + Toploader Magnético | R$ 69,90 | R$ 74,90 | 4 |
+  | Toploader Magnético 4 mm | R$ 19,90 | R$ 21,90 | 6 |
   | Booster Avulso Reinado Delta | R$ 12,90 | R$ 13,90 | 36 |
   | Mini Booster Box (18 boosters) Reinado Delta | — | R$ 229,90 | 10 |
 
@@ -162,3 +162,4 @@ Em `.claude/skills/`: `ecommerce-visual-designer`, `digital-marketing-tcg`, `sen
   - Testado (Playwright) em 320, 360, 375, 390, 393, 412 e 430px: zero overflow horizontal em todas, nome da marca aparece inteiro (sem truncar) em todas, "Pedido" com texto completo a partir de 400px, sem erros de console.
 - [x] **Mini Booster Box (18 boosters) de Reinado Delta voltou ao estoque (22/11/2026)**: `estoque` em `js/produtos.js` passou de `0` pra `10` (quantidade confirmada pelo Nilson) — o produto deixa de aparecer como "Esgotado" e volta a poder ser adicionado ao pedido (até 10 unidades). Triple Pack continua esgotado (pendência em aberto, ver acima).
 - [x] **Fundo do tema claro trocado pra branco puro (22/11/2026)**, a pedido do Nilson ("deixar o fundo da versão clara branco, exatamente da cor de fundo dos produtos"): `--color-bg` em `css/style.css` (bloco `:root[data-theme="light"]`) saiu de `#F7F4EF` (bege claro) pra `#FFFFFF`, igual a `--color-surface` e a `--color-mat` (o fundo branco por trás das fotos de produto) — os três tokens agora são o mesmo branco. O fundo escuro fixo da vitrine (hero) não muda com o tema, como já era (ver pendência/nota mais acima). Testado com Playwright (mobile e desktop, tema claro ativado): cabeçalho, busca e cards se fundem no mesmo branco, bordas (`--color-border`) continuam visíveis separando os elementos, zero erros de console.
+- [x] **Case Magnético 4 mm ganhou foto real e virou "Toploader Magnético" (23/11/2026)**: o Nilson mandou a foto oficial do produto (embalagem "Central Acessórios"); `img` em `js/produtos.js` (sku `RD-CM`) passou de `""` pra `img/reinado-delta-toploader-magnetico.webp`. A pedido dele, o nome do produto também mudou de "Case Magnético 4 mm" pra "Toploader Magnético 4 mm" (e o Kit Presente, que citava o nome antigo, virou "Kit Presente: Quadpack + Toploader Magnético") — atualizado em `js/produtos.js` e na tabela de preços acima. Testado com Playwright: card aparece com a foto carregando (object-fit:contain na chapa clara, como os demais produtos), nome novo em ambos os produtos, preço Pix em destaque, zero erros de console.
